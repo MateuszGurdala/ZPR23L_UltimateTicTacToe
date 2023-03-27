@@ -12,10 +12,7 @@ ServerSocket::~ServerSocket()
     delete[] _recvbuff;
 }
 
-int ServerSocket::GetRequest(char *&buffptr)
+std::string ServerSocket::GetRequest()
 {
-    buffptr = new char[_recvbufflen];
-    std::copy(_recvbuff, _recvbuff + _recvbufflen, buffptr);
-
-    return _recvbufflen;
+    return std::string(_recvbuff);
 }

@@ -1,7 +1,6 @@
 #ifndef HTTP_RESPONSE_HPP
 #define HTTP_RESPONSE_HPP
 
-
 #include <string>
 #include <sstream>
 #include <vector>
@@ -9,8 +8,8 @@
 #include <ctime>
 #include <time.h>
 
-
-class HttpResponse {
+class HttpResponse
+{
 private:
 	std::vector<std::string> _headers;
 
@@ -18,17 +17,16 @@ private:
 	std::string getDateHeader();
 	void addServerHeader();
 	void addContentTypeHeader();
-	void addContentLengthHeader(std::string & body);
+	void addContentLengthHeader(std::string &body);
 	void addConnectionHeader();
-	void addHeaders(std::string& body);
+	void addBaseHeaders();
 	std::string endHeaders();
 
 public:
 	HttpResponse();
 	~HttpResponse();
 
-	int getResponse(std::string& response, std::string& body);
+	std::string getResponse(std::string &body);
 };
-
 
 #endif

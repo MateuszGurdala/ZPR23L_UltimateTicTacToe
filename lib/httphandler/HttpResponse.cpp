@@ -5,7 +5,7 @@
 #define STATUS_MESSAGE "OK"
 
 #define CONTENT_TYPE "text/html; charset=utf-8"
-#define SERVER_NAME "CustomCppServer"
+#define SERVER_NAME "UltimateTicTacToeServer"
 #define CONNECTION "close"
 
 using namespace std;
@@ -30,15 +30,12 @@ stringstream HttpResponse::getResponseTop()
 
 string HttpResponse::getDateHeader()
 {
-	char buff[26];
 	string header = "Date: ";
 
 	auto now = chrono::system_clock::now();
 	auto time = chrono::system_clock::to_time_t(now);
-	// ctime_s(buff, sizeof buff, &time); //Doesn't work on Linux
-	ctime(&time);
 
-	header += buff;
+	header += ctime(&time);
 	return header;
 }
 
@@ -70,11 +67,10 @@ void HttpResponse::addContentLengthHeader(string &body)
 	_headers.push_back(header);
 }
 
-void HttpResponse::addHeaders(string &body)
+void HttpResponse::addBaseHeaders()
 {
 	addServerHeader();
 	addContentTypeHeader();
-	addContentLengthHeader(body);
 	addConnectionHeader();
 }
 
@@ -83,12 +79,13 @@ string HttpResponse::endHeaders()
 	return "\n";
 }
 
-int HttpResponse::getResponse(string &response, string &body)
+string HttpResponse::getResponse(string &body)
 {
 	stringstream ss = getResponseTop();
 
 	ss << getDateHeader();
-	addHeaders(body);
+	addBaseHeaders();
+	addContentLengthHeader(body);
 
 	for (auto i = _headers.begin(); i != _headers.end(); i++)
 	{
@@ -98,6 +95,5 @@ int HttpResponse::getResponse(string &response, string &body)
 	ss << endHeaders();
 	ss << body;
 
-	response = ss.str();
-	return response.length();
+	return ss.str();
 }

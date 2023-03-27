@@ -1,5 +1,9 @@
-﻿#include <stdio.h>
+﻿// Standard includes
+#include <stdio.h>
 #include <stdlib.h>
+#include <memory>
+
+// Custom includes
 #include "../include/HttpResponse.hpp"
 
 #ifdef _WIN32
@@ -11,22 +15,25 @@
 #endif
 
 #define DEFAULT_PORT 1337
-#define DEFAULT_REQUEST_BUFLEN 1024
+#define DEFAULT_REQUEST_BUFFLEN 1024
 
 int main(int argc, char const *argv[])
 {
-	char *buffptr = NULL;
-	int recvlen;
-	std::string respstr;
-	std::string respBody = "<body><div>Dzialaaaa!!!!<div></body>"; // temp
-
 #ifdef _WIN32
-	WIN32ServerSocket serverSocket = WIN32ServerSocket(DEFAULT_PORT, DEFAULT_REQUEST_BUFLEN);
+	WIN32ServerSocket serverSocket = WIN32ServerSocket(DEFAULT_PORT, DEFAULT_REQUEST_BUFFLEN);
 #endif // _WIN32
 
 #ifdef linux
-	LinuxServerSocket serverSocket = LinuxServerSocket(DEFAULT_PORT, DEFAULT_REQUEST_BUFLEN);
+	LinuxServerSocket serverSocket = LinuxServerSocket(DEFAULT_PORT, DEFAULT_REQUEST_BUFFLEN);
 #endif
+
+	// std::shared_ptr<HttpResponse> resp_ptr(nullptr);
+	std::shared_ptr<HttpResponse> resp_ptr = std::make_shared<HttpResponse>();
+
+	std::string reqstr;
+	std::string respstr;
+
+	std::string tempbody = "<body><div>Dzialaaaa!!!!<div></body>";
 
 	if (serverSocket.Init() != 0)
 	{
@@ -40,23 +47,6 @@ int main(int argc, char const *argv[])
 
 		if (serverSocket.Listen() == 0)
 		{
-			HttpResponse httpResponse;
-
-			// Klient -> request -> HttpHandlera -> Engine -> Gra
-			// Ustalanie stanu gry
-			// Engine ->(stan gry)HttpHandlera -> (HttpResponse) -> socket -> Klienta
-
-			recvlen = serverSocket.GetRequest(buffptr);
-			printf(buffptr);
-			printf("\n");
-
-			httpResponse.getResponse(respstr, respBody);
-
-			printf("Sending response:\n");
-			printf(respstr.c_str());
-			printf("\n");
-
-			serverSocket.SendResponse(respstr.c_str(), respstr.length());
 		}
 	} while (true);
 
