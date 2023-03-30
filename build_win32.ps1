@@ -1,7 +1,7 @@
-Write-Output "Creating build folder"
 if (Test-Path -Path '.\build') {
 }
 else {
+    Write-Output "Creating build folder"
     New-Item -Path ".\" -Name "build" -ItemType "directory"
 }
 Set-Location -Path '.\build'
