@@ -27,7 +27,7 @@ public:
 	~LinuxServerSocket();
 	int Init();
 	int Listen();
-	int SendResponse(const char *respc, int resplen);
+	virtual int SendResponse(HttpResponse& response) const;
 };
 #endif
 

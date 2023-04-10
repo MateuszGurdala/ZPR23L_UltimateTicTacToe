@@ -64,8 +64,9 @@ int LinuxServerSocket::Listen()
     return 0;
 }
 
-int LinuxServerSocket::SendResponse(const char *respc, int resplen)
+int LinuxServerSocket::SendResponse(HttpResponse& response) const
 {
-    send(_new_socket, respc, resplen, 0);
+    string responseString = response.getResponse();
+    send(_new_socket, responseString.c_str(), responseString.length(), 0);
     return 0;
 }

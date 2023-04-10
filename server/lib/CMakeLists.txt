@@ -6,6 +6,8 @@ add_subdirectory(httphandler)
 
 if(WIN32)
     add_library(WIN32ServerSocket ${SERVERSOCKETSRC} ${WIN32SRC})
+    target_link_libraries(WIN32ServerSocket HTTP)
 ELSEIF(UNIX)
     add_library(LinuxServerSocket ${SERVERSOCKETSRC} ${LINUXSRC})
+    target_link_libraries(LinuxServerSocket HTTP)
 endif()
