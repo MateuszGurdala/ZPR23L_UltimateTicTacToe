@@ -8,7 +8,7 @@ class ServerSocket : public IServerSocket
 public:
     ServerSocket(int port, int reqbufflen);
     ~ServerSocket();
-    virtual HttpRequest GetRequest();
+    HttpRequest GetRequest() override;
 };
 
 #endif

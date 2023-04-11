@@ -1,5 +1,5 @@
-﻿#include <stdio.h>
-#include <stdlib.h>
+﻿#include <cstdio>
+#include <cstdlib>
 #include <memory>
 #include "../include/HttpResponse.hpp"
 
@@ -7,7 +7,7 @@
 #include "../include/WIN32ServerSocket.hpp"
 #endif
 
-#ifdef linux
+#if linux || defined(__arm64__)
 #include "../include/LinuxServerSocket.hpp"
 #endif
 
@@ -25,12 +25,12 @@ int main(int argc, char const *argv[])
 	WIN32ServerSocket serverSocket(DEFAULT_PORT, DEFAULT_REQUEST_BUFFLEN);
 #endif
 
-#ifdef linux
-	LinuxServerSocket serverSocket(DEFAULT_PORT, DEFAULT_REQUEST_BUFFLEN);
+#if linux || defined(__arm64__)
+    LinuxServerSocket serverSocket(DEFAULT_PORT, DEFAULT_REQUEST_BUFFLEN);
 #endif
 
 	URequest request;
-	UResponse response;
+    UResponse();
 	std::string tempbody = "<body><div>Dzialaaaa!!!!<div></body>";
 
 	if (serverSocket.Init() != 0)

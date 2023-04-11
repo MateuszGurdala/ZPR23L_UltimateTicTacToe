@@ -1,6 +1,5 @@
 #include "../../include/LinuxServerSocket.hpp"
 
-using namespace std;
 
 LinuxServerSocket::LinuxServerSocket(int port, int reqbufflen) : ServerSocket(port, reqbufflen) {}
 
@@ -24,7 +23,7 @@ int LinuxServerSocket::Init()
 
     // Forcefully attaching socket to the port
     if (setsockopt(_server_fd, SOL_SOCKET,
-                   SO_REUSEADDR | SO_REUSEPORT, &_opt,
+                   SO_REUSEADDR, &_opt,
                    sizeof(_opt)))
     {
         perror("setsockopt");
@@ -34,7 +33,7 @@ int LinuxServerSocket::Init()
     _address.sin_addr.s_addr = INADDR_ANY;
     _address.sin_port = htons(_port);
 
-    if (bind(_server_fd, (struct sockaddr *)&_address,
+    if (::bind(_server_fd, (struct sockaddr *)&_address,
              sizeof(_address)) < 0)
     {
         perror("bind failed");
@@ -66,7 +65,7 @@ int LinuxServerSocket::Listen()
 
 int LinuxServerSocket::SendResponse(HttpResponse& response) const
 {
-    string responseString = response.getResponse();
+    std::string responseString = response.getResponse();
     send(_new_socket, responseString.c_str(), responseString.length(), 0);
     return 0;
 }

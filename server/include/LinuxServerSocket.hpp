@@ -3,18 +3,17 @@
 
 #include "ServerSocket.hpp"
 
-#ifdef linux
+#if linux || defined(__arm64__)
 #include <netinet/in.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
 #include <sys/socket.h>
 #include <unistd.h>
 
 class LinuxServerSocket : public ServerSocket
 {
 private:
-	int _port;
 
 	// SocketData
 	struct sockaddr_in _address;
@@ -25,9 +24,9 @@ private:
 public:
 	LinuxServerSocket(int port, int reqbufflent);
 	~LinuxServerSocket();
-	int Init();
-	int Listen();
-	virtual int SendResponse(HttpResponse& response) const;
+	int Init() override;
+	int Listen() override;
+	int SendResponse(HttpResponse& response) const override;
 };
 #endif
 

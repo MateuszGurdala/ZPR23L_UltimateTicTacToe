@@ -4,7 +4,7 @@
 #include "ServerSocket.hpp"
 #include <stdio.h>
 
-#ifdef _WIN32
+#if _WIN32 && !defined(__arm64__)
 #include <winsock2.h>
 #include <ws2tcpip.h>
 
