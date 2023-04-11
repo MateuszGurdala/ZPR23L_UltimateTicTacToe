@@ -1,0 +1,14 @@
+
+
+#ifndef ULTIMATETICTACTOESERVER_COMPUTERPLAYER_H
+#define ULTIMATETICTACTOESERVER_COMPUTERPLAYER_H
+
+#include "Player.h"
+
+class HumanPlayer : public Player {
+private:
+
+public:
+};
+
+#endif //ULTIMATETICTACTOESERVER_COMPUTERPLAYER_H
