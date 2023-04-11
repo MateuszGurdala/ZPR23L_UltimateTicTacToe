@@ -14,7 +14,6 @@
 class LinuxServerSocket : public ServerSocket
 {
 private:
-
 	// SocketData
 	struct sockaddr_in _address;
 	int _addrlen = sizeof(_address);
