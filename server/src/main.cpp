@@ -2,12 +2,13 @@
 #include <cstdlib>
 #include <memory>
 #include "../include/HttpResponse.hpp"
+#include "../include/HttpRequest.hpp"
 
 #ifdef _WIN32
 #include "../include/WIN32ServerSocket.hpp"
 #endif
 
-#if linux || defined(__arm64__)
+#if defined(__linux__) || defined(__arm64__)
 #include "../include/LinuxServerSocket.hpp"
 #endif
 
@@ -19,18 +20,18 @@ typedef std::unique_ptr<HttpResponse> UResponse;
 
 bool verbose = true;
 
-int main(int argc, char const *argv[])
+int main(void)
 {
 #ifdef _WIN32
 	WIN32ServerSocket serverSocket(DEFAULT_PORT, DEFAULT_REQUEST_BUFFLEN);
 #endif
 
-#if linux || defined(__arm64__)
-    LinuxServerSocket serverSocket(DEFAULT_PORT, DEFAULT_REQUEST_BUFFLEN);
+#if defined(__linux__) || defined(__arm64__)
+	LinuxServerSocket serverSocket(DEFAULT_PORT, DEFAULT_REQUEST_BUFFLEN);
 #endif
 
 	URequest request;
-    UResponse();
+	UResponse();
 	std::string tempbody = "<body><div>Dzialaaaa!!!!<div></body>";
 
 	if (serverSocket.Init() != 0)
@@ -53,11 +54,6 @@ int main(int argc, char const *argv[])
 			serverSocket.SendResponse(response);
 			printf("Sent response.\n");
 		}
-		//else
-		//{
-		//	printf("Something went wrong.\n");
-		//	return 1;
-		//}
 	} while (true);
 
 	return 0;

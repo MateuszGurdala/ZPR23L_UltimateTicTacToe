@@ -4,7 +4,7 @@
 #include "ServerSocket.hpp"
 #include <stdio.h>
 
-#if _WIN32 && !defined(__arm64__)
+#ifdef _WIN32
 #include <winsock2.h>
 #include <ws2tcpip.h>
 
@@ -23,9 +23,9 @@ private:
 public:
 	WIN32ServerSocket(int port, int reqbufflen);
 	~WIN32ServerSocket();
-	int Init();
-	int Listen();
-	int SendResponse(HttpResponse & response) const;
+	virtual int Init();
+	virtual int Listen();
+	virtual int SendResponse(HttpResponse & response) const;
 };
 #endif
 

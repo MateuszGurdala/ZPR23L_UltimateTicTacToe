@@ -3,7 +3,7 @@
 
 #include "ServerSocket.hpp"
 
-#if linux || defined(__arm64__)
+#if defined(__linux__) || defined(__arm64__)
 #include <netinet/in.h>
 #include <cstdio>
 #include <cstdlib>
@@ -23,9 +23,9 @@ private:
 public:
 	LinuxServerSocket(int port, int reqbufflent);
 	~LinuxServerSocket();
-	int Init() override;
-	int Listen() override;
-	int SendResponse(HttpResponse& response) const override;
+	virtual int Init();
+	virtual int Listen();
+	virtual int SendResponse(HttpResponse &response) const;
 };
 #endif
 
