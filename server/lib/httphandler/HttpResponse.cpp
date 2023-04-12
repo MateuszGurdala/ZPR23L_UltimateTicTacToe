@@ -10,63 +10,53 @@
 
 typedef std::unique_ptr<std::string> PString;
 
-HttpResponse::HttpResponse(std::string& body)
-{
-	_body = body;
+HttpResponse::HttpResponse(std::string &body) { _body = body; }
+
+HttpResponse::~HttpResponse() {
+  _headers.clear();
+  std::vector<PString>().swap(_headers); // Deallocate memory
 }
 
-HttpResponse::~HttpResponse()
-{
-	_headers.clear();
-	std::vector<PString>().swap(_headers); // Deallocate memory
+std::stringstream HttpResponse::getResponseTop() {
+  std::stringstream ss;
+  ss << VERSION << " ";
+  ss << STATUS_OK << " ";
+  ss << STATUS_MESSAGE << '\n';
+
+  return ss;
 }
 
-std::stringstream HttpResponse::getResponseTop()
-{
-	std::stringstream ss;
-	ss << VERSION << " ";
-	ss << STATUS_OK << " ";
-	ss << STATUS_MESSAGE << '\n';
+std::string HttpResponse::getDate() {
+  auto now = std::chrono::system_clock::now();
+  auto time = std::chrono::system_clock::to_time_t(now);
 
-	return ss;
+  return std::string(ctime(&time));
 }
 
-std::string HttpResponse::getDate()
-{
-	auto now = std::chrono::system_clock::now();
-	auto time = std::chrono::system_clock::to_time_t(now);
-
-	return std::string(ctime(&time));
+void HttpResponse::pushBackHeader(std::string &&name, std::string &&value) {
+  PString header = std::make_unique<std::string>(name);
+  (*header) += ": ";
+  (*header) += value;
+  _headers.push_back(std::move(header));
 }
 
-void HttpResponse::pushBackHeader(std::string&& name, std::string&& value)
-{
-	PString header = std::make_unique<std::string>(name);
-	(*header) += ": ";
-	(*header) += value;
-	_headers.push_back(std::move(header));
+void HttpResponse::addHeaders() {
+  pushBackHeader("Server", SERVER_NAME);
+  pushBackHeader("Content-Type", CONTENT_TYPE);
+  pushBackHeader("Connection", CONNECTION);
+  pushBackHeader("Content-Length", std::to_string(_body.length()));
+  pushBackHeader("Date", getDate());
 }
 
-void HttpResponse::addHeaders()
-{
-	pushBackHeader("Server", SERVER_NAME);
-	pushBackHeader("Content-Type", CONTENT_TYPE);
-	pushBackHeader("Connection", CONNECTION);
-	pushBackHeader("Content-Length", std::to_string(_body.length()));
-	pushBackHeader("Date", getDate());
-}
+std::string HttpResponse::getResponse() {
+  std::stringstream ss = getResponseTop();
+  addHeaders();
 
-std::string HttpResponse::getResponse()
-{
-	std::stringstream ss = getResponseTop();
-	addHeaders();
+  for (auto header = _headers.begin(); header != _headers.end(); ++header) {
+    ss << (**header) << '\n';
+  }
 
-	for (auto header = _headers.begin(); header != _headers.end(); ++header)
-	{
-		ss << (**header) << '\n';
-	}
+  ss << _body;
 
-	ss << _body;
-
-	return ss.str();
+  return ss.str();
 }
