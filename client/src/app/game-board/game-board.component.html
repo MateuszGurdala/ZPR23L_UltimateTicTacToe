@@ -1,0 +1,7 @@
+<div #board *ngIf="isMotherboard" class="game-board" [createBoard]="size">
+    <game-board [size]="size" type="Daughterboard" *ngFor="let i of childrenCount;"></game-board>
+</div>
+
+<div *ngIf="!isMotherboard" class="game-board" [createBoard]="size">
+    <board-segment *ngFor="let i of childrenCount;"></board-segment>
+</div>
