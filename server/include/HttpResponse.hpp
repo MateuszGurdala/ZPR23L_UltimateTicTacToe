@@ -9,7 +9,6 @@
 #include <time.h>
 #include <vector>
 
-
 class HttpResponse {
 private:
   std::vector<std::unique_ptr<std::string>> _headers;
@@ -22,6 +21,7 @@ private:
 
 public:
   HttpResponse(std::string &body);
+  HttpResponse(std::string &&body);
   ~HttpResponse();
 
   std::string getResponse();

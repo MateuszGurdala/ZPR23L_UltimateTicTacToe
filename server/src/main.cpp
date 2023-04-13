@@ -4,7 +4,6 @@
 #include <cstdlib>
 #include <memory>
 
-
 #ifdef _WIN32
 #include "../include/WIN32ServerSocket.hpp"
 #endif
@@ -19,9 +18,9 @@
 typedef std::unique_ptr<HttpRequest> URequest;
 typedef std::unique_ptr<HttpResponse> UResponse;
 
-bool verbose = true;
+bool verbose = false;
 
-int main(void) {
+int main() {
 #ifdef _WIN32
   WIN32ServerSocket serverSocket(DEFAULT_PORT, DEFAULT_REQUEST_BUFFLEN);
 #endif
@@ -32,7 +31,6 @@ int main(void) {
 
   URequest request;
   UResponse();
-  std::string tempbody = "<body><div>Dzialaaaa!!!!<div></body>";
 
   if (serverSocket.Init() != 0) {
     printf("Socket intialization failed.\n");
@@ -47,7 +45,7 @@ int main(void) {
       request = std::make_unique<HttpRequest>(serverSocket.GetRequest());
 
       // TODO: REMOVE
-      HttpResponse response(tempbody);
+      HttpResponse response("{\"result\":\"true\"}");
       serverSocket.SendResponse(response);
       printf("Sent response.\n");
     }
