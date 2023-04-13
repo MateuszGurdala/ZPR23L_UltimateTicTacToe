@@ -1,7 +1,7 @@
-import { AfterContentInit, Component, Host, Input } from "@angular/core";
+import { AfterContentInit, Component, Host } from "@angular/core";
 import { SegmentLogic } from "../segment-logic";
 import { GameBoardComponent } from "../game-board/game-board.component";
-import { GameHttpClient } from "src/app/services/game-http-client.service";
+import { GameHttpClient } from "../../services/game-http-client.service";
 
 @Component({
 	selector: "board-segment",
@@ -17,6 +17,12 @@ export class BoardSegmentComponent extends SegmentLogic implements AfterContentI
 	}
 
 	onClick() {
+		// if (!this.isActive) {
+		// 	return;
+		// }
+
+		this.ownerSign = "O";
+
 		if (this.parent.id !== undefined && this.id !== undefined) {
 			this.gameClient.postMove(this.parent.id, this.id);
 		}
