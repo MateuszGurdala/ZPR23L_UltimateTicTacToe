@@ -1,1 +1,14 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+    --main-tint: #495057;
+    --main: #343a40;
+    --main-shade: #212529;
+
+    --main-gradient: linear-gradient(0deg, var(--main-shade) 40%, var(--main) 100%);
+
+    --gray: #888;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
