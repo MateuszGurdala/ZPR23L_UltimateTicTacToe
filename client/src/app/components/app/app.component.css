@@ -6,7 +6,7 @@
 }
 
 .board-container {
-    width: 90vh;
-    height: 90vh;
+    width: min(90vh, 100vw * var(--ratio));
+    height: min(90vh, 100vw * var(--ratio));
     margin: auto;
 }
