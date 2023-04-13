@@ -3,7 +3,7 @@
     height: 100%;
 
     border-style: solid;
-    border-color: var(--gray);
+    border-color: var(--grey);
     border-width: 1px;
 
     cursor: pointer;

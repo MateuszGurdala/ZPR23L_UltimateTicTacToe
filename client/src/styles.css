@@ -5,7 +5,7 @@
 
     --main-gradient: linear-gradient(0deg, var(--main-shade) 40%, var(--main) 100%);
 
-    --gray: #888;
+    --grey: #888;
 
     --ratio: calc(9/16);
 }
