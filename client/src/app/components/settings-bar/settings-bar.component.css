@@ -1,0 +1,26 @@
+.material-symbols-outlined {
+    font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 200,
+        'opsz' 48
+}
+
+.extend-button {
+    cursor: pointer;
+    color: var(--grey);
+    font-size: 5vh;
+}
+
+.container {
+    height: 100vh;
+    width: fit-content;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.settings-bar {
+    width: 25vw;
+}

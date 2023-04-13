@@ -3,6 +3,7 @@
     height: 100vh;
     background-image: var(--main-gradient);
     display: flex;
+    flex-direction: row;
 }
 
 .board-container {
