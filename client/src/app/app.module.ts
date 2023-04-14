@@ -8,12 +8,19 @@ import { BoardSegmentComponent } from "./components/board-segment/board-segment.
 import { CreateBoardDirective } from "./directives/create-board.directive";
 import { GameHttpClient } from "./services/game-http-client.service";
 import { HttpClientModule } from "@angular/common/http";
-import { SettingsBarComponent } from './components/settings-bar/settings-bar.component';
+import { SettingsBarComponent } from "./components/settings-bar/settings-bar.component";
+import { GameMasterService } from "./services/game-master.service";
 
 @NgModule({
-	declarations: [AppComponent, GameBoardComponent, BoardSegmentComponent, CreateBoardDirective, SettingsBarComponent],
+	declarations: [
+		AppComponent,
+		GameBoardComponent,
+		BoardSegmentComponent,
+		CreateBoardDirective,
+		SettingsBarComponent,
+	],
 	imports: [BrowserModule, AppRoutingModule, HttpClientModule],
-	providers: [GameHttpClient],
+	providers: [GameMasterService, GameHttpClient],
 	bootstrap: [AppComponent],
 })
 export class AppModule {}

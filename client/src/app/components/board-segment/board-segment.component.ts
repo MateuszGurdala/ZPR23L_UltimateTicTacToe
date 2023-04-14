@@ -1,7 +1,7 @@
 import { AfterContentInit, Component, Host } from "@angular/core";
 import { SegmentLogic } from "../segment-logic";
 import { GameBoardComponent } from "../game-board/game-board.component";
-import { GameHttpClient } from "../../services/game-http-client.service";
+import { GameMasterService } from "src/app/services/game-master.service";
 
 @Component({
 	selector: "board-segment",
@@ -11,7 +11,7 @@ import { GameHttpClient } from "../../services/game-http-client.service";
 export class BoardSegmentComponent extends SegmentLogic implements AfterContentInit {
 	private parent: GameBoardComponent;
 
-	constructor(@Host() parent: GameBoardComponent, private gameClient: GameHttpClient) {
+	constructor(@Host() parent: GameBoardComponent, private gameMaster: GameMasterService) {
 		super();
 		this.parent = parent;
 	}
@@ -24,7 +24,7 @@ export class BoardSegmentComponent extends SegmentLogic implements AfterContentI
 		this.ownerSign = "O";
 
 		if (this.parent.id !== undefined && this.id !== undefined) {
-			this.gameClient.postMove(this.parent.id, this.id);
+			this.gameMaster.makeMove(this.parent.id, this.id);
 		}
 	}
 }
