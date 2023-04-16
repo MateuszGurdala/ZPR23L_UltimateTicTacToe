@@ -11,6 +11,7 @@ add_executable (UltimateTicTacToeServer "${PROJECT_SOURCE_DIR}/src/main.cpp")
 
 IF(WIN32)
     target_link_libraries(UltimateTicTacToeServer WIN32ServerSocket)
+    target_link_libraries(UltimateTicTacToeServer ws2_32.lib)
 ELSEIF(UNIX)
     target_link_libraries(UltimateTicTacToeServer LinuxServerSocket)
 ENDIF()
