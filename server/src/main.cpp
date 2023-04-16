@@ -1,5 +1,6 @@
-﻿#include <cstdio>
-#include <cstdlib>
+﻿#pragma clang diagnostic push
+#pragma ide diagnostic ignored "bugprone-unused-raii"
+#include <cstdio>
 #include <memory>
 #include "../include/HttpResponse.hpp"
 
@@ -62,3 +63,5 @@ int main(int argc, char const *argv[])
 
 	return 0;
 }
+
+#pragma clang diagnostic pop

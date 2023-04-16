@@ -20,7 +20,7 @@ private:
 	int parseRequestType(std::string& request);
 
 public:
-	HttpRequest(std::string&& request);
+	explicit HttpRequest(std::string&& request);
 	const std::string& operator[](const std::string& key) const;
 };
 

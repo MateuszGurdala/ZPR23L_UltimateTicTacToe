@@ -15,7 +15,7 @@ int WIN32ServerSocket::Init()
 	string sport = to_string(_port);
 	PCSTR port = sport.c_str();
 	WSADATA wsaData;
-	int result = 0;
+	int result;
 	struct addrinfo hints;
 	PADDRINFOA addr;
 
@@ -34,7 +34,7 @@ int WIN32ServerSocket::Init()
 	hints.ai_flags = AI_PASSIVE;
 
 	// Resolve the local address and port to be used by the server
-	result = getaddrinfo(NULL, port, &hints, &addr);
+	result = getaddrinfo(nullptr, port, &hints, &addr);
 	if (result != 0)
 	{
 		printf("getaddrinfo failed: %d\n", result);
@@ -46,7 +46,7 @@ int WIN32ServerSocket::Init()
 	ListenSocket = socket(addr->ai_family, addr->ai_socktype, addr->ai_protocol);
 	if (ListenSocket == INVALID_SOCKET)
 	{
-		printf("Error at socket(): %ld\n", WSAGetLastError());
+		printf("Error at socket(): %d\n", WSAGetLastError());
 		freeaddrinfo(addr);
 		WSACleanup();
 		return 1;
@@ -71,13 +71,13 @@ int WIN32ServerSocket::Listen()
 {
 	if (listen(ListenSocket, SOMAXCONN) == SOCKET_ERROR)
 	{
-		printf("Listen failed with error: %ld\n", WSAGetLastError());
+		printf("Listen failed with error: %d\n", WSAGetLastError());
 		closesocket(ListenSocket);
 		WSACleanup();
 		return 1;
 	}
 
-	ClientSocket = accept(ListenSocket, NULL, NULL);
+	ClientSocket = accept(ListenSocket, nullptr, nullptr);
 	if (ClientSocket == INVALID_SOCKET)
 	{
 		printf("accept failed: %d\n", WSAGetLastError());

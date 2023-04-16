@@ -61,9 +61,9 @@ std::string HttpResponse::getResponse()
 	std::stringstream ss = getResponseTop();
 	addHeaders();
 
-	for (auto header = _headers.begin(); header != _headers.end(); ++header)
+	for (auto & _header : _headers)
 	{
-		ss << (**header) << '\n';
+		ss << (*_header) << '\n';
 	}
 
 	ss << _body;

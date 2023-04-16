@@ -6,7 +6,7 @@
 #include <vector>
 #include <chrono>
 #include <ctime>
-#include <time.h>
+#include <ctime>
 #include <memory>
 
 class HttpResponse
@@ -15,13 +15,13 @@ private:
 	std::vector<std::unique_ptr<std::string>> _headers;
 	std::string _body;
 
-	std::stringstream getResponseTop();
-	std::string getDate();
+	static std::stringstream getResponseTop();
+	static std::string getDate();
 	void pushBackHeader(std::string&& name, std::string&& value);
 	void addHeaders();
 
 public:
-	HttpResponse(std::string& body);
+	explicit HttpResponse(std::string& body);
 	~HttpResponse();
 
 	std::string getResponse();

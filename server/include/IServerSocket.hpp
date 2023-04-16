@@ -1,11 +1,13 @@
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "cppcoreguidelines-pro-type-member-init"
 #ifndef I_SERVER_SOCKET_HPP
 #define I_SERVER_SOCKET_HPP
 
 #include <memory>
-#include <stdio.h>
+#include <cstdio>
 #include <iostream>
-#include <stdio.h>
-#include <stdlib.h>
+#include <cstdio>
+#include <cstdlib>
 #include <sstream>
 #include <string>
 #include <algorithm>
@@ -28,4 +30,6 @@ public:
 	virtual int SendResponse(HttpResponse& response) const = 0;
 };
 
-#endif // ! I_SERVER_SOCKET_H
+#endif // I_SERVER_SOCKET_HPP
+
+#pragma clang diagnostic pop
