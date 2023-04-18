@@ -8,8 +8,8 @@ HttpRequest::HttpRequest(std::string &&request) {
   parseHeaders(request);
 
   if (verbose) {
-    std::cout << "TYPE:\n";
-    std::cout << _requestType << '\n';
+    std::cout << "METHOD: " << _method << '\n';
+    std::cout << "ENDPOINT: " << _endpoint << '\n';
 
     std::cout << "HEADERS:\n";
     for (const auto &mapPair : _headers) {
@@ -31,6 +31,8 @@ int HttpRequest::parseHeaders(std::string &request) {
     parts.push_back(request.substr(0, pos));
     request.erase(0, pos + _newLine.length());
   }
+
+  // parts.pop_back();
 
   for (auto &part : parts) {
     pos = part.find(_colon);
@@ -55,13 +57,28 @@ int HttpRequest::parseBody(std::string &request) {
 
 int HttpRequest::parseRequestType(std::string &request) {
   size_t pos = 0;
+  std::string requestType;
 
   if ((pos = request.find(_newLine)) != std::string::npos) {
-    _requestType = request.substr(0, pos - _newLine.length());
-    request.erase(0, _requestType.length() + _newLine.length() * 2);
+    requestType = request.substr(0, pos - _newLine.length());
+    request.erase(0, requestType.length() + _newLine.length() * 2);
+    parseRequestMethod(requestType);
     return 0;
   }
   return 1;
+}
+
+int HttpRequest::parseRequestMethod(std::string &requestType) {
+  size_t pos;
+  if ((pos = requestType.find(_space)) != std::string::npos) {
+    _method = requestType.substr(0, pos);
+    requestType.erase(0, pos + _space.length());
+  }
+
+  if ((pos = requestType.find(_space)) != std::string::npos) {
+    _endpoint = requestType.substr(0, pos);
+  }
+  return 0;
 }
 
 const std::string &HttpRequest::operator[](const std::string &key) const {
