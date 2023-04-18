@@ -8,19 +8,25 @@ HttpRequest::HttpRequest(std::string &&request) {
   parseHeaders(request);
 
   if (verbose) {
-    std::cout << "METHOD: " << _method << '\n';
-    std::cout << "ENDPOINT: " << _endpoint << '\n';
-
-    std::cout << "HEADERS:\n";
-    for (const auto &mapPair : _headers) {
-      std::cout << mapPair.first << ':' << mapPair.second << '\n';
-    }
-
-    if (!_body.empty()) {
-      std::cout << "BODY:\n";
-      std::cout << _body << '\n';
-    }
+    verboseRequest();
   }
+}
+
+void HttpRequest::verboseRequest() const {
+  std::cout << "REQUEST:\n";
+  std::cout << "METHOD: " << _method << '\n';
+  std::cout << "ENDPOINT: " << _endpoint << '\n';
+
+  std::cout << "HEADERS:\n";
+  for (const auto &mapPair : _headers) {
+    std::cout << mapPair.first << ':' << mapPair.second << '\n';
+  }
+
+  if (!_body.empty()) {
+    std::cout << "BODY:\n";
+    std::cout << _body << '\n';
+  }
+  std::cout << "END REQUEST\n\n";
 }
 
 int HttpRequest::parseHeaders(std::string &request) {

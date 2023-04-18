@@ -19,6 +19,7 @@ private:
   int parseHeaders(std::string &request);
   int parseRequestType(std::string &request);
   int parseRequestMethod(std::string &requestType);
+  void verboseRequest() const;
 
 public:
   HttpRequest(std::string &&request);
