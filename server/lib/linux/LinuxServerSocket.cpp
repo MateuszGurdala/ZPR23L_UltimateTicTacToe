@@ -47,8 +47,6 @@ int LinuxServerSocket::Listen() {
   }
 
   read(_new_socket, _recvbuff, _recvbufflen);
-  printf("%s\n", _recvbuff);
-
   return 0;
 }
 

@@ -18,7 +18,7 @@
 typedef std::unique_ptr<HttpRequest> URequest;
 typedef std::unique_ptr<HttpResponse> UResponse;
 
-bool verbose = false;
+bool verbose = true;
 
 int main() {
 #ifdef _WIN32
@@ -38,16 +38,12 @@ int main() {
   }
 
   do {
-    printf("Waiting for request.\n");
-
     if (serverSocket.Listen() == 0) {
-      printf("Got new request.\n");
       request = std::make_unique<HttpRequest>(serverSocket.GetRequest());
 
       // TODO: REMOVE
       HttpResponse response("{\"result\":\"true\"}");
       serverSocket.SendResponse(response);
-      printf("Sent response.\n");
     }
   } while (true);
 
