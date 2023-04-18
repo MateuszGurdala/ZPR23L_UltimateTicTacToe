@@ -15,7 +15,7 @@ private:
 
 public:
   HttpHeaders();
-  HttpHeaders(std::string &headers);
+  explicit HttpHeaders(std::string &headers);
   void verbose() const;
   const std::string &operator[](const std::string &key) const;
 };

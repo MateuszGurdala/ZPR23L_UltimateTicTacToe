@@ -4,7 +4,8 @@ HttpHeaders::HttpHeaders() {}
 
 HttpHeaders::HttpHeaders(std::string &headers) {
   size_t pos = 0;
-  std::string key, value;
+  std::string key;
+  std::string value;
   std::vector<std::string> parts;
 
   while ((pos = headers.find(_newLine)) != std::string::npos) {

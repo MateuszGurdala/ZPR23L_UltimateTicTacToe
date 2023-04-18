@@ -20,8 +20,8 @@ private:
   void addHeaders();
 
 public:
-  HttpResponse(std::string &body);
-  HttpResponse(std::string &&body);
+  explicit HttpResponse(std::string &body);
+  explicit HttpResponse(std::string &&body);
   ~HttpResponse();
 
   std::string getResponse();

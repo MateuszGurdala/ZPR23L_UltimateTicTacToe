@@ -1,12 +1,12 @@
 #include "../../include/HttpRequest.hpp"
 
-extern bool verbose;
+extern bool const verbose;
 
 HttpRequest::HttpRequest(std::string &&request) {
   parseRequestType(request);
   parseBody(request);
 
-  headers.reset(new HttpHeaders(request));
+  headers = std::make_unique<HttpHeaders>(HttpHeaders(request));
 
   if (verbose) {
     verboseRequest();

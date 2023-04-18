@@ -25,7 +25,7 @@ private:
 
 public:
   UHeaders headers;
-  HttpRequest(std::string &&request);
+  explicit HttpRequest(std::string &&request);
 };
 
 #endif
