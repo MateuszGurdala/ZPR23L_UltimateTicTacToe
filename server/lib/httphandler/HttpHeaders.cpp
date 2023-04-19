@@ -41,12 +41,59 @@ std::string HttpHeaders::toString() const {
   return stream.str();
 }
 
-int HttpHeaders::addHeader(std::string &key, std::string &value) {
+int HttpHeaders::addHeader(std::string &key, const std::string &value) {
   if (_headers[key].empty()) {
     _headers[key] = value;
     return 0;
   }
   return 1;
+}
+
+int HttpHeaders::addHeader(std::string &&key, const std::string &value) {
+  if (_headers[key].empty()) {
+    _headers[key] = value;
+    return 0;
+  }
+  return 1;
+}
+
+int HttpHeaders::addHeader(std::string &&key, std::string &&value) {
+  if (_headers[key].empty()) {
+    _headers[key] = value;
+    return 0;
+  }
+  return 1;
+}
+
+int HttpHeaders::addDateHeader() {
+  auto now = std::chrono::system_clock::now();
+  auto time = std::chrono::system_clock::to_time_t(now);
+  auto timeStr = std::string(ctime(&time));
+  auto value = timeStr.substr(0, timeStr.length() - _newLine.length());
+  return addHeader("Date", value);
+}
+
+int HttpHeaders::addAllowHeader() {
+  return addHeader("Allow", globalHeaders.at("Allow"));
+}
+
+int HttpHeaders::closeConnection() { return addHeader("Connection", "closed"); }
+
+int HttpHeaders::addContentLengthHeader(int length) {
+  return addHeader("Content-Length", std::to_string(length));
+}
+
+int HttpHeaders::addCORSHeaders() {
+  std::string origin = "Access-Control-Allow-Origin";
+  std::string methods = "Access-Control-Allow-Methods";
+  std::string headers = "Access-Control-Allow-Headers";
+
+  auto x = globalHeaders.at(origin);
+
+  addHeader(origin, x);
+  addHeader(methods, globalHeaders.at(methods));
+  addHeader(headers, globalHeaders.at(headers));
+  return 0;
 }
 
 const std::string &HttpHeaders::operator[](const std::string &key) const {
