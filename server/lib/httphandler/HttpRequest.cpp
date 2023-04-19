@@ -7,7 +7,7 @@ HttpRequest::HttpRequest(std::string &&request) {
 
   headers = std::make_unique<HttpHeaders>(HttpHeaders(request));
 
-  if (app::verbose) {
+  if (config::verbose) {
     verboseRequest();
   }
 }
