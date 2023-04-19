@@ -95,3 +95,9 @@ const std::string &HttpHeaders::operator[](const std::string &key) const {
   // TODO: Add error handling for missing values for a key
   return _headers.at(key);
 }
+HttpHeaders &HttpHeaders::operator=(const HttpHeaders &obj) {
+  for (const auto &mapPair : obj._headers) {
+    _headers[mapPair.first] = mapPair.second;
+  }
+  return *this;
+}
