@@ -21,17 +21,17 @@ HttpHandler::handle(const std::shared_ptr<HttpRequest> request) const {
 HttpResponse HttpHandler::handleGETRequest(
     const std::shared_ptr<HttpRequest> request) const {
   auto x = request;
-  return HttpResponse(R"({"result":" true"})");
+  return HttpResponse::GETResponse(R"({"result":" true"})");
 }
 
 HttpResponse HttpHandler::handlePOSTRequest(
     const std::shared_ptr<HttpRequest> request) const {
   auto x = request;
-  return HttpResponse(R"({"result":" true"})");
+  return HttpResponse::POSTResponse(R"({"result":" true"})");
 }
 
 HttpResponse HttpHandler::handleOPTIONSRequest(
     const std::shared_ptr<HttpRequest> request) const {
   auto x = request;
-  return HttpResponse(R"({"result":" true"})");
+  return HttpResponse::OPTIONSResponse();
 }
