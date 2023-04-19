@@ -7,6 +7,7 @@
 class MainBoard : public BoardBase {
 private:
     std::vector<std::vector<std::unique_ptr<InnerBoard>>> mainPlayBoard;
+    std::unique_ptr<std::unique_ptr<char[]>[]> winnerBoard;
     void FillBoard() override;
 public:
     MainBoard(int boardSize);

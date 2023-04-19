@@ -5,9 +5,8 @@
 
 #include "Player.h"
 
-class HumanPlayer : public Player {
+class ComputerPlayer : public Player {
 private:
-
 public:
 };
 

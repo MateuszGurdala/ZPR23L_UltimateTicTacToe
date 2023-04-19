@@ -15,6 +15,11 @@ void MainBoard::FillBoard() {
             row[j] = std::make_unique<InnerBoard>(boardSize);
         }
     }
+    for (int i = 0; i < boardSize; i++) {
+        for (int j = 0; j < boardSize; j++) {
+            winnerBoard[i][j] = ' ';
+        }
+    }
 }
 
 void MainBoard::Print() const {
