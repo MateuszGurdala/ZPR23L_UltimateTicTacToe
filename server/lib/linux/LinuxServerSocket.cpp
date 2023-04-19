@@ -51,7 +51,7 @@ int LinuxServerSocket::Listen() {
 }
 
 int LinuxServerSocket::SendResponse(HttpResponse &response) const {
-  std::string responseString = response.getResponse();
+  std::string responseString = response.toString();
   send(_new_socket, responseString.c_str(), responseString.length(), 0);
   return 0;
 }
