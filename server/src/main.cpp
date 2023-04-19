@@ -3,6 +3,7 @@
 
 int main() {
   using URequest = std::shared_ptr<HttpRequest>;
+  using UResponse = std::shared_ptr<HttpResponse>;
 
 #ifdef _WIN32
   WIN32ServerSocket serverSocket(DEFAULT_PORT, DEFAULT_REQUEST_BUFFLEN);
@@ -14,6 +15,7 @@ int main() {
 
   const HttpHandler handler;
   URequest request;
+  UResponse response(nullptr);
 
   if (serverSocket.Init() != 0) {
     std::cout << "Socket intialization failed.\n";
@@ -23,9 +25,8 @@ int main() {
   do {
     if (serverSocket.Listen() == 0) {
       request = std::make_shared<HttpRequest>(serverSocket.GetRequest());
-
-      auto x = handler.handle(request);
-      serverSocket.SendResponse(x);
+      response = std::make_shared<HttpResponse>(handler.handle(request));
+      serverSocket.SendResponse(response);
     }
   } while (true);
 
