@@ -4,12 +4,14 @@
 #include "InnerBoard.h"
 #include <vector>
 
-class MainBoard {
+class MainBoard : public BoardBase {
 private:
-    std::vector<InnerBoard> _gameBoard;
-    const int _size = _gameBoard[0].GetBoardSize();
+    std::vector<std::vector<std::unique_ptr<InnerBoard>>> mainPlayBoard;
+    void FillBoard() override;
 public:
-    MainBoard();
+    MainBoard(int boardSize);
+    void Print() const;
+
 };
 
 #endif //ULTIMATETICTACTOESERVER_MAINBOARD_H

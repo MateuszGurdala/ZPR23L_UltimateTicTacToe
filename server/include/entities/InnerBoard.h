@@ -3,14 +3,17 @@
 
 #include <vector>
 #include <array>
+#include <memory>
+#include "BoardBase.h"
 
-class InnerBoard {
+class InnerBoard : public BoardBase{
 private:
-    static int _arraySize;
-    std::array<std::array<char, _arraySize>, _arraySize> playBoardArray = {{' '}};
+    std::unique_ptr<std::unique_ptr<char[]>[]> playBoard;
+    void FillBoard() override;
 public:
-    InnerBoard();
-    int GetBoardSize();
+    InnerBoard(int boardSize);
+    std::string ToString() const;
+
 };
 
 #endif //ULTIMATETICTACTOESERVER_INNERBOARD_H
