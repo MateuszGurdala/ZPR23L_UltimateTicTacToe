@@ -1,5 +1,5 @@
 #include "../../include/HttpRequest.hpp"
-#include "../../src/App.hpp"
+#include "../../src/config.hpp"
 
 HttpRequest::HttpRequest(std::string &&request) {
   parseRequestType(request);
@@ -11,6 +11,9 @@ HttpRequest::HttpRequest(std::string &&request) {
     verboseRequest();
   }
 }
+
+std::string HttpRequest::getEndpoint() const { return _endpoint; }
+method HttpRequest::getMethod() const { return _method; }
 
 void HttpRequest::verboseRequest() const {
   std::cout << "REQUEST:\n";
@@ -53,8 +56,19 @@ int HttpRequest::parseRequestType(std::string &request) {
 
 int HttpRequest::parseRequestMethod(std::string &requestType) {
   size_t pos;
+  std::string method;
   if ((pos = requestType.find(_space)) != std::string::npos) {
-    _method = requestType.substr(0, pos);
+
+    method = requestType.substr(0, pos);
+
+    if (method == "GET") {
+      _method = method::GET;
+    } else if (method == "POST") {
+      _method = method::POST;
+    } else if (method == "OPTIONS") {
+      _method = method::OPTIONS;
+    }
+
     requestType.erase(0, pos + _space.length());
   }
 

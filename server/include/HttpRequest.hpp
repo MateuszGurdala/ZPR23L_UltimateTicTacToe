@@ -8,15 +8,18 @@
 #include <string>
 #include <vector>
 
+enum method { GET, POST, OPTIONS };
+
 class HttpRequest {
-  typedef std::unique_ptr<HttpHeaders> UHeaders;
+  using UHeaders = std::unique_ptr<HttpHeaders>;
 
 private:
   const std::string _newLine = "\n";
   const std::string _colon = ":";
   const std::string _space = " ";
 
-  std::string _body, _method, _endpoint;
+  std::string _body, _endpoint;
+  method _method;
 
   int parseBody(std::string &request);
   int parseRequestType(std::string &request);
@@ -25,6 +28,8 @@ private:
 
 public:
   UHeaders headers;
+  std::string getEndpoint() const;
+  method getMethod() const;
   explicit HttpRequest(std::string &&request);
 };
 
