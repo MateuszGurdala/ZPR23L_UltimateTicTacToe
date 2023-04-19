@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <map>
+#include <sstream>
 #include <string>
 #include <vector>
 
@@ -17,6 +18,7 @@ public:
   HttpHeaders();
   explicit HttpHeaders(std::string &headers);
   void verbose() const;
+  std::string toString() const;
   const std::string &operator[](const std::string &key) const;
 };
 

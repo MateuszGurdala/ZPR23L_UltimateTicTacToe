@@ -31,6 +31,16 @@ void HttpHeaders::verbose() const {
   }
 }
 
+std::string HttpHeaders::toString() const {
+  std::stringstream stream;
+
+  for (const auto &mapPair : _headers) {
+    stream << mapPair.first << _colon << mapPair.second << _newLine;
+  }
+
+  return stream.str();
+}
+
 const std::string &HttpHeaders::operator[](const std::string &key) const {
   // TODO: Add error handling for missing values for a key
   return _headers.at(key);
