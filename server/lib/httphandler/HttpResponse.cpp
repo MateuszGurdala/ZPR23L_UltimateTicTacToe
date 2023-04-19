@@ -1,4 +1,5 @@
 #include "../../include/HttpResponse.hpp"
+#include "../../src/config.hpp"
 
 HttpResponse::HttpResponse() {}
 HttpResponse::HttpResponse(std::string &body) { _body = body; }
@@ -12,7 +13,10 @@ std::string HttpResponse::toString() const {
     stream << _body << '\n';
   }
 
-  std::cout << stream.str() << std::endl;
+  if (config::verbose) {
+    std::cout << stream.str() << std::endl;
+  }
+
   return stream.str();
 }
 
@@ -56,6 +60,17 @@ HttpResponse HttpResponse::POSTResponse(std::string &&body) {
   response._headers.addContentLengthHeader(body.length());
 
   response._body = body;
+
+  return response;
+}
+
+HttpResponse HttpResponse::ERRORResponse() {
+  HttpResponse response;
+
+  response._statusLine = "HTTP/1.1 400 BAD REQUEST";
+
+  response._headers.addDateHeader();
+  response._headers.closeConnection();
 
   return response;
 }
