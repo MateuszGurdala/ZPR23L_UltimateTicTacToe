@@ -16,6 +16,7 @@ public:
   explicit HttpResponse(std::string &&body);
 
   static HttpResponse OPTIONSResponse();
+  static HttpResponse ERRORResponse();
   static HttpResponse GETResponse(std::string &&body);
   static HttpResponse POSTResponse(std::string &&body);
 

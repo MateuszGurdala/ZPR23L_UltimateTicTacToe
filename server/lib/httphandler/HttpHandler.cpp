@@ -13,7 +13,7 @@ HttpHandler::handle(const std::shared_ptr<HttpRequest> request) const {
     return handlePOSTRequest(request);
     break;
   default:
-    return HttpResponse(R"({"result":" true"})");
+    return HttpResponse::ERRORResponse();
     break;
   }
 }
