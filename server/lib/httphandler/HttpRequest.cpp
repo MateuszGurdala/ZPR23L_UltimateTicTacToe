@@ -1,6 +1,5 @@
 #include "../../include/HttpRequest.hpp"
-
-extern bool const verbose;
+#include "../../src/App.hpp"
 
 HttpRequest::HttpRequest(std::string &&request) {
   parseRequestType(request);
@@ -8,7 +7,7 @@ HttpRequest::HttpRequest(std::string &&request) {
 
   headers = std::make_unique<HttpHeaders>(HttpHeaders(request));
 
-  if (verbose) {
+  if (app::verbose) {
     verboseRequest();
   }
 }
