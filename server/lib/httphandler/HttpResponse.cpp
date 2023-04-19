@@ -5,6 +5,12 @@ HttpResponse::HttpResponse() {}
 HttpResponse::HttpResponse(std::string &body) { _body = body; }
 HttpResponse::HttpResponse(std::string &&body) { _body = std::move(body); }
 
+HttpResponse::HttpResponse(HttpResponse &&obj) {
+  _body = obj._body;
+  _statusLine = obj._statusLine;
+  _headers = obj._headers;
+}
+
 std::string HttpResponse::toString() const {
   std::stringstream stream;
   stream << _statusLine << '\n';

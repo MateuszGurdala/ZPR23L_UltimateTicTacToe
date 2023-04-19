@@ -14,6 +14,7 @@ public:
   HttpResponse();
   explicit HttpResponse(std::string &body);
   explicit HttpResponse(std::string &&body);
+  HttpResponse(HttpResponse &&obj);
 
   static HttpResponse OPTIONSResponse();
   static HttpResponse ERRORResponse();
