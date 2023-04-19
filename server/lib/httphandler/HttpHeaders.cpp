@@ -24,18 +24,13 @@ HttpHeaders::HttpHeaders(std::string &headers) {
   }
 }
 
-void HttpHeaders::verbose() const {
-  std::cout << "HEADERS:\n";
-  for (const auto &mapPair : _headers) {
-    std::cout << mapPair.first << ':' << mapPair.second << '\n';
-  }
-}
+void HttpHeaders::verbose() const { std::cout << toString(); }
 
 std::string HttpHeaders::toString() const {
   std::stringstream stream;
 
   for (const auto &mapPair : _headers) {
-    stream << mapPair.first << _colon << mapPair.second << _newLine;
+    stream << mapPair.first << _colon << ' ' << mapPair.second << _newLine;
   }
 
   return stream.str();
