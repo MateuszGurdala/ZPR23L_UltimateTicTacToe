@@ -9,7 +9,7 @@ int main() {
 #endif
 
 #if defined(__linux__) || defined(__arm64__)
-  LinuxServerSocket serverSocket(app::port, app::requestBuffer);
+  LinuxServerSocket serverSocket(config::port, config::requestBuffer);
 #endif
 
   const HttpHandler handler;
