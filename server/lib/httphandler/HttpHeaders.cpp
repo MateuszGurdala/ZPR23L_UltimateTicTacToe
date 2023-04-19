@@ -41,6 +41,14 @@ std::string HttpHeaders::toString() const {
   return stream.str();
 }
 
+int HttpHeaders::addHeader(std::string &key, std::string &value) {
+  if (_headers[key].empty()) {
+    _headers[key] = value;
+    return 0;
+  }
+  return 1;
+}
+
 const std::string &HttpHeaders::operator[](const std::string &key) const {
   // TODO: Add error handling for missing values for a key
   return _headers.at(key);
