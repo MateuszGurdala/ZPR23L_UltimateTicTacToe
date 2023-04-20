@@ -19,7 +19,7 @@ void InnerBoard::FillBoard() {
     }
 }
 
-void InnerBoard::MakeMove(Point coordinates, char figure) {
+void InnerBoard::PlaceFigure(Point coordinates, char figure) {
     VerifyFigure(figure);
     VerifyCoordinates(coordinates);
     if(playBoard[coordinates.x][coordinates.y] != ' ')
@@ -53,4 +53,21 @@ std::string InnerBoard::ToString() const {
         stringStream << "\n";
     }
     return stringStream.str();
+}
+
+//TODO
+auto InnerBoard::GetLeftDiagonalValues(Point playBoardCoordinates, Point innerBoardRowAndColumn) {
+    return nullptr;
+}
+
+auto InnerBoard::GetRightDiagonalValues(Point playBoardCoordinates, Point innerBoardRowAndColumn) {
+    return nullptr;
+}
+
+auto InnerBoard::GetHorizontalValues(Point playBoardCoordinates, Point innerBoardRowAndColumn) {
+    return nullptr;
+}
+
+auto InnerBoard::GetVerticalValues(Point playBoardCoordinates, Point innerBoardRowAndColumn) {
+    return nullptr;
 }

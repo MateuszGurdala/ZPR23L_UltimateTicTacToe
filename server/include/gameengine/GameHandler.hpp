@@ -4,16 +4,19 @@
 #include "../entities/HumanPlayer.hpp"
 #include "../entities/Player.hpp"
 #include "GameEngine.hpp"
+#include <memory>
 
 class GameHandler {
 private:
-    HumanPlayer hostPlayer;
-    Player secondPlayer;
-    GameEngine gameEngine;
+    std::unique_ptr<HumanPlayer> hostPlayer;
+    std::unique_ptr<Player> secondPlayer;
+    std::unique_ptr<GameEngine> gameEngine;
+    bool isHostTurn;
 public:
     void StartGame();
-    bool IsPlayerWinner();
-    GameHandler();
+    bool CheckIfGameEnd();
+    void PerformTurn();
+    GameHandler(std::unique_ptr<HumanPlayer> hostPlayer, std::unique_ptr<Player> secondPlayer, std::unique_ptr<GameEngine> gameEngine);
 };
 
 #endif //ULTIMATETICTACTOESERVER_GAMEHANDLER_H

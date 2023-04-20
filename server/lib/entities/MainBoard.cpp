@@ -40,3 +40,24 @@ void MainBoard::AddWinnerOfInnerBoard(Point coordinates, char figure) {
     }
     winnerBoard[coordinates.x][coordinates.y] = figure;
 }
+
+//TODO
+auto MainBoard::GetInnerBoardVerticalValues(Point playBoardCoordinates, Point innerBoardRowAndColumn) {
+    return nullptr;
+}
+
+auto MainBoard::GetInnerBoardRightDiagonalValues(Point playBoardCoordinates, Point innerBoardRowAndColumn) {
+    return nullptr;
+}
+
+auto MainBoard::GetInnerBoardLeftDiagonalValues(Point playBoardCoordinates, Point innerBoardRowAndColumn) {
+    return nullptr;
+}
+
+auto MainBoard::GetInnerBoarHorizontalValues(Point playBoardCoordinates, Point innerBoardRowAndColumn) {
+    return nullptr;
+}
+
+void MainBoard::MakeMove(Point boardCoordinates, Point innerCoordinates, char figure) {
+    mainPlayBoard[boardCoordinates.x][boardCoordinates.y]->PlaceFigure(innerCoordinates, figure);
+}

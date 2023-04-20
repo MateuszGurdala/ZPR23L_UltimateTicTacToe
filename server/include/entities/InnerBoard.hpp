@@ -10,10 +10,16 @@ class InnerBoard : public BoardBase{
 private:
     std::unique_ptr<std::unique_ptr<char[]>[]> playBoard;
     void FillBoard() override;
+
 public:
     InnerBoard(int boardSize);
     std::string ToString() const;
-    void MakeMove(Point coordinates, char figure);
+    auto GetLeftDiagonalValues(Point playBoardCoordinates, Point innerBoardRowAndColumn);
+    auto GetRightDiagonalValues(Point playBoardCoordinates, Point innerBoardRowAndColumn);
+    auto GetHorizontalValues(Point playBoardCoordinates, Point innerBoardRowAndColumn);
+    auto GetVerticalValues(Point playBoardCoordinates, Point innerBoardRowAndColumn);
+
+    void PlaceFigure(Point coordinates, char figure);
 };
 
 #endif //ULTIMATETICTACTOESERVER_INNERBOARD_HPP

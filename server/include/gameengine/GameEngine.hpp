@@ -5,10 +5,12 @@
 
 class GameEngine {
 private:
-    MainBoard mainBoard;
+    std::unique_ptr<MainBoard> mainBoard;
 public:
-    bool CheckWinner();
-    GameEngine();
+    bool CheckLocalWinner();
+    bool CheckGlobalWinner();
+    void HandleMove(Point boardCoordinates, Point innerCoordinates, char figure);
+    GameEngine(std::unique_ptr<MainBoard> mainBoard);
 };
 
 #endif //ULTIMATETICTACTOESERVER_GAMEENGINE_H
