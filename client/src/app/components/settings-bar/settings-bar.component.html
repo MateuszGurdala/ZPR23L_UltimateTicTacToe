@@ -1,5 +1,19 @@
 <div class="container">
-    <div *ngIf="isExtended" class="settings-bar"></div>
+    <div *ngIf="isExtended" class="settings-bar">
+        <h1 class="game-header">UltimateTicTacToe</h1>
+        <div class="settings-container">
+            <span>Board size</span>
+            <br />
+            <span>Server url</span>
+            <input [value]="boardSize" type="text" />
+            <br />
+            <input [value]="serverUrl" type="text" />
+        </div>
+        <div class="buttons-container">
+            <h2>Start Game</h2>
+            <h2>Reset</h2>
+        </div>
+    </div>
     <span (click)="extend()" *ngIf="!isExtended" class="material-symbols-outlined extend-button ">
         arrow_forward_ios
     </span>
