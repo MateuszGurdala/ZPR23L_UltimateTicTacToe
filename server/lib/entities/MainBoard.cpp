@@ -30,3 +30,13 @@ void MainBoard::Print() const {
         std::cout << "\n";
     }
 }
+
+void MainBoard::AddWinnerOfInnerBoard(Point coordinates, char figure) {
+    VerifyFigure(figure);
+    VerifyCoordinates(coordinates);
+    if(winnerBoard[coordinates.x][coordinates.y] != ' ')
+    {
+        throw std::invalid_argument("given given cell is already filled");
+    }
+    winnerBoard[coordinates.x][coordinates.y] = figure;
+}

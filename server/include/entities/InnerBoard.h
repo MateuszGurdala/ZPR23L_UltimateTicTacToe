@@ -13,7 +13,7 @@ private:
 public:
     InnerBoard(int boardSize);
     std::string ToString() const;
-
+    void MakeMove(Point coordinates, char figure);
 };
 
 #endif //ULTIMATETICTACTOESERVER_INNERBOARD_H

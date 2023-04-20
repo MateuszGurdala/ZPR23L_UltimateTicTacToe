@@ -12,7 +12,7 @@ private:
 public:
     MainBoard(int boardSize);
     void Print() const;
-
+    void AddWinnerOfInnerBoard(Point coordinates, char figure);
 };
 
 #endif //ULTIMATETICTACTOESERVER_MAINBOARD_H

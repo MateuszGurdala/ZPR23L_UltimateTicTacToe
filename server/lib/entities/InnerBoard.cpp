@@ -1,6 +1,7 @@
 
 #include <sstream>
 #include "../../include/entities/InnerBoard.h"
+#include <stdexcept>
 
 InnerBoard::InnerBoard(int boardSize) : BoardBase(boardSize){
     playBoard = std::make_unique<std::unique_ptr<char[]>[]>(boardSize);
@@ -16,6 +17,16 @@ void InnerBoard::FillBoard() {
             playBoard[i][j] = ' ';
         }
     }
+}
+
+void InnerBoard::MakeMove(Point coordinates, char figure) {
+    VerifyFigure(figure);
+    VerifyCoordinates(coordinates);
+    if(playBoard[coordinates.x][coordinates.y] != ' ')
+    {
+        throw std::invalid_argument("given given cell is already filled");
+    }
+    playBoard[coordinates.x][coordinates.y] = figure;
 }
 
 std::string InnerBoard::ToString() const {

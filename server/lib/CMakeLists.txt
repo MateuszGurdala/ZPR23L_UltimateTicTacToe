@@ -5,6 +5,8 @@ set(LINUXSRC "${INCLUDE}/LinuxServerSocket.hpp" "linux/LinuxServerSocket.cpp")
 
 add_subdirectory(httphandler)
 add_subdirectory(entities)
+add_subdirectory(gameengine)
+
 if(WIN32)
     add_library(WIN32ServerSocket ${SERVERSOCKETSRC} ${WIN32SRC})
     target_link_libraries(WIN32ServerSocket HTTP)
