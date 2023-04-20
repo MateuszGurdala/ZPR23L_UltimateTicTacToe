@@ -8,15 +8,19 @@
 
 class GameHandler {
 private:
+
     std::unique_ptr<HumanPlayer> hostPlayer;
     std::unique_ptr<Player> secondPlayer;
     std::unique_ptr<GameEngine> gameEngine;
     bool isHostTurn;
+    void startGame();
 public:
-    void StartGame();
     bool CheckIfGameEnd();
-    void PerformTurn();
+    void PerformTurn(Point boardCoordinates, Point innerCoordinates);
     GameHandler(std::unique_ptr<HumanPlayer> hostPlayer, std::unique_ptr<Player> secondPlayer, std::unique_ptr<GameEngine> gameEngine);
+    GameHandler();
+
+    void Print();
 };
 
 #endif //ULTIMATETICTACTOESERVER_GAMEHANDLER_H

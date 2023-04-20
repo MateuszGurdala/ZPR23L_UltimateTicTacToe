@@ -14,12 +14,12 @@ private:
 public:
     InnerBoard(int boardSize);
     std::string ToString() const;
-    auto GetLeftDiagonalValues(Point playBoardCoordinates, Point innerBoardRowAndColumn);
-    auto GetRightDiagonalValues(Point playBoardCoordinates, Point innerBoardRowAndColumn);
-    auto GetHorizontalValues(Point playBoardCoordinates, Point innerBoardRowAndColumn);
-    auto GetVerticalValues(Point playBoardCoordinates, Point innerBoardRowAndColumn);
+    auto GetLeftDiagonalValues(Point& playBoardCoordinates, Point& innerBoardRowAndColumn);
+    auto GetRightDiagonalValues(Point& playBoardCoordinates, Point& innerBoardRowAndColumn);
+    auto GetHorizontalValues(Point& playBoardCoordinates, Point& innerBoardRowAndColumn);
+    auto GetVerticalValues(Point& playBoardCoordinates, Point& innerBoardRowAndColumn);
 
-    void PlaceFigure(Point coordinates, char figure);
+    void PlaceFigure(Point& coordinates, char &figure);
 };
 
 #endif //ULTIMATETICTACTOESERVER_INNERBOARD_HPP

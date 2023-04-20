@@ -7,10 +7,12 @@ class GameEngine {
 private:
     std::unique_ptr<MainBoard> mainBoard;
 public:
+    GameEngine(std::unique_ptr<MainBoard> mainBoard);
+
     bool CheckLocalWinner();
     bool CheckGlobalWinner();
-    void HandleMove(Point boardCoordinates, Point innerCoordinates, char figure);
-    GameEngine(std::unique_ptr<MainBoard> mainBoard);
+    void HandleMove(Point& boardCoordinates, Point& innerCoordinates, char figure);
+    void Print();
 };
 
 #endif //ULTIMATETICTACTOESERVER_GAMEENGINE_H

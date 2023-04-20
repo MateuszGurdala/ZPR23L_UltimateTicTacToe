@@ -7,7 +7,7 @@ class HumanPlayer : public Player {
 private:
     std::string name;
 public:
-    HumanPlayer(char symbol,std::string &name);
+    HumanPlayer(char symbol,std::string name);
 };
 
 #endif //ULTIMATETICTACTOESERVER_HUMANPLAYER_HPP

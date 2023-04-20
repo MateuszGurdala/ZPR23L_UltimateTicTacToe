@@ -11,6 +11,7 @@ protected:
 public:
     Player(char symbol);
     int GetPoints() const;
+    char GetSymbol() const;
     void IncrementPoints();
 };
 
