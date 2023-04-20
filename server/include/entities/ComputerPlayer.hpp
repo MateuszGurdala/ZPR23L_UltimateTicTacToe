@@ -1,0 +1,13 @@
+
+
+#ifndef ULTIMATETICTACTOESERVER_COMPUTERPLAYER_HPP
+#define ULTIMATETICTACTOESERVER_COMPUTERPLAYER_HPP
+
+#include "Player.hpp"
+
+class ComputerPlayer : public Player {
+private:
+public:
+};
+
+#endif //ULTIMATETICTACTOESERVER_COMPUTERPLAYER_HPP

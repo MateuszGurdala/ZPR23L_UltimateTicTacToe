@@ -1,6 +1,6 @@
 
 #include <sstream>
-#include "../../include/entities/InnerBoard.h"
+#include "../../include/entities/InnerBoard.hpp"
 #include <stdexcept>
 
 InnerBoard::InnerBoard(int boardSize) : BoardBase(boardSize){

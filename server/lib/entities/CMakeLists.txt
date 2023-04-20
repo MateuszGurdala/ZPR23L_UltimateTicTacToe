@@ -1,9 +1,9 @@
-set(PLAYERSRC "${INCLUDE}/entities/Player.h" "Player.cpp")
-set(MAINBOARDSRC "${INCLUDE}/entities/MainBoard.h" "MainBoard.cpp")
-set(HUMANPLAYERSRC "${INCLUDE}/entities/HumanPlayer.h" "HumanPlayer.cpp")
-set(COMPUTERPLAYERSRC "${INCLUDE}/entities/ComputerPlayer.h" "ComputerPlayer.cpp")
-set(INNERBOARDSRC "${INCLUDE}/entities/InnerBoard.h" "InnerBoard.cpp")
-set(BOARDBASESRC "${INCLUDE}/entities/BoardBase.h" "BoardBase.cpp")
+set(PLAYERSRC "${INCLUDE}/entities/Player.hpp" "Player.cpp")
+set(MAINBOARDSRC "${INCLUDE}/entities/MainBoard.hpp" "MainBoard.cpp")
+set(HUMANPLAYERSRC "${INCLUDE}/entities/HumanPlayer.hpp" "HumanPlayer.cpp")
+set(COMPUTERPLAYERSRC "${INCLUDE}/entities/ComputerPlayer.hpp" "ComputerPlayer.cpp")
+set(INNERBOARDSRC "${INCLUDE}/entities/InnerBoard.hpp" "InnerBoard.cpp")
+set(BOARDBASESRC "${INCLUDE}/entities/BoardBase.hpp" "BoardBase.cpp")
 
 
 add_library(HumanPlayer ${HUMANPLAYERSRC})

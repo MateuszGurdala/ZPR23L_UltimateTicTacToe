@@ -1,7 +1,7 @@
-#ifndef ULTIMATETICTACTOESERVER_MAINBOARD_H
-#define ULTIMATETICTACTOESERVER_MAINBOARD_H
+#ifndef ULTIMATETICTACTOESERVER_MAINBOARD_HPP
+#define ULTIMATETICTACTOESERVER_MAINBOARD_HPP
 
-#include "InnerBoard.h"
+#include "InnerBoard.hpp"
 #include <vector>
 
 class MainBoard : public BoardBase {
@@ -15,4 +15,4 @@ public:
     void AddWinnerOfInnerBoard(Point coordinates, char figure);
 };
 
-#endif //ULTIMATETICTACTOESERVER_MAINBOARD_H
+#endif //ULTIMATETICTACTOESERVER_MAINBOARD_HPP

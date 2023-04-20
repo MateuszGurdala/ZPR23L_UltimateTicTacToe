@@ -1,10 +1,10 @@
-#ifndef ULTIMATETICTACTOESERVER_INNERBOARD_H
-#define ULTIMATETICTACTOESERVER_INNERBOARD_H
+#ifndef ULTIMATETICTACTOESERVER_INNERBOARD_HPP
+#define ULTIMATETICTACTOESERVER_INNERBOARD_HPP
 
 #include <vector>
 #include <array>
 #include <memory>
-#include "BoardBase.h"
+#include "BoardBase.hpp"
 
 class InnerBoard : public BoardBase{
 private:
@@ -16,4 +16,4 @@ public:
     void MakeMove(Point coordinates, char figure);
 };
 
-#endif //ULTIMATETICTACTOESERVER_INNERBOARD_H
+#endif //ULTIMATETICTACTOESERVER_INNERBOARD_HPP

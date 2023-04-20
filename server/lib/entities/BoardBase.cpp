@@ -1,5 +1,5 @@
 
-#include "../../include/entities/BoardBase.h"
+#include "../../include/entities/BoardBase.hpp"
 
 int BoardBase::GetBoardSize() const {
     return boardSize;

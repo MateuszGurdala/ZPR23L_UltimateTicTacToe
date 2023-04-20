@@ -1,5 +1,5 @@
 
-#include "../../include/entities/Player.h"
+#include "../../include/entities/Player.hpp"
 
 void Player::IncrementPoints() {
     points++;

@@ -1,5 +1,5 @@
 #include <iostream>
-#include "../../include/entities/MainBoard.h"
+#include "../../include/entities/MainBoard.hpp"
 
 MainBoard::MainBoard(int boardSize) : BoardBase(boardSize) {
     mainPlayBoard.resize(boardSize);
