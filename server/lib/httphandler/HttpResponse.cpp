@@ -77,6 +77,7 @@ HttpResponse HttpResponse::ERRORResponse() {
 
   response._headers.addDateHeader();
   response._headers.closeConnection();
+  response._headers.addContentLengthHeader(0);
 
   return response;
 }
