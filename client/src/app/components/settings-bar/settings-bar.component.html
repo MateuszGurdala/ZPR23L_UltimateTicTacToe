@@ -1,0 +1,9 @@
+<div class="container">
+    <div *ngIf="isExtended" class="settings-bar"></div>
+    <span (click)="extend()" *ngIf="!isExtended" class="material-symbols-outlined extend-button ">
+        arrow_forward_ios
+    </span>
+    <span (click)="extend()" *ngIf="isExtended" class="material-symbols-outlined extend-button ">
+        arrow_back_ios
+    </span>
+</div>

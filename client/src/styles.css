@@ -1,0 +1,16 @@
+:root {
+    --main-tint: #495057;
+    --main: #343a40;
+    --main-shade: #212529;
+
+    --main-gradient: linear-gradient(0deg, var(--main-shade) 40%, var(--main) 100%);
+
+    --grey: #888;
+
+    --ratio: calc(9/16);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}

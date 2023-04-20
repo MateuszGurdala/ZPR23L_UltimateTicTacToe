@@ -1,0 +1,10 @@
+.game-board {
+    min-width: 100%;
+    min-height: 100%;
+
+    border-style: solid;
+    border-color: var(--grey);
+    border-width: 3px;
+
+    display: grid;
+}

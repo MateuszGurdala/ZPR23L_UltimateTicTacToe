@@ -1,30 +1,25 @@
 #ifndef HTTP_RESPONSE_HPP
 #define HTTP_RESPONSE_HPP
 
-#include <string>
+#include "HttpHeaders.hpp"
 #include <sstream>
-#include <vector>
-#include <chrono>
-#include <ctime>
-#include <ctime>
-#include <memory>
+#include <string>
 
-class HttpResponse
-{
+class HttpResponse {
 private:
-	std::vector<std::unique_ptr<std::string>> _headers;
-	std::string _body;
-
-	static std::stringstream getResponseTop();
-	static std::string getDate();
-	void pushBackHeader(std::string&& name, std::string&& value);
-	void addHeaders();
+  HttpHeaders _headers;
+  std::string _statusLine, _body;
 
 public:
-	explicit HttpResponse(std::string& body);
-	~HttpResponse();
+  HttpResponse();
+  explicit HttpResponse(std::string &body);
+  explicit HttpResponse(std::string &&body);
 
-	std::string getResponse();
+  static HttpResponse OPTIONSResponse();
+  static HttpResponse GETResponse(std::string &&body);
+  static HttpResponse POSTResponse(std::string &&body);
+
+  std::string toString() const;
 };
 
 #endif

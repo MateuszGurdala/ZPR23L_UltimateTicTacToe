@@ -1,67 +1,33 @@
-﻿#pragma clang diagnostic push
-#pragma ide diagnostic ignored "bugprone-unused-raii"
-#include <cstdio>
-#include <memory>
-#include "../include/HttpResponse.hpp"
+﻿#include "main.hpp"
+#include "config.hpp"
+
+int main() {
+  using URequest = std::shared_ptr<HttpRequest>;
 
 #ifdef _WIN32
-#include "../include/WIN32ServerSocket.hpp"
+  WIN32ServerSocket serverSocket(DEFAULT_PORT, DEFAULT_REQUEST_BUFFLEN);
 #endif
 
-#if linux || defined(__arm64__)
-#include "../include/LinuxServerSocket.hpp"
+#if defined(__linux__) || defined(__arm64__)
+  LinuxServerSocket serverSocket(config::port, config::requestBuffer);
 #endif
 
-#define DEFAULT_PORT 1337
-#define DEFAULT_REQUEST_BUFFLEN 1024
+  const HttpHandler handler;
+  URequest request;
 
-typedef std::unique_ptr<HttpRequest> URequest;
-typedef std::unique_ptr<HttpResponse> UResponse;
+  if (serverSocket.Init() != 0) {
+    std::cout << "Socket intialization failed.\n";
+    return 1;
+  }
 
-bool verbose = true;
+  do {
+    if (serverSocket.Listen() == 0) {
+      request = std::make_shared<HttpRequest>(serverSocket.GetRequest());
 
-int main(int argc, char const *argv[])
-{
-#ifdef _WIN32
-	WIN32ServerSocket serverSocket(DEFAULT_PORT, DEFAULT_REQUEST_BUFFLEN);
-#endif
+      auto x = handler.handle(request);
+      serverSocket.SendResponse(x);
+    }
+  } while (true);
 
-#if linux || defined(__arm64__)
-    LinuxServerSocket serverSocket(DEFAULT_PORT, DEFAULT_REQUEST_BUFFLEN);
-#endif
-
-	URequest request;
-    UResponse();
-	std::string tempbody = "<body><div>Dzialaaaa!!!!<div></body>";
-
-	if (serverSocket.Init() != 0)
-	{
-		printf("Socket intialization failed.\n");
-		return 1;
-	}
-
-	do
-	{
-		printf("Waiting for request.\n");
-
-		if (serverSocket.Listen() == 0)
-		{
-			printf("Got new request.\n");
-			request = std::make_unique<HttpRequest>(serverSocket.GetRequest());
-
-			// TODO: REMOVE
-			HttpResponse response(tempbody);
-			serverSocket.SendResponse(response);
-			printf("Sent response.\n");
-		}
-		//else
-		//{
-		//	printf("Something went wrong.\n");
-		//	return 1;
-		//}
-	} while (true);
-
-	return 0;
+  return 0;
 }
-
-#pragma clang diagnostic pop

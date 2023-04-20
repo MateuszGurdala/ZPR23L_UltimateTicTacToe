@@ -8,10 +8,8 @@ add_subdirectory(entities)
 add_subdirectory(gameengine)
 
 if(WIN32)
-    add_library(WIN32ServerSocket ${SERVERSOCKETSRC} ${WIN32SRC})
-    target_link_libraries(WIN32ServerSocket HTTP)
+    add_library(ServerSocket ${SERVERSOCKETSRC} ${WIN32SRC})
 ELSEIF(UNIX)
-    add_library(LinuxServerSocket ${SERVERSOCKETSRC} ${LINUXSRC})
-    target_link_libraries(LinuxServerSocket HTTP)
+    add_library(ServerSocket ${SERVERSOCKETSRC} ${LINUXSRC})
 endif()
 

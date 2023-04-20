@@ -4,28 +4,27 @@
 #include "ServerSocket.hpp"
 #include <stdio.h>
 
-#if _WIN32 && !defined(__arm64__)
+#ifdef _WIN32
 #include <winsock2.h>
 #include <ws2tcpip.h>
 
 #pragma comment(lib, "ws2_32.lib")
 
-class WIN32ServerSocket : public ServerSocket
-{
+class WIN32ServerSocket : public ServerSocket {
 private:
-	// Networking data
-	// PCSTR _port;
+  // Networking data
+  // PCSTR _port;
 
-	// SocketData
-	SOCKET ListenSocket = INVALID_SOCKET;
-	SOCKET ClientSocket = INVALID_SOCKET;
+  // SocketData
+  SOCKET ListenSocket = INVALID_SOCKET;
+  SOCKET ClientSocket = INVALID_SOCKET;
 
 public:
-	WIN32ServerSocket(int port, int reqbufflen);
-	~WIN32ServerSocket();
-	int Init();
-	int Listen();
-	int SendResponse(HttpResponse & response) const;
+  WIN32ServerSocket(int port, int reqbufflen);
+  ~WIN32ServerSocket();
+  virtual int Init();
+  virtual int Listen();
+  virtual int SendResponse(HttpResponse &response) const;
 };
 #endif
 

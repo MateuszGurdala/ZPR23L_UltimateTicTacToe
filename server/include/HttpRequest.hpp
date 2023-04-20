@@ -1,27 +1,36 @@
 #ifndef HTTP_REQUEST_HPP
 #define HTTP_REQUEST_HPP
 
-#include <map>
-#include <string>
+#include "HttpHeaders.hpp"
 #include <iostream>
+#include <map>
+#include <memory>
+#include <string>
 #include <vector>
 
-class HttpRequest
-{
+enum method { GET, POST, OPTIONS };
+
+class HttpRequest {
+  using UHeaders = std::unique_ptr<HttpHeaders>;
+
 private:
-	const std::string _newLine = "\n";
-	const std::string _colon = ":";
+  const std::string _newLine = "\n";
+  const std::string _colon = ":";
+  const std::string _space = " ";
 
-	std::string _requestType, _body;
-	std::map<std::string, std::string> _headers;
+  std::string _body, _endpoint;
+  method _method;
 
-	int parseBody(std::string& request);
-	int parseHeaders(std::string& request);
-	int parseRequestType(std::string& request);
+  int parseBody(std::string &request);
+  int parseRequestType(std::string &request);
+  int parseRequestMethod(std::string &requestType);
+  void verboseRequest() const;
 
 public:
-	explicit HttpRequest(std::string&& request);
-	const std::string& operator[](const std::string& key) const;
+  UHeaders headers;
+  std::string getEndpoint() const;
+  method getMethod() const;
+  explicit HttpRequest(std::string &&request);
 };
 
 #endif
