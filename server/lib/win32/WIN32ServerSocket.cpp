@@ -42,7 +42,7 @@ int WIN32ServerSocket::Init() {
   // Create a SOCKET for the server to listen for client connections
   ListenSocket = socket(addr->ai_family, addr->ai_socktype, addr->ai_protocol);
   if (ListenSocket == INVALID_SOCKET) {
-    printf("Error at socket(): %ld\n", WSAGetLastError());
+    printf("Error at socket(): %d\n", WSAGetLastError());
     freeaddrinfo(addr);
     WSACleanup();
     return 1;
@@ -64,7 +64,7 @@ int WIN32ServerSocket::Init() {
 
 int WIN32ServerSocket::Listen() {
   if (listen(ListenSocket, SOMAXCONN) == SOCKET_ERROR) {
-    printf("Listen failed with error: %ld\n", WSAGetLastError());
+    printf("Listen failed with error: %d\n", WSAGetLastError());
     closesocket(ListenSocket);
     WSACleanup();
     return 1;
@@ -89,7 +89,8 @@ int WIN32ServerSocket::Listen() {
 }
 
 int WIN32ServerSocket::SendResponse(HttpResponse &response) const {
-  string responseString = response.getResponse();
+    response.toString(); //TODO fix later
+    /*string responseString = response.getResponse();
   int result =
       send(ClientSocket, responseString.c_str(), responseString.length(), 0);
   if (result == SOCKET_ERROR) {
@@ -97,6 +98,6 @@ int WIN32ServerSocket::SendResponse(HttpResponse &response) const {
     closesocket(ClientSocket);
     WSACleanup();
     return 1;
-  }
+  }*/
   return 0;
 }
