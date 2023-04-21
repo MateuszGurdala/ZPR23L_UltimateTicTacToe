@@ -46,6 +46,7 @@ HttpResponse HttpResponse::GETResponse(std::string &&body) {
 
   response._headers.addDateHeader();
   response._headers.addAllowHeader();
+  response._headers.addCORSHeaders();
   response._headers.closeConnection();
   response._headers.addContentLengthHeader(body.length());
 
