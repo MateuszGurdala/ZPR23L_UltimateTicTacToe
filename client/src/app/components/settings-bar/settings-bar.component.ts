@@ -11,9 +11,13 @@ export class SettingsBarComponent {
 	boardSize: string = "3";
 	serverUrl: string = "localhost:4200";
 
-	constructor(private master: GameMasterService) {}
+	constructor(private game: GameMasterService) {}
 
 	extend() {
 		this.isExtended = !this.isExtended;
+	}
+
+	test() {
+		this.game.updateBoard();
 	}
 }
