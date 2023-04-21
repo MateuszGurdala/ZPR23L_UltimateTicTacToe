@@ -1,0 +1,382 @@
+{
+	"segments": [
+		{
+			"id": "1",
+			"winner": "",
+			"segments": [
+				{
+					"id": "1",
+					"winner": "X"
+				},
+				{
+					"id": "2",
+					"winner": ""
+				},
+				{
+					"id": "3",
+					"winner": ""
+				},
+				{
+					"id": "4",
+					"winner": ""
+				},
+				{
+					"id": "5",
+					"winner": ""
+				},
+				{
+					"id": "6",
+					"winner": ""
+				},
+				{
+					"id": "7",
+					"winner": ""
+				},
+				{
+					"id": "8",
+					"winner": ""
+				},
+				{
+					"id": "9",
+					"winner": ""
+				}
+			]
+		},
+		{
+			"id": "2",
+			"winner": "",
+			"segments": [
+				{
+					"id": "1",
+					"winner": ""
+				},
+				{
+					"id": "2",
+					"winner": ""
+				},
+				{
+					"id": "3",
+					"winner": ""
+				},
+				{
+					"id": "4",
+					"winner": ""
+				},
+				{
+					"id": "5",
+					"winner": ""
+				},
+				{
+					"id": "6",
+					"winner": ""
+				},
+				{
+					"id": "7",
+					"winner": ""
+				},
+				{
+					"id": "8",
+					"winner": ""
+				},
+				{
+					"id": "9",
+					"winner": ""
+				}
+			]
+		},
+		{
+			"id": "3",
+			"winner": "",
+			"segments": [
+				{
+					"id": "1",
+					"winner": ""
+				},
+				{
+					"id": "2",
+					"winner": ""
+				},
+				{
+					"id": "3",
+					"winner": ""
+				},
+				{
+					"id": "4",
+					"winner": ""
+				},
+				{
+					"id": "5",
+					"winner": ""
+				},
+				{
+					"id": "6",
+					"winner": ""
+				},
+				{
+					"id": "7",
+					"winner": ""
+				},
+				{
+					"id": "8",
+					"winner": ""
+				},
+				{
+					"id": "9",
+					"winner": ""
+				}
+			]
+		},
+		{
+			"id": "4",
+			"winner": "",
+			"segments": [
+				{
+					"id": "1",
+					"winner": ""
+				},
+				{
+					"id": "2",
+					"winner": ""
+				},
+				{
+					"id": "3",
+					"winner": ""
+				},
+				{
+					"id": "4",
+					"winner": ""
+				},
+				{
+					"id": "5",
+					"winner": ""
+				},
+				{
+					"id": "6",
+					"winner": ""
+				},
+				{
+					"id": "7",
+					"winner": ""
+				},
+				{
+					"id": "8",
+					"winner": ""
+				},
+				{
+					"id": "9",
+					"winner": ""
+				}
+			]
+		},
+		{
+			"id": "5",
+			"winner": "",
+			"segments": [
+				{
+					"id": "1",
+					"winner": ""
+				},
+				{
+					"id": "2",
+					"winner": ""
+				},
+				{
+					"id": "3",
+					"winner": "O"
+				},
+				{
+					"id": "4",
+					"winner": ""
+				},
+				{
+					"id": "5",
+					"winner": ""
+				},
+				{
+					"id": "6",
+					"winner": ""
+				},
+				{
+					"id": "7",
+					"winner": ""
+				},
+				{
+					"id": "8",
+					"winner": ""
+				},
+				{
+					"id": "9",
+					"winner": ""
+				}
+			]
+		},
+		{
+			"id": "6",
+			"winner": "",
+			"segments": [
+				{
+					"id": "1",
+					"winner": ""
+				},
+				{
+					"id": "2",
+					"winner": ""
+				},
+				{
+					"id": "3",
+					"winner": ""
+				},
+				{
+					"id": "4",
+					"winner": ""
+				},
+				{
+					"id": "5",
+					"winner": ""
+				},
+				{
+					"id": "6",
+					"winner": ""
+				},
+				{
+					"id": "7",
+					"winner": ""
+				},
+				{
+					"id": "8",
+					"winner": ""
+				},
+				{
+					"id": "9",
+					"winner": ""
+				}
+			]
+		},
+		{
+			"id": "7",
+			"winner": "",
+			"segments": [
+				{
+					"id": "1",
+					"winner": ""
+				},
+				{
+					"id": "2",
+					"winner": ""
+				},
+				{
+					"id": "3",
+					"winner": ""
+				},
+				{
+					"id": "4",
+					"winner": ""
+				},
+				{
+					"id": "5",
+					"winner": ""
+				},
+				{
+					"id": "6",
+					"winner": ""
+				},
+				{
+					"id": "7",
+					"winner": ""
+				},
+				{
+					"id": "8",
+					"winner": ""
+				},
+				{
+					"id": "9",
+					"winner": ""
+				}
+			]
+		},
+		{
+			"id": "8",
+			"winner": "",
+			"segments": [
+				{
+					"id": "1",
+					"winner": ""
+				},
+				{
+					"id": "2",
+					"winner": ""
+				},
+				{
+					"id": "3",
+					"winner": ""
+				},
+				{
+					"id": "4",
+					"winner": ""
+				},
+				{
+					"id": "5",
+					"winner": ""
+				},
+				{
+					"id": "6",
+					"winner": ""
+				},
+				{
+					"id": "7",
+					"winner": ""
+				},
+				{
+					"id": "8",
+					"winner": ""
+				},
+				{
+					"id": "9",
+					"winner": ""
+				}
+			]
+		},
+		{
+			"id": "9",
+			"winner": "",
+			"segments": [
+				{
+					"id": "1",
+					"winner": ""
+				},
+				{
+					"id": "2",
+					"winner": ""
+				},
+				{
+					"id": "3",
+					"winner": ""
+				},
+				{
+					"id": "4",
+					"winner": ""
+				},
+				{
+					"id": "5",
+					"winner": ""
+				},
+				{
+					"id": "6",
+					"winner": ""
+				},
+				{
+					"id": "7",
+					"winner": ""
+				},
+				{
+					"id": "8",
+					"winner": ""
+				},
+				{
+					"id": "9",
+					"winner": ""
+				}
+			]
+		}
+	]
+}
