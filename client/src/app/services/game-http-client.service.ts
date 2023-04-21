@@ -1,6 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
+import { GameBoard } from "../structs";
 
 @Injectable({
 	providedIn: "root",
@@ -17,11 +18,7 @@ export class GameHttpClient {
 		});
 	}
 
-	getBoardState(): Observable<any> {
-		return this.httpClient.get<any>(this.url + "Board");
-	}
-
-	getGameState(): Observable<any> {
-		return this.httpClient.get<any>(this.url + "State");
+	getBoardState(): Observable<GameBoard> {
+		return this.httpClient.get<GameBoard>(this.url + "/BoardState");
 	}
 }
