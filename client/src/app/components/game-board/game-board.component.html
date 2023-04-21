@@ -1,5 +1,6 @@
 <div #board *ngIf="isMotherboard" class="game-board" [createBoard]="size">
-    <game-board [size]="size" type="Daughterboard" *ngFor="let i of childrenCount;" [id]="i"></game-board>
+    <game-board [size]="size" type="Daughterboard" [parent]="this" *ngFor="let i of childrenCount;"
+        [id]="i"></game-board>
 </div>
 
 <div *ngIf="!isMotherboard" class="game-board" [createBoard]="size">
