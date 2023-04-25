@@ -26,7 +26,7 @@ HttpResponse HttpHandler::handleGETRequest(
     const std::shared_ptr<HttpRequest> request) const {
   if (request->getEndpoint() == "/BoardState") {
     /* TEMP */
-    std::ifstream t("../templates/BoardState.json");
+    std::ifstream t("../../templates/BoardState.json"); // ../ linux ../../ win32
     std::stringstream buffer;
     buffer << t.rdbuf();
     return HttpResponse::GETResponse(buffer.str());
