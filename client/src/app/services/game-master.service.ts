@@ -28,4 +28,8 @@ export class GameMasterService {
 			this.gameBoard.update(next);
 		});
 	}
+
+	mockFun() {
+		return this.httpClient.mockFun();
+	}
 }

@@ -3,6 +3,16 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { GameBoard } from "../structs";
 
+/*
+GETBoardState -> zwraca cała plansza z podplanszami i segmentami oraz ich znakami
+GETGameState -> kto wygrywa jaką podplanszę + kto teraz wykonuje ruch (metadane rozgrywki)
+POSTMakeMove -> jak nazwa wskazuje
+POSTCreateGame -> tworzy planszę z wybranym przeciwnikiem
+GETStartGame -> rozpoczyna rozgrywkę
+GETEndGame -> jak nazwa wskazuje
+GETTestConnection -> sprawdza czy serwer pod danym url odpowiada
+*/
+
 @Injectable({
 	providedIn: "root",
 })
@@ -20,5 +30,9 @@ export class GameHttpClient {
 
 	getBoardState(): Observable<GameBoard> {
 		return this.httpClient.get<GameBoard>(this.url + "/BoardState");
+	}
+
+	mockFun() {
+		console.log("XDD");
 	}
 }
