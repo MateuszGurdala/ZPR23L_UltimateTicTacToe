@@ -24,7 +24,7 @@ public:
   ~WIN32ServerSocket();
   virtual int Init();
   virtual int Listen();
-  virtual int SendResponse(HttpResponse &response) const;
+  virtual int SendResponse(std::shared_ptr<HttpResponse> response) const;
 };
 #endif
 

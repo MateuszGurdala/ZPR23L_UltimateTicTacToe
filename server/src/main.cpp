@@ -6,7 +6,7 @@ int main() {
   using UResponse = std::shared_ptr<HttpResponse>;
 
 #ifdef _WIN32
-  WIN32ServerSocket serverSocket(DEFAULT_PORT, DEFAULT_REQUEST_BUFFLEN);
+  WIN32ServerSocket serverSocket(config::port, config::requestBuffer);
 #endif
 
 #if defined(__linux__) || defined(__arm64__)
