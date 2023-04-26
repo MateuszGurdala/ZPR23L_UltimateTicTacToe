@@ -40,6 +40,7 @@ public:
 
   void verbose() const;
   const std::string &operator[](const std::string &key) const;
+  HttpHeaders &operator=(const HttpHeaders &obj);
 };
 
 #endif

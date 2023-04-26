@@ -8,7 +8,7 @@
 #include <string>
 #include <vector>
 
-enum method { GET, POST, OPTIONS };
+enum method { GET, POST, OPTIONS, INVALID };
 
 class HttpRequest {
   using UHeaders = std::unique_ptr<HttpHeaders>;

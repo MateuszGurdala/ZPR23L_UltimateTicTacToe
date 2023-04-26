@@ -88,8 +88,8 @@ int WIN32ServerSocket::Listen() {
   }
 }
 
-int WIN32ServerSocket::SendResponse(HttpResponse &response) const {
-  string responseString = response.getResponse();
+int WIN32ServerSocket::SendResponse(std::shared_ptr<HttpResponse> response) const {
+  std::string responseString = response->toString();
   int result =
       send(ClientSocket, responseString.c_str(), responseString.length(), 0);
   if (result == SOCKET_ERROR) {

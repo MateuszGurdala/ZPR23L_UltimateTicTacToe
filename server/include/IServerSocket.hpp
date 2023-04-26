@@ -22,7 +22,7 @@ public:
   virtual int Init() = 0;
   virtual int Listen() = 0;
   virtual HttpRequest GetRequest() = 0;
-  virtual int SendResponse(HttpResponse &response) const = 0;
+  virtual int SendResponse(std::shared_ptr<HttpResponse> response) const = 0;
 };
 
 #endif // ! I_SERVER_SOCKET_H
