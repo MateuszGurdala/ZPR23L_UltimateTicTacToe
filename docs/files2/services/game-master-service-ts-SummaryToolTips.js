@@ -1,0 +1,1 @@
+﻿NDSummary.OnToolTipsLoaded("File2:services/game-master.service.ts",{4:"<div class=\"NDToolTip TClass LTypescript\"><div class=\"TTSummary\">Main Client handler</div></div>"});

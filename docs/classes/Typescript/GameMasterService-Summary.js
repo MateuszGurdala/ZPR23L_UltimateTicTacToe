@@ -1,0 +1,1 @@
+﻿NDFramePage.OnPageTitleLoaded("TypescriptClass:GameMasterService","GameMasterService");NDSummary.OnSummaryLoaded("TypescriptClass:GameMasterService",[["Typescript","Typescript"]],[["Classes","Class"]],[[4,0,0,"GameMasterService"]]);

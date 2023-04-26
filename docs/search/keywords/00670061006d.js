@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("gam",["Class"],[["GameMasterService",,[[,,,,0,"File2:services/game-master.service.ts:GameMasterService","TypescriptClass:GameMasterService"]]]]);
