@@ -16,8 +16,6 @@
 
 ## Install Catch2:
 
-<br/>
-
 #### git clone https://github.com/catchorg/Catch2.git
 
 #### cd Catch2
@@ -29,7 +27,5 @@
 <br/>
 
 ## Run testing script:
-
-<br/>
 
 #### sh ./run_tests_catch.sh
