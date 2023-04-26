@@ -1,31 +1,39 @@
 # HOW TO BUILD AND RUN GAME SERVER
 
-## For WIN32:
+### For WIN32:
 
-#### powershell -ExecutionPolicy Bypass -File build_win32.ps1
+```powershell
+powershell -ExecutionPolicy Bypass -File build_win32.ps1
+```
 
 <br/>
 
-## For Linux:
+### For Linux:
 
-#### sh ./build_linux.sh
+```bash
+sh ./build_linux.sh
+```
 
 <br/>
 
 # TO RUN UNIT TESTS (LINUX ONLY)
 
-## Install Catch2:
+### Install Catch2:
 
-#### git clone https://github.com/catchorg/Catch2.git
+```bash
+git clone https://github.com/catchorg/Catch2.git
 
-#### cd Catch2
+cd Catch2
 
-#### cmake -Bbuild -H. -DBUILD_TESTING=OFF
+cmake -Bbuild -H. -DBUILD_TESTING=OFF
 
-#### sudo cmake --build build/ --target install
+sudo cmake --build build/ --target install
+```
 
 <br/>
 
-## Run testing script:
+### Run testing script:
 
-#### sh ./run_tests_catch.sh
+```bash
+sh ./run_tests_catch.sh
+```
