@@ -7,7 +7,7 @@ project ("UltimateTicTacToeServer")
 set(INCLUDE "${PROJECT_SOURCE_DIR}/include")
 add_subdirectory(lib)
 
-add_executable (UltimateTicTacToeServer "${PROJECT_SOURCE_DIR}/src/main.cpp")
+#add_executable (UltimateTicTacToeServer "${PROJECT_SOURCE_DIR}/src/main.cpp")
 add_executable (UltimateTicTacToeServer "${PROJECT_SOURCE_DIR}/src/gameMain.cpp")
 
 

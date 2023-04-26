@@ -14,8 +14,8 @@ private:
     ComputerPlayer(char symbol);
     Point& SimulateMove(const std::vector<Point>& availableMoves);
 public:
-    std::array<Point, 2> ChooseMove(const std::vector<Point>& availableOuterBoardMoves,
-                                                    const std::vector<Point>& availableInnerBoardMoves ) override;
+    std::array<Point, 2> ChooseMove(const std::vector<Point>& availableOuterBoardMoves, int boardSize,
+                                    std::vector<std::vector<Point>> availableInnerBoardMoves) override;
 };
 
 #endif //ULTIMATETICTACTOESERVER_COMPUTERPLAYER_HPP

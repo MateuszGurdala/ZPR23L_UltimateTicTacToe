@@ -6,6 +6,8 @@
 class GameEngine {
 private:
     std::unique_ptr<MainBoard> mainBoard;
+    std::vector<Point> availableOuterBoardMoves;
+    std::vector<Point> availableInnerBoardMoves;
 public:
     GameEngine(std::unique_ptr<MainBoard> mainBoard);
 
