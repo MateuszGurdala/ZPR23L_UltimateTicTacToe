@@ -9,8 +9,6 @@ int Player::GetPoints() const {
     return points;
 }
 
-Player::Player(char symbol) : symbol(symbol) {}
-
 char Player::GetSymbol() const {
     return symbol;
 }
