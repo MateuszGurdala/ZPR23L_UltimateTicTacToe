@@ -1,4 +1,5 @@
-import { AfterContentInit, Component, Inject, Input } from "@angular/core";
+import { AfterContentInit, Component, Input } from "@angular/core";
+import { GameBoardComponent } from "./game-board/game-board.component";
 
 @Component({
 	selector: "",
@@ -6,6 +7,7 @@ import { AfterContentInit, Component, Inject, Input } from "@angular/core";
 })
 export class SegmentLogic implements AfterContentInit {
 	@Input("id") setId: number;
+	parent: GameBoardComponent;
 
 	id: number | undefined = undefined;
 	isActive: boolean | undefined = undefined;

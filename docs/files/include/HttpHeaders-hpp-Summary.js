@@ -1,0 +1,1 @@
+﻿NDFramePage.OnPageTitleLoaded("File:include/HttpHeaders.hpp","HttpHeaders.hpp");NDSummary.OnSummaryLoaded("File:include/HttpHeaders.hpp",[["C/C++","C"]],[["Classes","Class"],["Functions","Function"],["Groups","Group"]],[[1,0,0,"HttpHeaders","HttpHeaders"],[2,0,2,"Functions","HttpHeaders.Functions"],[3,0,1,"HttpHeaders","HttpHeaders.HttpHeaders"]]);

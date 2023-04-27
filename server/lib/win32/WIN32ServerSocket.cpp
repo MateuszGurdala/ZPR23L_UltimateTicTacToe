@@ -88,9 +88,8 @@ int WIN32ServerSocket::Listen() {
   }
 }
 
-int WIN32ServerSocket::SendResponse(HttpResponse &response) const {
-    response.toString(); //TODO fix later
-    /*string responseString = response.getResponse();
+[[maybe_unused]] int WIN32ServerSocket::SendResponse(std::shared_ptr<HttpResponse> response) const {
+  std::string responseString = response->toString();
   int result =
       send(ClientSocket, responseString.c_str(), responseString.length(), 0);
   if (result == SOCKET_ERROR) {
@@ -98,6 +97,6 @@ int WIN32ServerSocket::SendResponse(HttpResponse &response) const {
     closesocket(ClientSocket);
     WSACleanup();
     return 1;
-  }*/
+  }
   return 0;
 }

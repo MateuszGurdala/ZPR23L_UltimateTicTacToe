@@ -23,4 +23,56 @@
 
 .settings-bar {
     width: 25vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5vmin;
+}
+
+.game-header {
+    color: var(--grey);
+    font-size: 4.6vmin;
+}
+
+.settings-container {
+    display: grid;
+    grid-template-columns: 30% 5% 65%;
+    width: 90%;
+}
+
+.settings-container span {
+    color: var(--grey);
+    font-size: 2.6vmin;
+    font-weight: 500;
+}
+
+.settings-container input {
+    border-style: solid;
+    border-color: var(--grey);
+    border-width: 0 0 2px 2px;
+    padding: 0 0 0.2vmin 0.4vmin;
+    color: var(--grey);
+    margin-top: 1vmin;
+    width: 90%;
+    height: 3.6vmin;
+    font-size: 3vmin;
+    background-color: transparent;
+    text-align: center;
+}
+
+.settings-container input:focus {
+    outline: none;
+}
+
+.buttons-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 4vmin;
+}
+
+.buttons-container h2 {
+    color: var(--grey);
+    font-size: 3.6vmin;
+    cursor: pointer;
 }

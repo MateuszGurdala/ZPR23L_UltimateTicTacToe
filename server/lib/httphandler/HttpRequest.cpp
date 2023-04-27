@@ -67,6 +67,8 @@ int HttpRequest::parseRequestMethod(std::string &requestType) {
       _method = method::POST;
     } else if (method == "OPTIONS") {
       _method = method::OPTIONS;
+    } else {
+      _method = method::INVALID;
     }
 
     requestType.erase(0, pos + _space.length());
