@@ -1,4 +1,4 @@
-#include "../../include/HttpRequest.hpp"
+#include "../../include/http/HttpRequest.hpp"
 #include "../../src/config.hpp"
 
 HttpRequest::HttpRequest(std::string &&request) {

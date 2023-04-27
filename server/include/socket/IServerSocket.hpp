@@ -9,8 +9,8 @@
 #include <stdlib.h>
 #include <string>
 
-#include "HttpRequest.hpp"
-#include "HttpResponse.hpp"
+#include "../http/HttpRequest.hpp"
+#include "../http/HttpResponse.hpp"
 
 class IServerSocket {
 protected:

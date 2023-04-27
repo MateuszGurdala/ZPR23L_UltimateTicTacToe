@@ -1,6 +1,6 @@
-set(SERVERSOCKETSRC "${INCLUDE}/ServerSocket.hpp" "ServerSocket.cpp")
-set(WIN32SRC "${INCLUDE}/WIN32ServerSocket.hpp" "win32/WIN32ServerSocket.cpp")
-set(LINUXSRC "${INCLUDE}/LinuxServerSocket.hpp" "linux/LinuxServerSocket.cpp")
+set(SERVERSOCKETSRC "${INCLUDE}/socket/ServerSocket.hpp" "ServerSocket.cpp")
+set(WIN32SRC "${INCLUDE}/socket/WIN32ServerSocket.hpp" "win32/WIN32ServerSocket.cpp")
+set(LINUXSRC "${INCLUDE}/socket/LinuxServerSocket.hpp" "linux/LinuxServerSocket.cpp")
 set(INDEXCONVERTERSRC "${INCLUDE}/helpers/BoardIndexConverter.hpp" "helpers/BoardIndexConverter.cpp")
 
 add_subdirectory(httphandler)

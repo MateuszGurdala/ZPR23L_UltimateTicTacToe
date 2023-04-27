@@ -1,4 +1,4 @@
-#include "../../include/HttpHandler.hpp"
+#include "../../include/http/HttpHandler.hpp"
 
 /* TEMP */
 #include <fstream>
@@ -26,7 +26,8 @@ HttpResponse HttpHandler::handleGETRequest(
     const std::shared_ptr<HttpRequest> request) const {
   if (request->getEndpoint() == "/BoardState") {
     /* TEMP */
-    std::ifstream t("../../templates/BoardState.json"); // ../ linux ../../ win32
+    std::ifstream t(
+        "../../templates/BoardState.json"); // ../ linux ../../ win32
     std::stringstream buffer;
     buffer << t.rdbuf();
     return HttpResponse::GETResponse(buffer.str());

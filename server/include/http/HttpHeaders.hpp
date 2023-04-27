@@ -1,7 +1,7 @@
 #ifndef HTTP_HEADERS_HPP
 #define HTTP_HEADERS_HPP
 
-#include "../src/config.hpp"
+#include "../../src/config.hpp"
 #include <chrono>
 #include <iostream>
 #include <map>

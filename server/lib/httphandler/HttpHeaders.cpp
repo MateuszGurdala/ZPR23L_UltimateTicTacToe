@@ -1,4 +1,4 @@
-#include "../../include/HttpHeaders.hpp"
+#include "../../include/http/HttpHeaders.hpp"
 
 HttpHeaders::HttpHeaders() {}
 
