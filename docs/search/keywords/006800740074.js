@@ -1,1 +1,1 @@
-﻿NDSearch.OnPrefixDataLoaded("htt",["Class"],[["HttpHeaders",,[[,,,,0,"File:include/HttpHeaders.hpp:HttpHeaders","CClass:HttpHeaders"]]]]);
+﻿NDSearch.OnPrefixDataLoaded("htt",["Class"],[["HttpHandler",,[[,,,,0,"File:HttpHandler.hpp:HttpHandler","CClass:HttpHandler"]]],["HttpHeaders",,[[,,,,0,"File:HttpHeaders.hpp:HttpHeaders","CClass:HttpHeaders"]]],["HttpRequest",,[[,,,,0,"File:HttpRequest.hpp:HttpRequest","CClass:HttpRequest"]]],["HttpResponse",,[[,,,,0,"File:HttpResponse.hpp:HttpResponse","CClass:HttpResponse"]]]]);

@@ -1,1 +1,1 @@
-﻿NDMenu.OnSectionLoaded("files.js",[[2,"Client","File2:services/",[[1,"game-master.service.ts"]]],[2,"Server","File:include/",[[1,"HttpHeaders.hpp"]]]]);
+﻿NDMenu.OnSectionLoaded("files.js",[[2,"Http","File:",[[1,"HttpHandler.hpp"],[1,"HttpHeaders.hpp"],[1,"HttpRequest.hpp"],[1,"HttpResponse.hpp"]]],[2,"Socket","File3:",[[1,"IServerSocket.hpp"],[1,"LinuxServerSocket.hpp"],[1,"ServerSocket.hpp"],[1,"WIN32ServerSocket.hpp"]]]]);

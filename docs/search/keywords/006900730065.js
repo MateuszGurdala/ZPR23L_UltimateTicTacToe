@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("ise",["Interface"],[["IServerSocket",,[[,,,,0,"File3:IServerSocket.hpp:IServerSocket","CClass:IServerSocket"]]]]);

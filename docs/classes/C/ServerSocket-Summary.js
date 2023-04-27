@@ -1,0 +1,1 @@
+﻿NDFramePage.OnPageTitleLoaded("CClass:ServerSocket","ServerSocket");NDSummary.OnSummaryLoaded("CClass:ServerSocket",[["C/C++","C"]],[["Classes","Class"],["Functions","Function"],["Groups","Group"]],[[20,0,0,"ServerSocket"],[45,0,2,"Functions","Functions"],[51,0,1,"ServerSocket","ServerSocket"],[52,0,1,"ServerSocket","ServerSocket(2)"],[53,0,1,"GetRequest","GetRequest"]]);
