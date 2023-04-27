@@ -24,7 +24,7 @@ const std::map<std::string, std::string> globalHeaders = {
 class HttpHeaders {
 private:
   const std::string _newLine = "\n";
-  const std::string _colon = ":";
+  const std::string _colonSpace = ": ";
 
   std::map<std::string, std::string> _headers;
 
@@ -45,7 +45,8 @@ public:
 
       Parameters:
 
-        headers - reference to std::string that contains raw headers.
+        headers - reference to std::string that contains raw headers. IS
+        COMPLETELY DESTROYED AFTER PARSING.
 
       See Also:
 

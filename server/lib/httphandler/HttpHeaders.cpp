@@ -14,12 +14,14 @@ HttpHeaders::HttpHeaders(std::string &headers) {
   }
 
   for (auto &part : parts) {
-    pos = part.find(_colon);
-    key = part.substr(0, pos);
-    value = part.substr(pos + _colon.length(), part.length() - pos);
-    if (!key.empty() && !value.empty()) {
+    pos = part.find(_colonSpace);
+    if (pos != std::string::npos) {
+      key = part.substr(0, pos);
+      value = part.substr(pos + _colonSpace.length(), part.length() - pos);
+      if (!key.empty() && !value.empty()) {
 
-      _headers[key] = value;
+        _headers[key] = value;
+      }
     }
   }
 }
@@ -30,7 +32,7 @@ std::string HttpHeaders::toString() const {
   std::stringstream stream;
 
   for (const auto &mapPair : _headers) {
-    stream << mapPair.first << _colon << ' ' << mapPair.second << _newLine;
+    stream << mapPair.first << _colonSpace << mapPair.second << _newLine;
   }
 
   return stream.str();
@@ -83,9 +85,7 @@ int HttpHeaders::addCORSHeaders() {
   std::string methods = "Access-Control-Allow-Methods";
   std::string headers = "Access-Control-Allow-Headers";
 
-  auto x = globalHeaders.at(origin);
-
-  addHeader(origin, x);
+  addHeader(origin, globalHeaders.at(origin));
   addHeader(methods, globalHeaders.at(methods));
   addHeader(headers, globalHeaders.at(headers));
   return 0;
@@ -95,6 +95,7 @@ const std::string &HttpHeaders::operator[](const std::string &key) const {
   // TODO: Add error handling for missing values for a key
   return _headers.at(key);
 }
+
 HttpHeaders &HttpHeaders::operator=(const HttpHeaders &obj) {
   for (const auto &mapPair : obj._headers) {
     _headers[mapPair.first] = mapPair.second;
