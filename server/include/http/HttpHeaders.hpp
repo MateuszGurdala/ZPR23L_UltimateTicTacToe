@@ -153,7 +153,9 @@ public:
   std::string toString() const;
   /*  Function: verbose
 
-        Prints header data to standard output.
+      Returns:
+
+        Headers data as formatted std::string.
 */
   void verbose() const;
   /*  Function: operator[]

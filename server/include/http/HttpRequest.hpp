@@ -10,6 +10,10 @@
 
 enum method { GET, POST, OPTIONS, INVALID };
 
+/*  Class: HttpRequest
+    A class that acts as abstraction between raw http request data and
+    HttpHandler.
+*/
 class HttpRequest {
   using UHeaders = std::unique_ptr<HttpHeaders>;
 
@@ -21,16 +25,76 @@ private:
   std::string _body, _endpoint;
   method _method;
 
+  /*  Function: parseBody
+
+        Parses body from json format.
+
+      Parameters:
+
+        request - Request data as std::string.
+
+      Returns:
+
+        0 if parsing ended with success, else 1;
+    */
   int parseBody(std::string &request);
+  /*  Function: parseRequestType
+
+        Extracts request type from header line.
+
+      Parameters:
+
+        request - Request data as std::string.
+
+      Returns:
+
+        0 if parsing ended with success, else 1;
+    */
   int parseRequestType(std::string &request);
+  /*  Function: parseRequestMethod
+
+        Extracts request method from header line.
+
+      Parameters:
+
+        request - Request data as std::string.
+
+      Returns:
+
+        0 if parsing ended with success, else 1;
+    */
   int parseRequestMethod(std::string &requestType);
+  /*  Function: verboseRequest
+
+        Prints parsed request to the standard output.
+    */
   void verboseRequest() const;
 
 public:
   UHeaders headers;
-  std::string getEndpoint() const;
-  method getMethod() const;
+  /*  Constructor: HttpRequest
+
+        Parses body from json format.
+
+      Parameters:
+
+        request - Raw request data as std::string.
+    */
   explicit HttpRequest(std::string &&request);
+  /*  Function: getEndpoint
+
+      Returns:
+
+        Request endpoint;
+    */
+  std::string getEndpoint() const;
+  /*  Function: getEndpoint
+
+      Returns:
+
+        Request method;
+    */
+  method getMethod() const;
 };
 
 #endif
