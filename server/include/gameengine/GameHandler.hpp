@@ -12,14 +12,14 @@ private:
     std::unique_ptr<HumanPlayer> hostPlayer;
     std::unique_ptr<Player> secondPlayer;
     std::unique_ptr<GameEngine> gameEngine;
-    bool isHostTurn;
+    bool isHostTurn = false;
     void startGame();
 public:
     bool CheckIfGameEnd();
     void PerformTurn(Point boardCoordinates, Point innerCoordinates);
     GameHandler(std::unique_ptr<HumanPlayer> hostPlayer, std::unique_ptr<Player> secondPlayer, std::unique_ptr<GameEngine> gameEngine);
     GameHandler();
-
+    std::array<Point, 2> ChooseCoordinatesOfMove();
     void Print();
 };
 

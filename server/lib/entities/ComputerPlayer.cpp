@@ -5,8 +5,8 @@
 #include "../../include/helpers/BoardIndexConverter.hpp"
 
 
-std::array<Point, 2> ComputerPlayer::ChooseMove(const std::vector<Point>& availableOuterBoardMoves, int boardSize,
-                                                std::vector<std::vector<Point>> availableInnerBoardMoves){
+std::array<Point, 2> ComputerPlayer::ChooseMove(const std::vector<Point>& availableOuterBoardMoves,
+                                                std::vector<std::vector<Point>> availableInnerBoardMoves, int boardSize){
     std::array<Point, 2> playerMove{};
     auto& outerBoardCoords = SimulateMove(availableOuterBoardMoves);
     int innerIndex = BoardIndexConverter::PointToIndex(outerBoardCoords, boardSize);

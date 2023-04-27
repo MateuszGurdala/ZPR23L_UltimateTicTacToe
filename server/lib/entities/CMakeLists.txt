@@ -16,3 +16,4 @@ add_library(InnerBoard ${INNERBOARDSRC})
 
 target_link_libraries(MainBoard InnerBoard BoardBase)
 target_link_libraries(InnerBoard BoardBase)
+target_link_libraries(ComputerPlayer BoardIndexConverter)
