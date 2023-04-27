@@ -7,7 +7,7 @@
 # ------------------------------------------------------------------------
 
 Title: UltimateTicTacToe
-Subtitle: A ZPR Project
+Subtitle: A project for ZPR subject
 
 Copyright: Mateusz Gurdała && Krystian Grela
 
@@ -71,10 +71,13 @@ Copyright: Mateusz Gurdała && Krystian Grela
 # Source Code
 # ------------------------------------------------------------------------
 
-Source Folder: ..\server
-   Name: Server
+Source Folder: ../server/include/http
+   Name: Http
 
-Source Folder 2: ..\client\src\app
+Source Folder 3: ../server/include/socket
+   Name: Socket
+
+Source Folder 2: ../client/src/app
    Name: Client
 
 
@@ -153,7 +156,7 @@ Source Folder 2: ..\client\src\app
 # Generated Documentation
 # ------------------------------------------------------------------------
 
-HTML Output Folder: ..\docs
+HTML Output Folder: ../docs
 
 
 # This is where you tell Natural Docs what kind of documentation you want
