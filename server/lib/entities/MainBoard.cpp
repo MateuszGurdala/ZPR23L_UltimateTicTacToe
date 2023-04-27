@@ -37,7 +37,7 @@ void MainBoard::AddWinnerOfInnerBoard(Point& coordinates, char& figure) {
     VerifyCoordinates(coordinates);
     if(winnerBoard[coordinates.x][coordinates.y] != ' ')
     {
-        throw std::invalid_argument("given given cell is already filled");
+        throw std::invalid_argument("given cell is already filled");
     }
     winnerBoard[coordinates.x][coordinates.y] = figure;
 }
@@ -61,4 +61,8 @@ auto MainBoard::GetInnerBoarHorizontalValues(Point& playBoardCoordinates, Point&
 
 void MainBoard::MakeMove(Point& boardCoordinates, Point& innerCoordinates, char& figure) {
     mainPlayBoard[boardCoordinates.x][boardCoordinates.y]->PlaceFigure(innerCoordinates, figure);
+}
+
+std::string MainBoard::ToJson(bool isNested) {
+    return std::string();
 }

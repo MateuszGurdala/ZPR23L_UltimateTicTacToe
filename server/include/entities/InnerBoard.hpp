@@ -18,7 +18,7 @@ public:
     auto GetRightDiagonalValues(Point& playBoardCoordinates, Point& innerBoardRowAndColumn);
     auto GetHorizontalValues(Point& playBoardCoordinates, Point& innerBoardRowAndColumn);
     auto GetVerticalValues(Point& playBoardCoordinates, Point& innerBoardRowAndColumn);
-
+    std::string ToJson(bool isNested) override;
     void PlaceFigure(Point& coordinates, char &figure);
 };
 

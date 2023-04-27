@@ -9,14 +9,17 @@ endif()
 project ("UltimateTicTacToeServer")
 set(INCLUDE "${PROJECT_SOURCE_DIR}/include")
 add_subdirectory(lib)
+
+if(UNIX)
 add_subdirectory(test)
+endif()
 
 #add_executable (UltimateTicTacToeServer "${PROJECT_SOURCE_DIR}/src/main.cpp")
 add_executable (UltimateTicTacToeServer "${PROJECT_SOURCE_DIR}/src/gameMain.cpp")
 
 
 #Link libraries
-target_link_libraries(UltimateTicTacToeServer ServerSocket)
-target_link_libraries(UltimateTicTacToeServer Http)
-target_link_libraries(UltimateTicTacToeServer GameHandler)
-
+if(WIN32)
+	target_link_libraries(UltimateTicTacToeServer wsock32 ws2_32)
+endif()
+target_link_libraries(UltimateTicTacToeServer ServerSocket Http GameHandler)

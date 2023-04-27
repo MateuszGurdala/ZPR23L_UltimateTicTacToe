@@ -33,6 +33,7 @@ export class GameHttpClient {
 	}
 
 	mockFun() {
-		console.log("XDD");
+		console.log("click");
+		this.getBoardState();
 	}
 }

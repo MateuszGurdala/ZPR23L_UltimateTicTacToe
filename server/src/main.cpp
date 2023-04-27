@@ -21,8 +21,11 @@ int main() {
     std::cout << "Socket intialization failed.\n";
     return 1;
   }
-
+  else{
+      std::cout << "Socket intialization started.\n";
+  }
   do {
+
     if (serverSocket.Listen() == 0) {
       request = std::make_shared<HttpRequest>(serverSocket.GetRequest());
       response = std::make_shared<HttpResponse>(handler.handle(request));

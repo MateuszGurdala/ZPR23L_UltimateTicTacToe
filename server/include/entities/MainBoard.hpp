@@ -18,6 +18,7 @@ public:
     auto GetInnerBoarHorizontalValues(Point& playBoardCoordinates, Point& innerBoardRowAndColumn);
     auto GetInnerBoardLeftDiagonalValues(Point& playBoardCoordinates, Point& innerBoardRowAndColumn);
     auto GetInnerBoardRightDiagonalValues(Point& playBoardCoordinates, Point& innerBoardRowAndColumn);
+    std::string ToJson(bool isNested) override;
 };
 
 #endif //ULTIMATETICTACTOESERVER_MAINBOARD_HPP

@@ -55,6 +55,34 @@ std::string InnerBoard::ToString() const {
     return stringStream.str();
 }
 
+std::string InnerBoard::ToJson(bool isNested) {
+    std::stringstream ss;
+    if(!isNested)
+    {
+        ss << "{";
+    }
+    ss << "\"segments\":[";
+    for (int i = 0; i < boardSize; i++) {
+        ss << "[";
+        for (int j = 0; j < boardSize; j++) {
+            ss << "\"" << playBoard[i][j] << "\"";
+            if (j != boardSize - 1) {
+                ss << ",";
+            }
+        }
+        ss << "]";
+        if (i != boardSize - 1) {
+            ss << ",";
+        }
+    }
+    ss << "]";
+    if(!isNested)
+    {
+        ss << "}";
+    }
+    return ss.str();
+}
+
 //TODO
 /*
 auto InnerBoard::GetLeftDiagonalValues(Point& playBoardCoordinates, Point& innerBoardRowAndColumn) {

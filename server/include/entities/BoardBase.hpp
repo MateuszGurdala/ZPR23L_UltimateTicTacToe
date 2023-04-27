@@ -18,6 +18,7 @@ public:
     int GetBoardSize() const;
     void VerifyCoordinates(Point point) const;
     static void VerifyFigure(char figure) ;
+    virtual std::string ToJson(bool isNested) = 0;
 };
 
 
