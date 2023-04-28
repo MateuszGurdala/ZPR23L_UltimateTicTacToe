@@ -1,7 +1,7 @@
 #include "../../include/helpers/BoardIndexConverter.hpp"
 
 int BoardIndexConverter::PointToIndex(Point &point, int &boardSize) {
-    return point.y * boardSize + point.x;
+    return point.x * boardSize + point.y;
 }
 
 Point BoardIndexConverter::IndexToPoint(int& index, int &boardSize) {

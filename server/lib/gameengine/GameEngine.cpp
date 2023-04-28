@@ -1,6 +1,8 @@
 
 #include <memory>
+#include <sstream>
 #include "../../include/gameengine/GameEngine.hpp"
+#include "../../include/helpers/BoardIndexConverter.hpp"
 
 GameEngine::GameEngine(std::unique_ptr <MainBoard> mainBoard) : mainBoard(std::move(mainBoard)) {
     int boardSize = this->mainBoard->GetBoardSize();
@@ -58,4 +60,35 @@ std::vector<std::vector<Point>> &GameEngine::getAvailableInnerBoardMoves() {
 
 int GameEngine::GetBoardSize() {
     return mainBoard->GetBoardSize();
+}
+
+std::string GameEngine::GameStateAsJson(bool isNested) {
+    return std::string();
+}
+
+std::string GameEngine::MoveAsJson(bool isNested, std::array<Point,2> move, bool isValid) {
+    std::stringstream ss;
+    if(!isNested)
+    {
+        ss << "{";
+    }
+    ss << "\"MoveResponse\":";
+    ss << "{";
+    int boardSize = GetBoardSize();
+    ss << "\"OuterBoardIndex\":" << "\"" <<  BoardIndexConverter::PointToIndex(move[0],boardSize) << "\",";
+    ss << "\"InnerBoardIndex\":" << "\"" <<  BoardIndexConverter::PointToIndex(move[1],boardSize) << "\",";
+    if(isValid)
+    {
+        ss << "\"IsMoveValid\":" <<  "true" ;
+    }
+    else
+    {
+        ss << "\"IsMoveValid\":" <<  "false" ;
+    }
+    ss << "}";
+    if(!isNested)
+    {
+        ss << "}";
+    }
+    return ss.str();
 }

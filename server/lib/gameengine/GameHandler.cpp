@@ -19,6 +19,7 @@ void GameHandler::startGame() {
     gameEngine = std::make_unique<GameEngine>(std::move(mainBoard));
 }
 
+//TODO
 bool GameHandler::CheckIfGameEnd() {
     return false;
 }
