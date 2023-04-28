@@ -65,7 +65,7 @@ int GameEngine::GetBoardSize() {
 
 
 std::string GameEngine::GetWinnerBoardAsJson(bool isNested){
-    return mainBoard->WinnerBoardToJson(true);
+    return mainBoard->WinnerBoardToJson(isNested);
 }
 
 std::string GameEngine::MoveAsJson(bool isNested, std::array<Point,2> move, bool isValid) {
