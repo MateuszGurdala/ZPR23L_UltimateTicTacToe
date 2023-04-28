@@ -1,0 +1,1 @@
+﻿NDContentPage.OnToolTipsLoaded({23:"<div class=\"NDToolTip TClass LC\"><div class=\"NDClassPrototype\" id=\"NDClassPrototype23\"><div class=\"CPEntry TClass Current\"><div class=\"CPName\">HttpResponse</div></div></div><div class=\"TTSummary\">A class that acts as abstraction between raw http response data and HttpHandler.</div></div>"});

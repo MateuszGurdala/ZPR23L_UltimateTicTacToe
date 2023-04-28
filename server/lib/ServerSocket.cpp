@@ -1,4 +1,4 @@
-#include "../include/ServerSocket.hpp"
+#include "../include/socket/ServerSocket.hpp"
 
 ServerSocket::ServerSocket(int port, int reqbufflen) {
   _port = port;

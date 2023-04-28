@@ -1,4 +1,4 @@
-#include "../../include/HttpResponse.hpp"
+#include "../../include/http/HttpResponse.hpp"
 #include "../../src/config.hpp"
 
 HttpResponse::HttpResponse() {}

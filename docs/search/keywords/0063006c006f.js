@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("clo",["Function"],[["closeConnection",,[["HttpHeaders",,,,0,"File:HttpHeaders.hpp:HttpHeaders.closeConnection","CClass:HttpHeaders:closeConnection"]]]]);

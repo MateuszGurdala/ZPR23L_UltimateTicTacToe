@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("win",["Class"],[["WIN32ServerSocket",,[[,,,,0,"File3:WIN32ServerSocket.hpp:WIN32ServerSocket","CClass:WIN32ServerSocket"]]]]);

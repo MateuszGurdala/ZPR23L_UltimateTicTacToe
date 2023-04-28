@@ -1,1 +1,1 @@
-﻿NDMenu.OnSectionLoaded("classes.js",[[2,"C/C++","CClass:",[[1,"HttpHeaders"]]],[2,"Typescript","TypescriptClass:",[[1,"GameMasterService"]]]]);
+﻿NDMenu.OnSectionLoaded("classes.js",[[1,"HttpHandler"],[1,"HttpHeaders"],[1,"HttpRequest"],[1,"HttpResponse"],[1,"IServerSocket"],[1,"LinuxServerSocket"],[1,"ServerSocket"],[1,"WIN32ServerSocket"]]);

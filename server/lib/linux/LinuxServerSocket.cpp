@@ -1,4 +1,4 @@
-#include "../../include/LinuxServerSocket.hpp"
+#include "../../include/socket/LinuxServerSocket.hpp"
 
 LinuxServerSocket::LinuxServerSocket(int port, int reqbufflen)
     : ServerSocket(port, reqbufflen) {}

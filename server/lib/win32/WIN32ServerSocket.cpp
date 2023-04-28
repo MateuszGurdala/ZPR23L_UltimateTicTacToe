@@ -1,4 +1,4 @@
-#include "../../include/WIN32ServerSocket.hpp"
+#include "../../include/socket/WIN32ServerSocket.hpp"
 
 using namespace std;
 
@@ -88,7 +88,8 @@ int WIN32ServerSocket::Listen() {
   }
 }
 
-[[maybe_unused]] int WIN32ServerSocket::SendResponse(std::shared_ptr<HttpResponse> response) const {
+[[maybe_unused]] int
+WIN32ServerSocket::SendResponse(std::shared_ptr<HttpResponse> response) const {
   std::string responseString = response->toString();
   int result =
       send(ClientSocket, responseString.c_str(), responseString.length(), 0);
