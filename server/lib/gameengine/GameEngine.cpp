@@ -62,8 +62,10 @@ int GameEngine::GetBoardSize() {
     return mainBoard->GetBoardSize();
 }
 
-std::string GameEngine::GameStateAsJson(bool isNested) {
-    return std::string();
+
+
+std::string GameEngine::GetWinnerBoardAsJson(bool isNested){
+    return mainBoard->WinnerBoardToJson(true);
 }
 
 std::string GameEngine::MoveAsJson(bool isNested, std::array<Point,2> move, bool isValid) {
@@ -72,18 +74,18 @@ std::string GameEngine::MoveAsJson(bool isNested, std::array<Point,2> move, bool
     {
         ss << "{";
     }
-    ss << "\"MoveResponse\":";
+    ss << "\"moveResponse\":";
     ss << "{";
     int boardSize = GetBoardSize();
-    ss << "\"OuterBoardIndex\":" << "\"" <<  BoardIndexConverter::PointToIndex(move[0],boardSize) << "\",";
-    ss << "\"InnerBoardIndex\":" << "\"" <<  BoardIndexConverter::PointToIndex(move[1],boardSize) << "\",";
+    ss << "\"outerBoardIndex\":" << "\"" <<  BoardIndexConverter::PointToIndex(move[0],boardSize) << "\",";
+    ss << "\"innerBoardIndex\":" << "\"" <<  BoardIndexConverter::PointToIndex(move[1],boardSize) << "\",";
     if(isValid)
     {
-        ss << "\"IsMoveValid\":" <<  "true" ;
+        ss << "\"isMoveValid\":" <<  "true" ;
     }
     else
     {
-        ss << "\"IsMoveValid\":" <<  "false" ;
+        ss << "\"isMoveValid\":" <<  "false" ;
     }
     ss << "}";
     if(!isNested)

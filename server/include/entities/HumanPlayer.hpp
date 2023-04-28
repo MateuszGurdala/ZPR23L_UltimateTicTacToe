@@ -5,7 +5,6 @@
 
 class HumanPlayer : public Player {
 private:
-    std::string name;
 public:
     HumanPlayer(char symbol,std::string name);
     std::array<Point, 2> ChooseMove(const std::vector<Point>& availableOuterBoardMoves,

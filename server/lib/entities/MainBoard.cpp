@@ -65,6 +65,38 @@ void MainBoard::MakeMove(Point& boardCoordinates, Point& innerCoordinates, char&
     mainPlayBoard[boardCoordinates.x][boardCoordinates.y]->PlaceFigure(innerCoordinates, figure);
 }
 
+std::string MainBoard::WinnerBoardToJson(bool isNested){
+    std::stringstream ss;
+    if(!isNested)
+    {
+        ss << "{";
+    }
+    ss << "\"winnerBoard\":[";
+    for (int boardRow = 0; boardRow < boardSize; boardRow++) {
+        for (int boardColumn = 0; boardColumn < boardSize; boardColumn++) {
+            auto currentPoint = Point(boardRow, boardColumn);
+            int id = BoardIndexConverter::PointToIndex(currentPoint, boardSize);
+            ss << "{";
+            ss << R"("id": ")" << id << R"(",)" ;
+            ss << R"("winner": )";
+            ss << "\"" << winnerBoard[boardRow][boardColumn] << "\"";
+            ss << "}";
+            if (boardColumn != boardSize - 1) {
+                ss << ",";
+            }
+        }
+        if (boardRow != boardSize - 1) {
+            ss << ",";
+        }
+    }
+    ss << "]";
+    if(!isNested)
+    {
+        ss << "}";
+    }
+    return ss.str();
+}
+
 std::string MainBoard::ToJson(bool isNested) {
     std::stringstream ss;
     if(!isNested)
@@ -80,7 +112,6 @@ std::string MainBoard::ToJson(bool isNested) {
             ss << R"("id": ")" << id << R"(",)";
             ss << R"("winner": )";
             ss << "\"" << winnerBoard[boardRow][boardColumn] << "\",";
-            ss << mainPlayBoard[boardRow][boardColumn]->ToJson(true);
             ss << "}";
             if (boardColumn != boardSize - 1) {
                 ss << ",";

@@ -11,9 +11,11 @@ class Player {
 protected:
     char symbol;
     int points = 0;
+    std::string name = "Player";
 public:
     virtual ~Player() = default;
     Player(char symbol);
+    std::string GetName() const;
     int GetPoints() const;
     char GetSymbol() const;
     void IncrementPoints();

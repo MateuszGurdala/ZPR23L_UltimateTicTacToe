@@ -34,6 +34,6 @@ export class GameHttpClient {
 
 	mockFun() {
 		console.log("click");
-		this.getBoardState();
+		this.getBoardState().subscribe(next => {console.log(next)});
 	}
 }

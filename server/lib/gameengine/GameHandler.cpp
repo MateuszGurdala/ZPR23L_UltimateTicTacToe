@@ -1,3 +1,4 @@
+#include <sstream>
 #include "../../include/gameengine/GameHandler.hpp"
 #include "../../include/entities/ComputerPlayer.hpp"
 
@@ -55,4 +56,36 @@ void GameHandler::PerformTurn(Point boardCoordinates, Point innerCoordinates) {
     }
     gameEngine->HandleMove(boardCoordinates, innerCoordinates, currentFigure);
     isHostTurn = !isHostTurn;
+}
+
+//TODO consider moving jsons with communication to other class
+std::string GameHandler::GameStateAsJson() {
+    std::stringstream ss;
+    ss << "{";
+        ss << "\"hostPlayer\":";
+        ss << "{";
+            ss << "\"name\":" << "\"" << hostPlayer->GetName() << "\"";
+            ss << "\"symbol\":" << "\"" << hostPlayer->GetSymbol() << "\"";
+            ss << "\"points\":" << "\"" << hostPlayer->GetPoints() << "\"";
+        ss << "},";
+            ss << "\"guestPlayer\":";
+        ss << "{";
+            ss << "\"name\":" << "\"" << secondPlayer->GetName() << "\"";
+            ss << "\"symbol\":" << "\"" << secondPlayer->GetSymbol()<< "\"";
+            ss << "\"points\":" << "\"" << secondPlayer->GetPoints() << "\"";
+        ss << "},";
+            ss << "\"currentTurn\":";
+        ss << "{";
+        if(isHostTurn)
+        {
+            ss << "\"nowPlaying\":" << "\"" << hostPlayer->GetSymbol()<< "\"" ;
+        }
+        else
+        {
+            ss << "\"nowPlaying\":" << "\"" << secondPlayer->GetSymbol() << "\"";
+        }
+        ss << "},";
+            gameEngine->GetWinnerBoardAsJson(true);
+    ss << "}";
+    return ss.str();
 }

@@ -27,4 +27,6 @@ Point& ComputerPlayer::SimulateMove(const std::vector<Point>& availableMoves) {
     return move;
 }
 
-ComputerPlayer::ComputerPlayer(char symbol) : Player(symbol) {}
+ComputerPlayer::ComputerPlayer(char symbol) : Player(symbol) {
+    name = "Computer";
+}

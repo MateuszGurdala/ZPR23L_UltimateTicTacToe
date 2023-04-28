@@ -14,8 +14,8 @@ if(UNIX)
 add_subdirectory(test)
 endif()
 
-#add_executable (UltimateTicTacToeServer "${PROJECT_SOURCE_DIR}/src/main.cpp")
-add_executable (UltimateTicTacToeServer "${PROJECT_SOURCE_DIR}/src/gameMain.cpp")
+add_executable (UltimateTicTacToeServer "${PROJECT_SOURCE_DIR}/src/main.cpp")
+#add_executable (UltimateTicTacToeServer "${PROJECT_SOURCE_DIR}/src/gameMain.cpp")
 
 
 #Link libraries
