@@ -3,6 +3,9 @@
 
 #include <stdexcept>
 
+/*  Struct: Point
+    Contains coordinates of board defined as (x,y) which translates to (index of row, index of column)
+*/
 struct Point {
     int x;
     int y;
@@ -10,6 +13,13 @@ struct Point {
     Point() : x(0), y(0) {}
 };
 
+/*  Class: BoardBase
+        Base class for in game boards. Contains virtual methods used in all types of Boards and
+        stores information about size of the board.
+
+    See Also:
+      <InnerBoard>, <MainBoard>
+ */
 class BoardBase {
 protected:
     int boardSize;

@@ -7,6 +7,12 @@
 #include <vector>
 #include "BoardBase.hpp"
 
+/*  Class: BoardBase
+    Base class for tic-tac-toe players.
+
+    See Also:
+      <HumanPlayer>, <ComputerPlayer>
+ */
 class Player {
 protected:
     char symbol;
