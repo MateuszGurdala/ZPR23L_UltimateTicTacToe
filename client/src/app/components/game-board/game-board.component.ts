@@ -46,7 +46,7 @@ export class GameBoardComponent extends SegmentLogic implements AfterContentInit
 
 	update(state: GameBoard | DaughterBoard): void {
 		state.segments.forEach((segment: any) => {
-			let segmentComponent = this.segments.at(segment.id - 1);
+			let segmentComponent = this.segments.at(segment.id);
 			if (segmentComponent !== undefined) {
 				segmentComponent.update(segment);
 			}
