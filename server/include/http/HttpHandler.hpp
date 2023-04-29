@@ -32,7 +32,7 @@ private:
         <HttpRequest>
   */
   HttpResponse
-  handleGETRequest(const std::shared_ptr<HttpRequest> request) const;
+  handleGETRequest(const std::shared_ptr<HttpRequest>& request) const;
   /*  Function: handlePOSTRequest
 
     Processes requests with POST method.
@@ -51,7 +51,7 @@ private:
       <HttpRequest>
 */
   HttpResponse
-  handlePOSTRequest(const std::shared_ptr<HttpRequest> request) const;
+  handlePOSTRequest(const std::shared_ptr<HttpRequest>& request) const;
   /*  Function: handleOPTIONSRequest
 
     Processes requests with OPTIONS method.
@@ -69,7 +69,7 @@ private:
       <HttpRequest>
 */
   HttpResponse
-  handleOPTIONSRequest(const std::shared_ptr<HttpRequest> request) const;
+  handleOPTIONSRequest(const std::shared_ptr<HttpRequest>& request) const;
 
 public:
   /*  Function: handle
@@ -88,7 +88,7 @@ public:
 
       <HttpRequest>
 */
-  HttpResponse handle(const std::shared_ptr<HttpRequest> request) const;
+  HttpResponse handle(const std::shared_ptr<HttpRequest>& request) const;
 };
 
 #endif

@@ -61,7 +61,7 @@ auto MainBoard::GetInnerBoarHorizontalValues(Point& playBoardCoordinates, Point&
     return nullptr;
 }*/
 
-void MainBoard::MakeMove(Point& boardCoordinates, Point& innerCoordinates, char& figure) {
+void MainBoard::MakeMove(Point& boardCoordinates, Point& innerCoordinates, char figure) {
     mainPlayBoard[boardCoordinates.x][boardCoordinates.y]->PlaceFigure(innerCoordinates, figure);
 }
 
@@ -112,6 +112,7 @@ std::string MainBoard::ToJson(bool isNested) {
             ss << R"("id": ")" << id << R"(",)";
             ss << R"("winner": )";
             ss << "\"" << winnerBoard[boardRow][boardColumn] << "\",";
+            ss << mainPlayBoard[boardRow][boardColumn]->ToJson(true);
             ss << "}";
             if (boardColumn != boardSize - 1) {
                 ss << ",";

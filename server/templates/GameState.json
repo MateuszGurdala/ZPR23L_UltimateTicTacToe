@@ -1,0 +1,15 @@
+{
+  "hostPlayer":{
+    "name":"testHost",
+    "symbol":"X",
+    "points":"0"
+  },
+  "guestPlayer":{
+    "name":"Computer",
+    "symbol":"O",
+    "points":"0"
+  },
+  "currentTurn":{
+    "nowPlaying":"O"
+  }
+}

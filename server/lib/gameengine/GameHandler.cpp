@@ -64,14 +64,14 @@ std::string GameHandler::GameStateAsJson() {
     ss << "{";
         ss << "\"hostPlayer\":";
         ss << "{";
-            ss << "\"name\":" << "\"" << hostPlayer->GetName() << "\"";
-            ss << "\"symbol\":" << "\"" << hostPlayer->GetSymbol() << "\"";
+            ss << "\"name\":" << "\"" << hostPlayer->GetName() << "\",";
+            ss << "\"symbol\":" << "\"" << hostPlayer->GetSymbol() << "\",";
             ss << "\"points\":" << "\"" << hostPlayer->GetPoints() << "\"";
         ss << "},";
             ss << "\"guestPlayer\":";
         ss << "{";
-            ss << "\"name\":" << "\"" << secondPlayer->GetName() << "\"";
-            ss << "\"symbol\":" << "\"" << secondPlayer->GetSymbol()<< "\"";
+            ss << "\"name\":" << "\"" << secondPlayer->GetName() << "\",";
+            ss << "\"symbol\":" << "\"" << secondPlayer->GetSymbol()<< "\",";
             ss << "\"points\":" << "\"" << secondPlayer->GetPoints() << "\"";
         ss << "},";
             ss << "\"currentTurn\":";
@@ -84,7 +84,7 @@ std::string GameHandler::GameStateAsJson() {
         {
             ss << "\"nowPlaying\":" << "\"" << secondPlayer->GetSymbol() << "\"";
         }
-        ss << "},";
+        ss << "}";
             gameEngine->GetWinnerBoardAsJson(true);
     ss << "}";
     return ss.str();
