@@ -4,7 +4,7 @@
 #include "../../include/entities/HumanPlayer.hpp"
 
 HumanPlayer::HumanPlayer(char symbol,std::string name): Player(symbol){
-    this->name = name;
+    this->name = std::move(name);
 }
 
 
