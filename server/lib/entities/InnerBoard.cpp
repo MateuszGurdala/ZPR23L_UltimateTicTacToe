@@ -1,6 +1,7 @@
 
 #include <sstream>
 #include "../../include/entities/InnerBoard.hpp"
+#include "../../include/helpers/BoardIndexConverter.hpp"
 #include <stdexcept>
 
 InnerBoard::InnerBoard(int boardSize) : BoardBase(boardSize){
@@ -29,6 +30,7 @@ void InnerBoard::PlaceFigure(Point& coordinates, char& figure) {
     playBoard[coordinates.x][coordinates.y] = figure;
 }
 
+//TEST PURPOSE TODO DELETE LATER
 std::string InnerBoard::ToString() const {
     std::ostringstream stringStream;
     stringStream << " |";
@@ -53,6 +55,38 @@ std::string InnerBoard::ToString() const {
         stringStream << "\n";
     }
     return stringStream.str();
+}
+
+std::string InnerBoard::ToJson(bool isNested) {
+    std::stringstream ss;
+    if(!isNested)
+    {
+        ss << "{";
+    }
+    ss << "\"segments\":[";
+    for (int boardRow = 0; boardRow < boardSize; boardRow++) {
+        for (int boardColumn = 0; boardColumn < boardSize; boardColumn++) {
+            auto currentPoint = Point(boardRow, boardColumn);
+            int id = BoardIndexConverter::PointToIndex(currentPoint, boardSize);
+            ss << "{";
+            ss << R"("id": ")" << id << R"(",)" ;
+            ss << R"("winner": )";
+            ss << "\"" << playBoard[boardRow][boardColumn] << "\"";
+            ss << "}";
+            if (boardColumn != boardSize - 1) {
+                ss << ",";
+            }
+        }
+        if (boardRow != boardSize - 1) {
+            ss << ",";
+        }
+    }
+    ss << "]";
+    if(!isNested)
+    {
+        ss << "}";
+    }
+    return ss.str();
 }
 
 //TODO

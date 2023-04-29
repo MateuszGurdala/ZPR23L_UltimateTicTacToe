@@ -6,7 +6,7 @@
 namespace config {
 const int port = 1337;
 const int requestBuffer = 1024;
-const bool verbose = false;
+const bool verbose = true;
 const std::string serverName = "UltimateTicTacToeServer";
 const std::string contentType = "application/json";
 const std::string allowOrigin = "*";

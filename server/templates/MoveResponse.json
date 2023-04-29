@@ -1,0 +1,7 @@
+{
+  "moveResponse":{
+    "outerBoardIndex":"5",
+    "innerBoardIndex":"1",
+    "isMoveValid":true
+  }
+}

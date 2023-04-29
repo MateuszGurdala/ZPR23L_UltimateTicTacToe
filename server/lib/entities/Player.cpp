@@ -9,6 +9,10 @@ int Player::GetPoints() const {
     return points;
 }
 
+std::string Player::GetName() const {
+    return name;
+}
+
 char Player::GetSymbol() const {
     return symbol;
 }

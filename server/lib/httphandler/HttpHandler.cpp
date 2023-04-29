@@ -1,11 +1,12 @@
 #include "../../include/http/HttpHandler.hpp"
+#include "../../include/entities/MainBoard.hpp"
 
 /* TEMP */
 #include <fstream>
 #include <sstream>
 
 HttpResponse
-HttpHandler::handle(const std::shared_ptr<HttpRequest> request) const {
+HttpHandler::handle(const std::shared_ptr<HttpRequest>& request) const {
   switch (request->getMethod()) {
   case OPTIONS:
     return handleOPTIONSRequest(request);
@@ -22,28 +23,29 @@ HttpHandler::handle(const std::shared_ptr<HttpRequest> request) const {
   }
 }
 
+//TODO expand later (prototype test purpose)
 HttpResponse HttpHandler::handleGETRequest(
-    const std::shared_ptr<HttpRequest> request) const {
+    const std::shared_ptr<HttpRequest>& request) const {
   if (request->getEndpoint() == "/BoardState") {
     /* TEMP */
-    std::ifstream t(
-        "../../templates/BoardState.json"); // ../ linux ../../ win32
-    std::stringstream buffer;
-    buffer << t.rdbuf();
-    return HttpResponse::GETResponse(buffer.str());
+    auto mainBoard = std::make_unique<MainBoard>(3);
+    Point outerBoardCoords = Point(1,1);
+    Point innerBoardCoords = Point(1,1);
+    mainBoard->MakeMove(outerBoardCoords,innerBoardCoords, 'X');
+    return HttpResponse::GETResponse(mainBoard->ToJson(false));
   } else {
     return HttpResponse::GETResponse(R"({"result":" true"})");
   }
 }
 
 HttpResponse HttpHandler::handlePOSTRequest(
-    const std::shared_ptr<HttpRequest> request) const {
+    const std::shared_ptr<HttpRequest>& request) const {
   auto x = request;
   return HttpResponse::POSTResponse(R"({"result":" true"})");
 }
 
 HttpResponse HttpHandler::handleOPTIONSRequest(
-    const std::shared_ptr<HttpRequest> request) const {
+    const std::shared_ptr<HttpRequest>& request) const {
   auto x = request;
   return HttpResponse::OPTIONSResponse();
 }

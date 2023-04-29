@@ -20,6 +20,7 @@ public:
     GameHandler(std::unique_ptr<HumanPlayer> hostPlayer, std::unique_ptr<Player> secondPlayer, std::unique_ptr<GameEngine> gameEngine);
     GameHandler();
     std::array<Point, 2> ChooseCoordinatesOfMove();
+    std::string GameStateAsJson();
     void Print();
 };
 

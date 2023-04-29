@@ -1,5 +1,7 @@
 #include <iostream>
+#include <sstream>
 #include "../../include/entities/MainBoard.hpp"
+#include "../../include/helpers/BoardIndexConverter.hpp"
 
 MainBoard::MainBoard(int boardSize) : BoardBase(boardSize), winnerBoard(new std::unique_ptr<char[]>[boardSize]){
     mainPlayBoard.resize(boardSize);
@@ -37,7 +39,7 @@ void MainBoard::AddWinnerOfInnerBoard(Point& coordinates, char& figure) {
     VerifyCoordinates(coordinates);
     if(winnerBoard[coordinates.x][coordinates.y] != ' ')
     {
-        throw std::invalid_argument("given given cell is already filled");
+        throw std::invalid_argument("given cell is already filled");
     }
     winnerBoard[coordinates.x][coordinates.y] = figure;
 }
@@ -59,6 +61,71 @@ auto MainBoard::GetInnerBoarHorizontalValues(Point& playBoardCoordinates, Point&
     return nullptr;
 }*/
 
-void MainBoard::MakeMove(Point& boardCoordinates, Point& innerCoordinates, char& figure) {
+void MainBoard::MakeMove(Point& boardCoordinates, Point& innerCoordinates, char figure) {
     mainPlayBoard[boardCoordinates.x][boardCoordinates.y]->PlaceFigure(innerCoordinates, figure);
+}
+
+std::string MainBoard::WinnerBoardToJson(bool isNested){
+    std::stringstream ss;
+    if(!isNested)
+    {
+        ss << "{";
+    }
+    ss << "\"winnerBoard\":[";
+    for (int boardRow = 0; boardRow < boardSize; boardRow++) {
+        for (int boardColumn = 0; boardColumn < boardSize; boardColumn++) {
+            auto currentPoint = Point(boardRow, boardColumn);
+            int id = BoardIndexConverter::PointToIndex(currentPoint, boardSize);
+            ss << "{";
+            ss << R"("id": ")" << id << R"(",)" ;
+            ss << R"("winner": )";
+            ss << "\"" << winnerBoard[boardRow][boardColumn] << "\"";
+            ss << "}";
+            if (boardColumn != boardSize - 1) {
+                ss << ",";
+            }
+        }
+        if (boardRow != boardSize - 1) {
+            ss << ",";
+        }
+    }
+    ss << "]";
+    if(!isNested)
+    {
+        ss << "}";
+    }
+    return ss.str();
+}
+
+std::string MainBoard::ToJson(bool isNested) {
+    std::stringstream ss;
+    if(!isNested)
+    {
+        ss << "{";
+    }
+    ss << "\"segments\":[";
+    for (int boardRow = 0; boardRow < boardSize; boardRow++) {
+        for (int boardColumn = 0; boardColumn < boardSize; boardColumn++) {
+            ss << "{";
+            auto currentPoint = Point(boardRow,boardColumn);
+            int id = BoardIndexConverter::PointToIndex(currentPoint, boardSize);
+            ss << R"("id": ")" << id << R"(",)";
+            ss << R"("winner": )";
+            ss << "\"" << winnerBoard[boardRow][boardColumn] << "\",";
+            ss << mainPlayBoard[boardRow][boardColumn]->ToJson(true);
+            ss << "}";
+            if (boardColumn != boardSize - 1) {
+                ss << ",";
+            }
+        }
+        if (boardRow != boardSize - 1) {
+            ss << ",";
+        }
+    }
+    ss << "]";
+    if(!isNested)
+    {
+        ss << "}";
+    }
+    return ss.str();
 }
