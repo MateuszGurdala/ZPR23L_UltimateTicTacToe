@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("cho",["Function"],[["ChooseMove",,[["ComputerPlayer",,,,0,"File6:ComputerPlayer.hpp:ComputerPlayer.ChooseMove","CClass:ComputerPlayer:ChooseMove"],["HumanPlayer",,,,0,"File6:HumanPlayer.hpp:HumanPlayer.ChooseMove","CClass:HumanPlayer:ChooseMove"]]]]);

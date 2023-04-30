@@ -1,1 +1,1 @@
-﻿NDSearch.OnPrefixDataLoaded("win",["Class"],[["WIN32ServerSocket",,[[,,,,0,"File3:WIN32ServerSocket.hpp:WIN32ServerSocket","CClass:WIN32ServerSocket"]]]]);
+﻿NDSearch.OnPrefixDataLoaded("win",["Class","Function"],[["WIN32ServerSocket",,[[,,,,0,"File3:WIN32ServerSocket.hpp:WIN32ServerSocket","CClass:WIN32ServerSocket"]]],["WinnerBoardToJson",,[["MainBoard",,,,1,"File6:MainBoard.hpp:MainBoard.WinnerBoardToJson","CClass:MainBoard:WinnerBoardToJson"]]]]);

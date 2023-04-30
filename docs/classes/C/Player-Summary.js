@@ -1,0 +1,1 @@
+﻿NDFramePage.OnPageTitleLoaded("CClass:Player","Player");NDSummary.OnSummaryLoaded("CClass:Player",[["C/C++","C"]],[["Classes","Class"]],[[76,0,0,"Player"]]);

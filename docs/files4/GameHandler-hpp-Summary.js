@@ -1,0 +1,1 @@
+﻿NDFramePage.OnPageTitleLoaded("File4:GameHandler.hpp","GameHandler.hpp");NDSummary.OnSummaryLoaded("File4:GameHandler.hpp",[["C/C++","C"]],[["Classes","Class"]],[[69,0,0,"GameHandler","GameHandler"]]);

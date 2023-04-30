@@ -1,0 +1,1 @@
+﻿NDFramePage.OnPageTitleLoaded("CClass:BoardIndexConverter","BoardIndexConverter");NDSummary.OnSummaryLoaded("CClass:BoardIndexConverter",[["C/C++","C"]],[["Classes","Class"],["Functions","Function"],["Groups","Group"]],[[77,0,0,"BoardIndexConverter"],[78,0,2,"Functions","Functions"],[79,0,1,"PointToIndex","PointToIndex"],[80,0,1,"handleGETRequest","handleGETRequest"]]);

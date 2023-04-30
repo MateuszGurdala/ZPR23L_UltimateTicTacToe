@@ -8,53 +8,53 @@
 
 <body onload="NDLoader.OnLoad('Content');" class="NDPage NDContentPage">
 
-<a name="Topic34"></a><div class="CTopic TClass LC first">
+<a name="Topic31"></a><div class="CTopic TClass LC first">
  <div class="CTitle">HttpRequest</div>
- <div class="NDClassPrototype" id="NDClassPrototype34"><div class="CPEntry TClass Current"><div class="CPName">HttpRequest</div></div></div>
+ <div class="NDClassPrototype" id="NDClassPrototype31"><div class="CPEntry TClass Current"><div class="CPName">HttpRequest</div></div></div>
  <div class="CBody"><p>A class that acts as abstraction between raw http request data and HttpHandler.</p></div>
 </div>
 
-<a name="Functions"></a><a name="Topic35"></a><div class="CTopic TGroup LC">
+<a name="Functions"></a><a name="Topic32"></a><div class="CTopic TGroup LC">
  <div class="CTitle">Functions</div>
 </div>
 
-<a name="parseBody"></a><a name="Topic36"></a><div class="CTopic TFunction LC">
+<a name="parseBody"></a><a name="Topic33"></a><div class="CTopic TFunction LC">
  <div class="CTitle">parseBody</div>
- <div id="NDPrototype36" class="NDPrototype WideForm"><div class="PSection PParameterSection CStyle"><table><tr><td class="PBeforeParameters"><span class="SHKeyword">int</span> parseBody(</td><td class="PParametersParentCell"><table class="PParameters"><tr><td class="PModifierQualifier first">std::</td><td class="PType"><span class="SHKeyword">string</span>&nbsp;</td><td class="PSymbols">&amp;</td><td class="PName last">request</td></tr></table></td><td class="PAfterParameters">)</td></tr></table></div></div>
+ <div id="NDPrototype33" class="NDPrototype WideForm"><div class="PSection PParameterSection CStyle"><table><tr><td class="PBeforeParameters"><span class="SHKeyword">int</span> parseBody(</td><td class="PParametersParentCell"><table class="PParameters"><tr><td class="PModifierQualifier first">std::</td><td class="PType"><span class="SHKeyword">string</span>&nbsp;</td><td class="PSymbols">&amp;</td><td class="PName last">request</td></tr></table></td><td class="PAfterParameters">)</td></tr></table></div></div>
  <div class="CBody"><p>Parses body from json format.</p><div class="CHeading">Parameters</div><table class="CDefinitionList"><tr><td class="CDLEntry">request<div class="CDLParameterType">std::<span class="SHKeyword">string</span>&amp;</div></td><td class="CDLDefinition"><p>Request data as std::string.</p></td></tr></table><div class="CHeading">Returns</div><p>0 if parsing ended with success, else 1;</p></div>
 </div>
 
-<a name="parseRequestType"></a><a name="Topic37"></a><div class="CTopic TFunction LC">
+<a name="parseRequestType"></a><a name="Topic34"></a><div class="CTopic TFunction LC">
  <div class="CTitle">parseRequestType</div>
- <div id="NDPrototype37" class="NDPrototype WideForm"><div class="PSection PParameterSection CStyle"><table><tr><td class="PBeforeParameters"><span class="SHKeyword">int</span> parseRequestType(</td><td class="PParametersParentCell"><table class="PParameters"><tr><td class="PModifierQualifier first">std::</td><td class="PType"><span class="SHKeyword">string</span>&nbsp;</td><td class="PSymbols">&amp;</td><td class="PName last">request</td></tr></table></td><td class="PAfterParameters">)</td></tr></table></div></div>
+ <div id="NDPrototype34" class="NDPrototype WideForm"><div class="PSection PParameterSection CStyle"><table><tr><td class="PBeforeParameters"><span class="SHKeyword">int</span> parseRequestType(</td><td class="PParametersParentCell"><table class="PParameters"><tr><td class="PModifierQualifier first">std::</td><td class="PType"><span class="SHKeyword">string</span>&nbsp;</td><td class="PSymbols">&amp;</td><td class="PName last">request</td></tr></table></td><td class="PAfterParameters">)</td></tr></table></div></div>
  <div class="CBody"><p>Extracts request type from header line.</p><div class="CHeading">Parameters</div><table class="CDefinitionList"><tr><td class="CDLEntry">request<div class="CDLParameterType">std::<span class="SHKeyword">string</span>&amp;</div></td><td class="CDLDefinition"><p>Request data as std::string.</p></td></tr></table><div class="CHeading">Returns</div><p>0 if parsing ended with success, else 1;</p></div>
 </div>
 
-<a name="parseRequestMethod"></a><a name="Topic38"></a><div class="CTopic TFunction LC">
+<a name="parseRequestMethod"></a><a name="Topic35"></a><div class="CTopic TFunction LC">
  <div class="CTitle">parseRequestMethod</div>
- <div id="NDPrototype38" class="NDPrototype WideForm"><div class="PSection PParameterSection CStyle"><table><tr><td class="PBeforeParameters"><span class="SHKeyword">int</span> parseRequestMethod(</td><td class="PParametersParentCell"><table class="PParameters"><tr><td class="PModifierQualifier first">std::</td><td class="PType"><span class="SHKeyword">string</span>&nbsp;</td><td class="PSymbols">&amp;</td><td class="PName last">requestType</td></tr></table></td><td class="PAfterParameters">)</td></tr></table></div></div>
+ <div id="NDPrototype35" class="NDPrototype WideForm"><div class="PSection PParameterSection CStyle"><table><tr><td class="PBeforeParameters"><span class="SHKeyword">int</span> parseRequestMethod(</td><td class="PParametersParentCell"><table class="PParameters"><tr><td class="PModifierQualifier first">std::</td><td class="PType"><span class="SHKeyword">string</span>&nbsp;</td><td class="PSymbols">&amp;</td><td class="PName last">requestType</td></tr></table></td><td class="PAfterParameters">)</td></tr></table></div></div>
  <div class="CBody"><p>Extracts request method from header line.</p><div class="CHeading">Parameters</div><table class="CDefinitionList"><tr><td class="CDLEntry">request</td><td class="CDLDefinition"><p>Request data as std::string.</p></td></tr></table><div class="CHeading">Returns</div><p>0 if parsing ended with success, else 1;</p></div>
 </div>
 
-<a name="verboseRequest"></a><a name="Topic39"></a><div class="CTopic TFunction LC">
+<a name="verboseRequest"></a><a name="Topic36"></a><div class="CTopic TFunction LC">
  <div class="CTitle">verboseRequest</div>
- <div id="NDPrototype39" class="NDPrototype"><div class="PSection PPlainSection"><span class="SHKeyword">void</span> verboseRequest() <span class="SHKeyword">const</span></div></div>
+ <div id="NDPrototype36" class="NDPrototype"><div class="PSection PPlainSection"><span class="SHKeyword">void</span> verboseRequest() <span class="SHKeyword">const</span></div></div>
  <div class="CBody"><p>Prints parsed request to the standard output.</p></div>
 </div>
 
-<a name="HttpRequest"></a><a name="Topic40"></a><div class="CTopic TFunction LC">
+<a name="HttpRequest"></a><a name="Topic37"></a><div class="CTopic TFunction LC">
  <div class="CTitle">HttpRequest</div>
- <div id="NDPrototype40" class="NDPrototype WideForm"><div class="PSection PParameterSection CStyle"><table><tr><td class="PBeforeParameters"><span class="SHKeyword">explicit</span> HttpRequest(</td><td class="PParametersParentCell"><table class="PParameters"><tr><td class="PModifierQualifier first">std::</td><td class="PType"><span class="SHKeyword">string</span>&nbsp;</td><td class="PSymbols">&amp;&amp;</td><td class="PName last">request</td></tr></table></td><td class="PAfterParameters">)</td></tr></table></div></div>
+ <div id="NDPrototype37" class="NDPrototype WideForm"><div class="PSection PParameterSection CStyle"><table><tr><td class="PBeforeParameters"><span class="SHKeyword">explicit</span> HttpRequest(</td><td class="PParametersParentCell"><table class="PParameters"><tr><td class="PModifierQualifier first">std::</td><td class="PType"><span class="SHKeyword">string</span>&nbsp;</td><td class="PSymbols">&amp;&amp;</td><td class="PName last">request</td></tr></table></td><td class="PAfterParameters">)</td></tr></table></div></div>
  <div class="CBody"><p>Parses body from json format.</p><div class="CHeading">Parameters</div><table class="CDefinitionList"><tr><td class="CDLEntry">request<div class="CDLParameterType">std::<span class="SHKeyword">string</span>&amp;&amp;</div></td><td class="CDLDefinition"><p>Raw request data as std::string.</p></td></tr></table></div>
 </div>
 
-<a name="getEndpoint"></a><a name="Topic41"></a><div class="CTopic TFunction LC">
+<a name="getEndpoint"></a><a name="Topic38"></a><div class="CTopic TFunction LC">
  <div class="CTitle">getEndpoint</div>
- <div id="NDPrototype41" class="NDPrototype"><div class="PSection PPlainSection">std::<span class="SHKeyword">string</span> getEndpoint() <span class="SHKeyword">const</span></div></div>
+ <div id="NDPrototype38" class="NDPrototype"><div class="PSection PPlainSection">std::<span class="SHKeyword">string</span> getEndpoint() <span class="SHKeyword">const</span></div></div>
  <div class="CBody"><div class="CHeading">Returns</div><p>Request endpoint;</p></div>
 </div>
 
-<a name="getEndpoint(2)"></a><a name="Topic42"></a><div class="CTopic TFunction LC last">
+<a name="getEndpoint(2)"></a><a name="Topic39"></a><div class="CTopic TFunction LC last">
  <div class="CTitle">getEndpoint</div>
  <div class="CBody"><div class="CHeading">Returns</div><p>Request method;</p></div>
 </div>

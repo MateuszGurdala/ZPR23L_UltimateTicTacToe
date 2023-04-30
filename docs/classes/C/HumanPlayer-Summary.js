@@ -1,0 +1,1 @@
+﻿NDFramePage.OnPageTitleLoaded("CClass:HumanPlayer","HumanPlayer");NDSummary.OnSummaryLoaded("CClass:HumanPlayer",[["C/C++","C"]],[["Classes","Class"],["Functions","Function"],["Groups","Group"]],[[94,0,0,"HumanPlayer"],[95,0,2,"Functions","Functions"],[96,0,1,"ComputerPlayer","ComputerPlayer"],[97,0,1,"ChooseMove","ChooseMove"]]);

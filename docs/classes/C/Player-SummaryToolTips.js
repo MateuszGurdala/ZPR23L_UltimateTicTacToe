@@ -1,0 +1,1 @@
+﻿NDSummary.OnToolTipsLoaded("CClass:Player",{76:"<div class=\"NDToolTip TClass LC\"><div class=\"NDClassPrototype\" id=\"NDClassPrototype76\"><div class=\"CPEntry TClass Current\"><div class=\"CPName\">Player</div></div></div><div class=\"TTSummary\">Base class for tic-tac-toe players.</div></div>"});

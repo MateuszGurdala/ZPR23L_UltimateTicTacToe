@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("poi",["Struct","Function"],[["Point",,[[,,,,0,"File6:BoardBase.hpp:Point","CClass:Point"]]],["PointToIndex",,[["BoardIndexConverter",,,,1,"File5:BoardIndexConverter.hpp:BoardIndexConverter.PointToIndex","CClass:BoardIndexConverter:PointToIndex"]]]]);

@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("boa",["Class"],[["BoardBase",,[[,,,,0,"File6:BoardBase.hpp:BoardBase","CClass:BoardBase"]]],["BoardIndexConverter",,[[,,,,0,"File5:BoardIndexConverter.hpp:BoardIndexConverter","CClass:BoardIndexConverter"]]]]);
