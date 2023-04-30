@@ -6,6 +6,12 @@
 #include "GameEngine.hpp"
 #include <memory>
 
+/*  Class: GameHandler
+    Wrapper class for game logic which also links players with the game. It holds the logic of performing turn and invokes
+    methods of gameEngine. It also holds the game state.
+    See also:
+    <GameEngine>
+ */
 class GameHandler {
 private:
 

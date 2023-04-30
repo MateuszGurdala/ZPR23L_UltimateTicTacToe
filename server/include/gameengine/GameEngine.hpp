@@ -3,6 +3,10 @@
 
 #include "../entities/MainBoard.hpp"
 
+/*  Class: GameEngine
+    Class responsible for checking and handling logic of the game. It inludes MainBoard,
+    lists all available moves, checks if game has the winner.
+ */
 class GameEngine {
 private:
     std::unique_ptr<MainBoard> mainBoard;
