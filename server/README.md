@@ -1,5 +1,5 @@
 # HOW TO BUILD AND RUN GAME SERVER
-
+## cmake is required to build and run project
 ### For WIN32:
 
 ```powershell
@@ -13,7 +13,10 @@ powershell -ExecutionPolicy Bypass -File build_win32.ps1
 ```bash
 sh ./build_linux.sh
 ```
-
+#### also test of creating jsons can be run:
+```bash
+sh ./build_test_main_linux.sh
+```
 <br/>
 
 # TO RUN UNIT TESTS (LINUX ONLY)
