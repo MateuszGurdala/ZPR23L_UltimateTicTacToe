@@ -11,8 +11,8 @@ import { HttpClientModule } from "@angular/common/http";
 import { SettingsBarComponent } from "./components/settings-bar/settings-bar.component";
 import { GameMasterService } from "./services/game-master.service";
 import { StartupPageComponent } from "./components/startup-page/startup-page.component";
-// import { GamePageComponent } from ".components/game-page/game-page.component";
 import { GamePageComponent } from "./components/game-page/game-page.component";
+import { HoverReactDirective } from "./directives/hover-react.directive";
 
 @NgModule({
 	declarations: [
@@ -23,6 +23,7 @@ import { GamePageComponent } from "./components/game-page/game-page.component";
 		SettingsBarComponent,
 		StartupPageComponent,
 		GamePageComponent,
+		HoverReactDirective,
 	],
 	imports: [BrowserModule, AppRoutingModule, HttpClientModule],
 	providers: [GameMasterService, GameHttpClient],

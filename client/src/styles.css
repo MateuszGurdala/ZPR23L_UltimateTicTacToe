@@ -6,6 +6,8 @@
     --main-gradient: linear-gradient(0deg, var(--main-shade) 40%, var(--main) 100%);
 
     --grey: #888;
+    --hover: #999;
+    --active: #555;
 
     --ratio: calc(9/16);
 }
@@ -15,4 +17,17 @@
     padding: 0;
     user-select: none;
     font-family: 'Roboto', sans-serif;
+}
+
+
+.color-react {
+    color: var(--grey);
+}
+
+.color-react:hover {
+    color: var(--hover);
+}
+
+.color-react:active {
+    color: var(--active);
 }
