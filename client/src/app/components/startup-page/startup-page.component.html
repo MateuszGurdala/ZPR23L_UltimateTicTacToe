@@ -1,1 +1,28 @@
-<p>startup-page works!</p>
+<div class="container">
+    <!-- WelcomePage -->
+    <div [ngClass]="{'hide': !displayWelcome}">
+        <div class="credits">
+            <h1>UltimateTicTacToe</h1>
+            <h3>A ZPR project.</h3>
+            <h4>Credits</h4>
+            <h4>Mateusz Gurdała</h4>
+            <h4>Krystian Grela</h4>
+        </div>
+
+        <div class="options-panel">
+            <h3 colorReact class="button">Start Game</h3>
+            <h3 colorReact class="button">Join Game</h3>
+            <h3 colorReact class="button" (click)="optionsClick()">Options</h3>
+        </div>
+    </div>
+    <!-- OtherPages -->
+    <div (click)="returnClick()" colorReact [ngClass]="{'hide': displayWelcome}" class="page-with-return">
+        <span class="material-symbols-outlined return-btn">
+            arrow_back_ios
+        </span>
+        <!-- OptionsPage -->
+        <div>
+
+        </div>
+    </div>
+</div>
