@@ -4,14 +4,4 @@
     width: 100vw;
     height: 100vh;
     background-image: var(--main-gradient);
-    display: flex;
-    flex-direction: row;
-}
-
-.board-container {
-    min-width: fit-content;
-    min-height: fit-content;
-    width: min(90vh, 100vw * var(--ratio));
-    height: min(90vh, 100vw * var(--ratio));
-    margin: auto;
 }

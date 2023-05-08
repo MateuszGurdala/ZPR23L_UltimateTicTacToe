@@ -6,8 +6,12 @@ import { GameBoardComponent } from "../components/game-board/game-board.componen
 	providedIn: "root",
 })
 export class GameMasterService {
-	constructor(private httpClient: GameHttpClient) {}
 	gameBoard: GameBoardComponent;
+	gameState: "Ready" | "Waiting" | "Ongoing" | "PlayerSolo" | "PlayerX" | "PlayerO";
+
+	constructor(private httpClient: GameHttpClient) {
+		this.gameState = "Ready";
+	}
 
 	setBoardComponent(component: GameBoardComponent): void {
 		this.gameBoard = component;
@@ -31,5 +35,9 @@ export class GameMasterService {
 
 	mockFun() {
 		return this.httpClient.mockFun();
+	}
+
+	CanStartGame(): boolean {
+		return this.gameState == "Ready";
 	}
 }
