@@ -1,4 +1,5 @@
 .container {
+    height: 60vh;
     padding: 10% 20%;
     color: var(--grey);
 }
@@ -38,12 +39,59 @@ h4 {
     display: none !important;
 }
 
+.selected {
+    color: var(--highlight);
+}
+
 .page-with-return {
-    display: grid;
-    grid-template-rows: 10% 90%;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .return-btn {
     cursor: pointer;
     font-size: 5vmin;
+    display: block;
+    width: fit-content;
+}
+
+.settings-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: fit-content;
+    gap: 5vmin;
+    margin: auto;
+}
+
+.setting-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.setting-container h4 {
+    font-size: 6vmin;
+    margin-right: 8vmin;
+}
+
+.server-url {
+    display: block;
+    background-color: transparent;
+
+}
+
+.server-url:focus {
+    outline: none;
+}
+
+.signs-container {
+    display: flex;
+    flex-direction: row;
+    gap: 4vmin;
+}
+
+.signs-container h1 {
+    cursor: pointer;
 }

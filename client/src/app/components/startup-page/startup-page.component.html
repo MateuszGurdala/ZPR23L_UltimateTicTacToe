@@ -16,13 +16,33 @@
         </div>
     </div>
     <!-- OtherPages -->
-    <div (click)="returnClick()" colorReact [ngClass]="{'hide': displayWelcome}" class="page-with-return">
-        <span class="material-symbols-outlined return-btn">
+    <div [ngClass]="{'hide': displayWelcome}" class="page-with-return">
+        <span class="material-symbols-outlined return-btn" (click)="returnClick()" colorReact>
             arrow_back_ios
         </span>
         <!-- OptionsPage -->
-        <div>
-
+        <div [ngClass]="{'hide': !displayOptions}" class="settings-page">
+            <div class="setting-container">
+                <h4>Server IP</h4>
+                <input type="text" value="localhost:4200" class="server-url" />
+            </div>
+            <div class="setting-container">
+                <h4>Preferred Sign</h4>
+                <div class="signs-container">
+                    <h1 [ngClass]="{'selected': xIsChosen}" (click)="selectSign($event)">X</h1>
+                    <h1 [ngClass]="{'selected': !xIsChosen}" (click)="selectSign($event)">O</h1>
+                </div>
+            </div>
+            <div class="setting-container">
+                <h4>Game Mode</h4>
+                <select>
+                    <option>AI Enemy</option>
+                    <option>Player</option>
+                </select>
+            </div>
+            <div class="setting-container">
+                <h4>Board Size</h4>
+            </div>
         </div>
     </div>
 </div>
