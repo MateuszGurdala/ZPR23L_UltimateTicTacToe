@@ -5,8 +5,8 @@ int BoardIndexConverter::PointToIndex(Point &point, int &boardSize) {
 }
 
 Point BoardIndexConverter::IndexToPoint(int& index, int &boardSize) {
-    int x = index % boardSize;
-    int y = (index - x)/boardSize;
+    int y = index % boardSize;
+    int x = (index - y)/boardSize;
     auto point = Point(x,y);
     return point;
 }

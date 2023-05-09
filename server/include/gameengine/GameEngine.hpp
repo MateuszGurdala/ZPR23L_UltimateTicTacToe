@@ -22,7 +22,6 @@ public:
     bool CheckLocalWinner();
     bool CheckGlobalWinner();
     void HandleMove(Point& boardCoordinates, Point& innerCoordinates, char figure);
-    void Print();
     std::string GetWinnerBoardAsJson(bool isNested);
     std::string MoveAsJson(bool isNested, std::array<Point, 2> move, bool isValid);
 };

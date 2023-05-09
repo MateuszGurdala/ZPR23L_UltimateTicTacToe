@@ -11,6 +11,15 @@ MainBoard::MainBoard(int boardSize) : BoardBase(boardSize), winnerBoard(new std:
     FillBoard();
 }
 
+std::unique_ptr<InnerBoard>& MainBoard::GetInnerBoard(Point point) {
+    return mainPlayBoard[point.x][point.y];
+}
+
+char MainBoard::GetWinnerBoardCell(Point point) {
+    return winnerBoard[point.x][point.y];
+}
+
+
 void MainBoard::FillBoard() {
     for (auto& row : mainPlayBoard) {
         for (int j = 0; j < boardSize; j++) {
@@ -22,15 +31,6 @@ void MainBoard::FillBoard() {
         for (int j = 0; j < boardSize; j++) {
             winnerBoard[i][j] = ' ';
         }
-    }
-}
-
-void MainBoard::Print() const {
-    for (const auto& row : mainPlayBoard) {
-        for (const auto& innerBoard : row) {
-            std::cout << innerBoard->ToString();
-        }
-        std::cout << "\n";
     }
 }
 

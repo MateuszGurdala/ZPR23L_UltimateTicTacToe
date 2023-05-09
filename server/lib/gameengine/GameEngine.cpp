@@ -35,10 +35,6 @@ void GameEngine::HandleMove(Point& boardCoordinates, Point& innerCoordinates, ch
     mainBoard->MakeMove(boardCoordinates,innerCoordinates,figure);
 }
 
-void GameEngine::Print()
-{
-    mainBoard->Print();
-}
 
 //TODO implement
 bool GameEngine::CheckLocalWinner() {

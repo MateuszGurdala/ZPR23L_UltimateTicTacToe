@@ -27,7 +27,6 @@ public:
     GameHandler();
     std::array<Point, 2> ChooseCoordinatesOfMove();
     std::string GameStateAsJson();
-    void Print();
 };
 
 #endif //ULTIMATETICTACTOESERVER_GAMEHANDLER_H

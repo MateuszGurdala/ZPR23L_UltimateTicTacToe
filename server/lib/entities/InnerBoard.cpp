@@ -30,33 +30,6 @@ void InnerBoard::PlaceFigure(Point& coordinates, char& figure) {
     playBoard[coordinates.x][coordinates.y] = figure;
 }
 
-//TEST PURPOSE TODO DELETE LATER
-std::string InnerBoard::ToString() const {
-    std::ostringstream stringStream;
-    stringStream << " |";
-    for (int i = 0; i < boardSize; i++) {
-        stringStream << i + 1 << "|";
-    }
-    stringStream << "\n-+";
-    for (int i = 0; i < boardSize; i++) {
-        stringStream << "-+";
-    }
-    stringStream << "\n";
-    for (int i = 0; i < boardSize; i++) {
-        stringStream << i + 1 << "|";
-        for (int j = 0; j < boardSize; j++) {
-            stringStream << playBoard[i][j];
-            stringStream << "|";
-        }
-        stringStream << "\n-+";
-        for (int j = 0; j < boardSize; j++) {
-            stringStream << "-+";
-        }
-        stringStream << "\n";
-    }
-    return stringStream.str();
-}
-
 std::string InnerBoard::ToJson(bool isNested) {
     std::stringstream ss;
     if(!isNested)
@@ -87,6 +60,10 @@ std::string InnerBoard::ToJson(bool isNested) {
         ss << "}";
     }
     return ss.str();
+}
+
+char InnerBoard::GetCell(Point coordinates) {
+    return playBoard[coordinates.x][coordinates.y];
 }
 
 //TODO

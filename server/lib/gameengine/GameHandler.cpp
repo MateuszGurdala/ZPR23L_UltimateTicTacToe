@@ -24,9 +24,6 @@ void GameHandler::startGame() {
 bool GameHandler::CheckIfGameEnd() {
     return false;
 }
-void GameHandler::Print() {
-    gameEngine->Print();
-}
 
 std::array<Point, 2> GameHandler::ChooseCoordinatesOfMove(){
     std::array<Point, 2> target{};
