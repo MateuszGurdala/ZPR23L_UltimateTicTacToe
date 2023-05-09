@@ -1,7 +1,5 @@
 .container {
-    height: 60vh;
     padding: 10% 20%;
-    color: var(--grey);
 }
 
 h1 {
@@ -54,32 +52,32 @@ h4 {
     font-size: 5vmin;
     display: block;
     width: fit-content;
+    height: fit-content;
 }
 
 .settings-page {
-    display: flex;
+    display: grid;
+    grid-template-columns: 40% 60%;
     flex-direction: column;
     align-items: center;
     height: fit-content;
     gap: 5vmin;
-    margin: auto;
+    margin-top: 5vh;
 }
 
-.setting-container {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-}
-
-.setting-container h4 {
+.setting-label {
     font-size: 6vmin;
     margin-right: 8vmin;
 }
 
 .server-url {
-    display: block;
     background-color: transparent;
-
+    border-style: solid;
+    border-color: var(--grey);
+    border-width: 0 0 0 0.4vmin;
+    padding-left: 1vmin;
+    font-size: 5vmin;
+    text-align: center;
 }
 
 .server-url:focus {
@@ -90,8 +88,35 @@ h4 {
     display: flex;
     flex-direction: row;
     gap: 4vmin;
+    margin: auto;
 }
 
 .signs-container h1 {
     cursor: pointer;
+}
+
+.board-size {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: auto;
+    gap: 3vmin;
+}
+
+.plus-style {
+    font-size: 7vmin;
+    cursor: pointer;
+}
+
+
+select {
+    background: transparent;
+    font-size: 5vmin;
+    border: none;
+    margin: auto;
+    width: 40%;
+}
+
+select:focus {
+    outline: none;
 }

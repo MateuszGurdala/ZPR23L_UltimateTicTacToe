@@ -22,26 +22,23 @@
         </span>
         <!-- OptionsPage -->
         <div [ngClass]="{'hide': !displayOptions}" class="settings-page">
-            <div class="setting-container">
-                <h4>Server IP</h4>
-                <input type="text" value="localhost:4200" class="server-url" />
+            <h4 class="setting-label">Server IP</h4>
+            <input name="server" type="text" [value]="serverURL" class="server-url" />
+            <h4 class="setting-label">Preferred Sign</h4>
+            <div class="signs-container">
+                <h1 [ngClass]="{'selected': xIsChosen}" (click)="selectSign($event)">X</h1>
+                <h1 [ngClass]="{'selected': !xIsChosen}" (click)="selectSign($event)">O</h1>
             </div>
-            <div class="setting-container">
-                <h4>Preferred Sign</h4>
-                <div class="signs-container">
-                    <h1 [ngClass]="{'selected': xIsChosen}" (click)="selectSign($event)">X</h1>
-                    <h1 [ngClass]="{'selected': !xIsChosen}" (click)="selectSign($event)">O</h1>
-                </div>
-            </div>
-            <div class="setting-container">
-                <h4>Game Mode</h4>
-                <select>
-                    <option>AI Enemy</option>
-                    <option>Player</option>
-                </select>
-            </div>
-            <div class="setting-container">
-                <h4>Board Size</h4>
+            <h4 class="setting-label">Game Mode</h4>
+            <select>
+                <option>AI Enemy</option>
+                <option>Player</option>
+            </select>
+            <h4 class="setting-label">Board Size</h4>
+            <div class="board-size">
+                <h1 colorReact style="cursor: pointer;" (click)="decreaseBoard()">-</h1>
+                <h1>{{ boardSize }}</h1>
+                <h1 colorReact class="plus-style" (click)="increaseBoard()">+</h1>
             </div>
         </div>
     </div>

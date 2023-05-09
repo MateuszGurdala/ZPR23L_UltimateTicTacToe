@@ -10,6 +10,8 @@ export class StartupPageComponent {
 	displayOptions: boolean = true;
 	preferredSign: "X" | "O" = "X";
 	xIsChosen: boolean = true;
+	boardSize: number = 3;
+	serverURL: string = "localhost:4200";
 
 	constructor(private master: GameMasterService) {}
 
@@ -27,5 +29,19 @@ export class StartupPageComponent {
 		this.preferredSign = (arg.target as HTMLElement).innerHTML as "X" | "O";
 
 		this.xIsChosen = this.preferredSign == "X";
+	}
+
+	increaseBoard(): void {
+		this.boardSize += 1;
+		if (this.boardSize > 5) {
+			this.boardSize = 5;
+		}
+	}
+
+	decreaseBoard(): void {
+		this.boardSize -= 1;
+		if (this.boardSize < 3) {
+			this.boardSize = 3;
+		}
 	}
 }
