@@ -23,7 +23,7 @@ public:
 /*  Constructor: InnerBoard
     Constructor which takes size of board as parameter. Creates empty board 2 dimensional array
  */
-InnerBoard(int boardSize);
+InnerBoard(unsigned int boardSize);
 auto GetLeftDiagonalValues(Point& playBoardCoordinates, Point& innerBoardRowAndColumn);
 auto GetRightDiagonalValues(Point& playBoardCoordinates, Point& innerBoardRowAndColumn);
 auto GetHorizontalValues(Point& playBoardCoordinates, Point& innerBoardRowAndColumn);

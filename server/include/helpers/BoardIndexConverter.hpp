@@ -28,7 +28,7 @@ public:
 
       <Point>
 */
-    static int PointToIndex(Point& point, int& boardSize);
+    static int PointToIndex(Point& point, unsigned int& boardSize);
 
     /*  Function: handleGETRequest
 
@@ -48,7 +48,7 @@ public:
 
       <Point>
 */
-    static Point IndexToPoint(int& index, int& boardSize);
+    static Point IndexToPoint(unsigned int& index, unsigned int& boardSize);
 };
 
 #endif //ULTIMATETICTACTOESERVER_BOARDINDEXCONVERTER_HPP

@@ -7,9 +7,9 @@
     Contains coordinates of board defined as (x,y) which translates to (index of row, index of column)
 */
 struct Point {
-    int x;
-    int y;
-    Point(int x_, int y_) : x(x_), y(y_) {}
+    unsigned int x;
+    unsigned int y;
+    Point(unsigned int x_, unsigned int y_) : x(x_), y(y_) {}
     Point() : x(0), y(0) {}
 };
 
@@ -22,12 +22,12 @@ struct Point {
  */
 class BoardBase {
 protected:
-    int boardSize;
+    unsigned int boardSize;
     virtual void FillBoard() = 0;
 public:
-    BoardBase(int boardSize);
+    BoardBase(unsigned int boardSize);
     virtual ~BoardBase() = default;
-    int GetBoardSize() const;
+    unsigned int GetBoardSize() const;
     void VerifyCoordinates(Point point) const;
     static void VerifyFigure(char figure) ;
     virtual std::string ToJson(bool isNested) = 0;

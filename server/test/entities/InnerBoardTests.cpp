@@ -4,13 +4,13 @@
 
 TEST_CASE("InnerBoard is created") {
 
-    int boardSize = 10;
+    unsigned int boardSize = 10;
     InnerBoard innerBoard(boardSize);
 
     REQUIRE(innerBoard.GetBoardSize() == boardSize);
 
-    for (int i = 0; i < boardSize; i++) {
-        for (int j = 0; j < boardSize; j++) {
+    for (unsigned int i = 0; i < boardSize; i++) {
+        for (unsigned int j = 0; j < boardSize; j++) {
             REQUIRE(innerBoard.GetCell(Point(i,j)) == ' ');
         }
     }
@@ -19,7 +19,7 @@ TEST_CASE("InnerBoard is created") {
 
 TEST_CASE("InnerBoard is serialized into json.") {
 
-    int boardSize = 3;
+    unsigned int boardSize = 3;
     InnerBoard innerBoard(boardSize);
 
     Point coordinatesA(0, 0);
@@ -53,7 +53,7 @@ TEST_CASE("InnerBoard is serialized into json.") {
 }
 
 TEST_CASE("PlaceFigure throws invalid_argument for already filled cell") {
-    int boardSize = 3;
+    unsigned int boardSize = 3;
     InnerBoard innerBoard(boardSize);
 
     Point coordinates(0, 0);
@@ -65,7 +65,7 @@ TEST_CASE("PlaceFigure throws invalid_argument for already filled cell") {
 }
 
 TEST_CASE("PlaceFigure places the figure correctly on the board") {
-    int boardSize = 3;
+    unsigned int boardSize = 3;
     InnerBoard innerBoard(boardSize);
 
     Point coordinates(0, 0);

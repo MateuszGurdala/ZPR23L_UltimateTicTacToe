@@ -2,14 +2,14 @@
 #include "../../include/entities/MainBoard.hpp"
 
 TEST_CASE("MainBoard constructor initializes mainPlayBoard and winnerBoard correctly") {
-    int boardSize = 3;
+    unsigned int boardSize = 3;
     MainBoard mainBoard(boardSize);
 
     SECTION("mainPlayBoard is initialized correctly") {
         REQUIRE(mainBoard.GetBoardSize() == boardSize);
 
-        for (int i = 0; i < boardSize; i++) {
-            for (int j = 0; j < boardSize; j++) {
+        for (unsigned int i = 0; i < boardSize; i++) {
+            for (unsigned int j = 0; j < boardSize; j++) {
                 REQUIRE(mainBoard.GetInnerBoard(Point(i,j)) != nullptr);
                 REQUIRE(mainBoard.GetInnerBoard(Point(i,j))->GetBoardSize() == boardSize);
             }
@@ -18,8 +18,8 @@ TEST_CASE("MainBoard constructor initializes mainPlayBoard and winnerBoard corre
 
     SECTION("winnerBoard is initialized correctly") {
 
-        for (int i = 0; i < boardSize; i++) {
-            for (int j = 0; j < boardSize; j++) {
+        for (unsigned int i = 0; i < boardSize; i++) {
+            for (unsigned int j = 0; j < boardSize; j++) {
                 REQUIRE(mainBoard.GetWinnerBoardCell(Point(i,j)) == ' ');
             }
         }

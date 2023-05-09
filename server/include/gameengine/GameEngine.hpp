@@ -12,11 +12,11 @@ private:
     std::unique_ptr<MainBoard> mainBoard;
     std::vector<Point> availableOuterBoardMoves;
     std::vector<std::vector<Point>> availableInnerBoardMoves;
-    static std::vector<Point> InitializeAvailableSingleBoardMoves(int boardSize);
-    static std::vector<std::vector<Point>> InitializeAvailableInnerBoardMoves(int boardSize);
+    static std::vector<Point> InitializeAvailableSingleBoardMoves(unsigned int boardSize);
+    static std::vector<std::vector<Point>> InitializeAvailableInnerBoardMoves(unsigned int boardSize);
 public:
     GameEngine(std::unique_ptr<MainBoard> mainBoard);
-    int GetBoardSize();
+    unsigned int GetBoardSize();
     std::vector<Point>& getAvailableOuterBoardMoves();
     std::vector<std::vector<Point>>& getAvailableInnerBoardMoves();
     bool CheckLocalWinner();

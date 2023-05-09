@@ -3,7 +3,7 @@
 #include "../../include/entities/MainBoard.hpp"
 #include "../../include/helpers/BoardIndexConverter.hpp"
 
-MainBoard::MainBoard(int boardSize) : BoardBase(boardSize), winnerBoard(new std::unique_ptr<char[]>[boardSize]){
+MainBoard::MainBoard(unsigned int boardSize) : BoardBase(boardSize), winnerBoard(new std::unique_ptr<char[]>[boardSize]){
     mainPlayBoard.resize(boardSize);
     for (auto& row : mainPlayBoard) {
         row.resize(boardSize);
@@ -22,13 +22,13 @@ char MainBoard::GetWinnerBoardCell(Point point) {
 
 void MainBoard::FillBoard() {
     for (auto& row : mainPlayBoard) {
-        for (int j = 0; j < boardSize; j++) {
+        for (unsigned int j = 0; j < boardSize; j++) {
             row[j] = std::make_unique<InnerBoard>(boardSize);
         }
     }
-    for (int i = 0; i < boardSize; i++) {
+    for (unsigned int i = 0; i < boardSize; i++) {
         winnerBoard[i] = std::make_unique<char[]>(boardSize);
-        for (int j = 0; j < boardSize; j++) {
+        for (unsigned int j = 0; j < boardSize; j++) {
             winnerBoard[i][j] = ' ';
         }
     }
@@ -72,8 +72,8 @@ std::string MainBoard::WinnerBoardToJson(bool isNested){
         ss << "{";
     }
     ss << "\"winnerBoard\":[";
-    for (int boardRow = 0; boardRow < boardSize; boardRow++) {
-        for (int boardColumn = 0; boardColumn < boardSize; boardColumn++) {
+    for (unsigned int boardRow = 0; boardRow < boardSize; boardRow++) {
+        for (unsigned int boardColumn = 0; boardColumn < boardSize; boardColumn++) {
             auto currentPoint = Point(boardRow, boardColumn);
             int id = BoardIndexConverter::PointToIndex(currentPoint, boardSize);
             ss << "{";
@@ -104,8 +104,8 @@ std::string MainBoard::ToJson(bool isNested) {
         ss << "{";
     }
     ss << "\"segments\":[";
-    for (int boardRow = 0; boardRow < boardSize; boardRow++) {
-        for (int boardColumn = 0; boardColumn < boardSize; boardColumn++) {
+    for (unsigned int boardRow = 0; boardRow < boardSize; boardRow++) {
+        for (unsigned int boardColumn = 0; boardColumn < boardSize; boardColumn++) {
             ss << "{";
             auto currentPoint = Point(boardRow,boardColumn);
             int id = BoardIndexConverter::PointToIndex(currentPoint, boardSize);
