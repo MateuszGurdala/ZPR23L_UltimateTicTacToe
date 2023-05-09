@@ -13,6 +13,7 @@ import { GameMasterService } from "./services/game-master.service";
 import { StartupPageComponent } from "./components/startup-page/startup-page.component";
 import { GamePageComponent } from "./components/game-page/game-page.component";
 import { HoverReactDirective } from "./directives/hover-react.directive";
+import { FormsModule } from "@angular/forms";
 
 @NgModule({
 	declarations: [
@@ -25,7 +26,7 @@ import { HoverReactDirective } from "./directives/hover-react.directive";
 		GamePageComponent,
 		HoverReactDirective,
 	],
-	imports: [BrowserModule, AppRoutingModule, HttpClientModule],
+	imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
 	providers: [GameMasterService, GameHttpClient],
 	bootstrap: [AppComponent],
 })

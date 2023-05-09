@@ -44,7 +44,6 @@ h4 {
 .page-with-return {
     display: flex;
     flex-direction: column;
-    height: 100%;
 }
 
 .return-btn {
@@ -57,7 +56,7 @@ h4 {
 
 .settings-page {
     display: grid;
-    grid-template-columns: 40% 60%;
+    grid-template-columns: 50% 50%;
     flex-direction: column;
     align-items: center;
     height: fit-content;

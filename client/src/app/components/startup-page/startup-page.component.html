@@ -21,16 +21,17 @@
             arrow_back_ios
         </span>
         <!-- OptionsPage -->
-        <div [ngClass]="{'hide': !displayOptions}" class="settings-page">
+        <div class="settings-page">
             <h4 class="setting-label">Server IP</h4>
-            <input name="server" type="text" [value]="serverURL" class="server-url" />
+            <input #serverInput name="server" type="text" [(ngModel)]="serverURL" class="server-url"
+                (input)="onInputChange()" (focusout)="onInputChange()" />
             <h4 class="setting-label">Preferred Sign</h4>
             <div class="signs-container">
                 <h1 [ngClass]="{'selected': xIsChosen}" (click)="selectSign($event)">X</h1>
                 <h1 [ngClass]="{'selected': !xIsChosen}" (click)="selectSign($event)">O</h1>
             </div>
             <h4 class="setting-label">Game Mode</h4>
-            <select>
+            <select [value]="enemy">
                 <option>AI Enemy</option>
                 <option>Player</option>
             </select>

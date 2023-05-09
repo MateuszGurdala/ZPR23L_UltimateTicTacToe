@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input } from "@angular/core";
+import { Component, ElementRef, ViewChild } from "@angular/core";
 import { GameMasterService } from "../../services/game-master.service";
 @Component({
 	selector: "startup-page",
@@ -6,23 +6,23 @@ import { GameMasterService } from "../../services/game-master.service";
 	styleUrls: ["./startup-page.component.css"],
 })
 export class StartupPageComponent {
-	displayWelcome: boolean = false;
-	displayOptions: boolean = true;
+	@ViewChild("serverInput") serverURLInput: ElementRef;
+
+	displayWelcome: boolean = true;
 	preferredSign: "X" | "O" = "X";
 	xIsChosen: boolean = true;
 	boardSize: number = 3;
-	serverURL: string = "localhost:4200";
+	serverURL: string = "localhost:1337";
+	enemy: "AI Enemy" | "Player" = "AI Enemy";
 
 	constructor(private master: GameMasterService) {}
 
 	returnClick(): void {
 		this.displayWelcome = true;
-		this.displayOptions = false;
 	}
 
 	optionsClick(): void {
 		this.displayWelcome = false;
-		this.displayOptions = true;
 	}
 
 	selectSign(arg: PointerEvent | MouseEvent): void {
@@ -42,6 +42,12 @@ export class StartupPageComponent {
 		this.boardSize -= 1;
 		if (this.boardSize < 3) {
 			this.boardSize = 3;
+		}
+	}
+
+	onInputChange(): void {
+		if (this.serverURL === "") {
+			this.serverURL = "localhost:1337";
 		}
 	}
 }
