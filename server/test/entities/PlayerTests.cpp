@@ -27,3 +27,14 @@ TEST_CASE("GetName returns the correct name for computer player") {
     REQUIRE(player.GetName() == correctName);
 }
 
+TEST_CASE("HumanPlayer name should not exceed 20 characters and contain only letters") {
+
+    SECTION("Name length exceeds 20 characters") {
+        REQUIRE_THROWS_AS(HumanPlayer('X', "ThisNameIsTooLongToBeValid"), std::invalid_argument);
+    }
+
+    SECTION("Name contains not only letters") {
+        REQUIRE_THROWS_AS(HumanPlayer('X', "John123"), std::invalid_argument);
+        REQUIRE_THROWS_AS(HumanPlayer('O', "Alice!"), std::invalid_argument);
+    }
+}
