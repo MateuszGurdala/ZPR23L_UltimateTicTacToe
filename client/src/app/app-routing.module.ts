@@ -4,11 +4,12 @@ import { RouterModule, Routes } from "@angular/router";
 //Components
 import { StartupPageComponent } from "./components/startup-page/startup-page.component";
 import { GamePageComponent } from "./components/game-page/game-page.component";
-import { RouteGuard } from "./services/route-guard";
+import { StartRouteGuard } from "./services/start-route-guard";
+import { GameRouteGuard } from "./services/game-route-guard";
 
 const routes: Routes = [
-	{ path: "Start", component: StartupPageComponent },
-	{ path: "Game", component: GamePageComponent, canActivate: [RouteGuard] },
+	{ path: "Start", component: StartupPageComponent, canActivate: [GameRouteGuard] },
+	{ path: "Game", component: GamePageComponent, canActivate: [StartRouteGuard] },
 	{ path: "**", redirectTo: "/Start" },
 ];
 
