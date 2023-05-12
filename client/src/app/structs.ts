@@ -12,3 +12,22 @@ export interface Segment {
 	id: number;
 	winner: "X" | "O";
 }
+
+export enum GameState {
+	Ready,
+	Waiting,
+	Ongoing,
+	PlayerSolo,
+	PlayerX,
+	PlayerO,
+}
+
+export enum Sign {
+	X,
+	O,
+}
+
+export enum Enemy {
+	AI = "AI Enemy",
+	Player = "Player",
+}
