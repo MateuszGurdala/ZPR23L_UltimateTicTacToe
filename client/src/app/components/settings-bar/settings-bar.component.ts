@@ -20,8 +20,4 @@ export class SettingsBarComponent {
 	test() {
 		this.game.updateBoard();
 	}
-
-	mock() {
-		this.game.mockFun();
-	}
 }
