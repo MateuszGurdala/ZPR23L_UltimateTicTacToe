@@ -6,7 +6,7 @@ export const RouteGuard: CanActivateFn = async (next: ActivatedRouteSnapshot, st
 	let gameMaster = inject<GameMasterService>(GameMasterService);
 	let router = inject<Router>(Router);
 
-	if (gameMaster.CanStartGame()) {
+	if (gameMaster.canStartGame()) {
 		router.navigate(["/Start"]);
 		return false;
 	} else {
