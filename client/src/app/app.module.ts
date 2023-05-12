@@ -14,6 +14,8 @@ import { StartupPageComponent } from "./components/startup-page/startup-page.com
 import { GamePageComponent } from "./components/game-page/game-page.component";
 import { HoverReactDirective } from "./directives/hover-react.directive";
 import { FormsModule } from "@angular/forms";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { ToastrModule } from "ngx-toastr";
 
 @NgModule({
 	declarations: [
@@ -26,7 +28,22 @@ import { FormsModule } from "@angular/forms";
 		GamePageComponent,
 		HoverReactDirective,
 	],
-	imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
+	imports: [
+		BrowserModule,
+		AppRoutingModule,
+		HttpClientModule,
+		FormsModule,
+		BrowserAnimationsModule,
+		ToastrModule.forRoot({
+			closeButton: false,
+			newestOnTop: true,
+			progressBar: false,
+			positionClass: "toast-top-center",
+			preventDuplicates: true,
+			timeOut: 5000,
+			tapToDismiss: true,
+		}),
+	],
 	providers: [GameMasterService, GameHttpClient],
 	bootstrap: [AppComponent],
 })
