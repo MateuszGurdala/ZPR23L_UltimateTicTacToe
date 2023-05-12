@@ -10,9 +10,18 @@
         </div>
 
         <div class="options-panel">
-            <h3 colorReact class="button">Start Game</h3>
-            <h3 colorReact class="button">Join Game</h3>
+            <h3 colorReact class="button" (click)="tryStartGame()">Start Game</h3>
+            <h3 colorReact class="button" (click)="tryJoinGame()">Join Game</h3>
             <h3 colorReact class="button" (click)="optionsClick()">Options</h3>
+        </div>
+
+        <div class="loader-container" [ngClass]="{'hide': !isProcessing}">
+            <div class="lds-ellipsis">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
         </div>
     </div>
     <!-- OtherPages -->
