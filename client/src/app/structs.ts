@@ -20,6 +20,7 @@ export enum GameState {
 	PlayerSolo,
 	PlayerX,
 	PlayerO,
+	Unknown,
 }
 
 export enum Sign {

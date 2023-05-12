@@ -1,6 +1,6 @@
 import { AfterContentInit, Component, Host, Input, Optional } from "@angular/core";
 import { SegmentLogic } from "../segment-logic";
-import { DaughterBoard, GameBoard, Segment } from "src/app/structs";
+import { DaughterBoard, GameBoard } from "src/app/structs";
 import { BoardSegmentComponent } from "../board-segment/board-segment.component";
 import { GameMasterService } from "src/app/services/game-master.service";
 

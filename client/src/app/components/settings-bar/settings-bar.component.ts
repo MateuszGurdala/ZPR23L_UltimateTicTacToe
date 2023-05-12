@@ -7,7 +7,7 @@ import { GameMasterService } from "src/app/services/game-master.service";
 	styleUrls: ["./settings-bar.component.css"],
 })
 export class SettingsBarComponent {
-	isExtended: boolean = true;
+	isExtended: boolean = false;
 	boardSize: string = "3";
 	serverUrl: string = "localhost:4200";
 
