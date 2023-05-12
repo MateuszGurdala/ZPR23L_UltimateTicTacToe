@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
-import { GameBoard } from "../structs";
+import { Observable, of } from "rxjs";
+import { GameBoard, GameState } from "../structs";
 
 /*
 GETBoardState -> zwraca cała plansza z podplanszami i segmentami oraz ich znakami
@@ -17,7 +17,7 @@ GETTestConnection -> sprawdza czy serwer pod danym url odpowiada
 	providedIn: "root",
 })
 export class GameHttpClient {
-	url: string = "http://localhost:1337";
+	private url: string = "http://localhost:1337";
 
 	constructor(private httpClient: HttpClient) {}
 
@@ -28,12 +28,21 @@ export class GameHttpClient {
 		});
 	}
 
+	setServerUrl(url: string): void {
+		this.url = "http://" + url;
+	}
+
 	getBoardState(): Observable<GameBoard> {
 		return this.httpClient.get<GameBoard>(this.url + "/BoardState");
 	}
 
-	mockFun() {
-		console.log("click");
-		this.getBoardState().subscribe(next => {console.log(next)});
+	getServerStatus(): Observable<boolean> {
+		//MOCK
+		return of(true);
+	}
+
+	getGameState(): Observable<GameState> {
+		//MOCK
+		return of(GameState.Ready);
 	}
 }
