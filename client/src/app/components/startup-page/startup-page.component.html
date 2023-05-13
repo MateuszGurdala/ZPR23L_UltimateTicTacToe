@@ -40,9 +40,9 @@
                 <h1 [ngClass]="{'selected': !xIsChosen}" (click)="selectSign($event)">O</h1>
             </div>
             <h4 class="setting-label">Game Mode</h4>
-            <select [value]="enemy">
-                <option>AI Enemy</option>
-                <option>Player</option>
+            <select [value]="gameMode">
+                <option>Player vs AI</option>
+                <option>Player vs Player</option>
             </select>
             <h4 class="setting-label">Board Size</h4>
             <div class="board-size">

@@ -1,7 +1,7 @@
 import { Component, ElementRef, ViewChild } from "@angular/core";
 import { GameMasterService } from "../../services/game-master.service";
 import { Router } from "@angular/router";
-import { Enemy, GameState, Sign } from "../../structs";
+import { Enemy, GameMode, GameState, Sign } from "../../structs";
 import { ToastrService } from "ngx-toastr";
 @Component({
 	selector: "startup-page",
@@ -16,7 +16,7 @@ export class StartupPageComponent {
 	xIsChosen: boolean = true;
 	boardSize: number = 3;
 	serverURL: string = "localhost:1337";
-	enemy: Enemy = Enemy.AI;
+	gameMode: GameMode = GameMode.SinglePlayer;
 	isProcessing: boolean = false;
 
 	constructor(private master: GameMasterService, private router: Router, private toastr: ToastrService) {}

@@ -24,11 +24,24 @@ export enum GameState {
 }
 
 export enum Sign {
-	X,
-	O,
+	X = "X",
+	O = "O",
 }
 
 export enum Enemy {
 	AI = "AI Enemy",
 	Player = "Player",
+}
+
+export enum GameMode {
+	SinglePlayer = "Player vs AI",
+	Multiplayer = "Player vs Player",
+}
+
+export enum GameStage {
+	PlayerTurn = "Your Turn",
+	EnemyTurn = "Enemy Turn",
+	PlayerChooseSegment = "Pick Next Segment",
+	EnemyChooseSegment = "Enemy is Choosing Next Segment",
+	Finished = "Game is Finished",
 }
