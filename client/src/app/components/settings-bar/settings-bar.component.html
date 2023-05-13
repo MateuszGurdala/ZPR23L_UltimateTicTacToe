@@ -1,17 +1,26 @@
 <div class="container">
     <div *ngIf="isExtended" class="settings-bar">
         <h1 class="game-header">UltimateTicTacToe</h1>
-        <div class="settings-container">
-            <span>Board size</span>
-            <br />
-            <span>Server url</span>
-            <input [value]="boardSize" type="text" />
-            <br />
-            <input [value]="serverUrl" type="text" />
+        <div class="game-settings-container">
+            <h4>Player Sign: {{playerSign}}</h4>
+            <h4>Game Mode: {{gameMode}}</h4>
         </div>
-        <div class="buttons-container">
-            <h2>Start Game</h2>
-            <h2 (click)="test()">Reset</h2>
+        <div class="game-stage-container">
+            <h3>Current Stage:</h3>
+            <h3>{{gameStage}}</h3>
+            <div class="loader-container">
+                <div class="lds-ellipsis" [ngClass]="{'hide': !isProcessing}">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+        </div>
+        <div class="exit-btn-container">
+            <span colorReact class="material-symbols-outlined" (click)="endGame()">
+                logout
+            </span>
         </div>
     </div>
     <span (click)="extend()" *ngIf="!isExtended" class="material-symbols-outlined extend-button ">

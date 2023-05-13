@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import { GameMasterService } from "src/app/services/game-master.service";
+import { GameMode, GameStage, Sign } from "../../structs";
 
 @Component({
 	selector: "settings-bar",
@@ -8,16 +9,18 @@ import { GameMasterService } from "src/app/services/game-master.service";
 })
 export class SettingsBarComponent {
 	isExtended: boolean = false;
-	boardSize: string = "3";
-	serverUrl: string = "localhost:4200";
+	playerSign: Sign = Sign.X;
+	gameMode: GameMode = GameMode.SinglePlayer;
+	gameStage: GameStage = GameStage.PlayerTurn;
+	isProcessing: boolean = false;
 
-	constructor(private game: GameMasterService) {}
+	constructor(private master: GameMasterService) {}
 
 	extend() {
 		this.isExtended = !this.isExtended;
 	}
 
-	test() {
-		this.game.updateBoard();
+	endGame(): void {
+		this.master.endGame();
 	}
 }
