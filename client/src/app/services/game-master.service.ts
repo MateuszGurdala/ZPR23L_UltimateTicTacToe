@@ -3,6 +3,7 @@ import { GameHttpClient } from "./game-http-client.service";
 import { GameBoardComponent } from "../components/game-board/game-board.component";
 import { GameState, Sign } from "../structs";
 import { firstValueFrom } from "rxjs";
+import { Router } from "@angular/router";
 
 @Injectable({
 	providedIn: "root",
@@ -22,7 +23,7 @@ export class GameMasterService {
 	PlayerO - look above
 	*/
 
-	constructor(private httpClient: GameHttpClient) {
+	constructor(private httpClient: GameHttpClient, private router: Router) {
 		this.gameState = GameState.Unknown;
 	}
 
@@ -45,7 +46,7 @@ export class GameMasterService {
 		if (this.gameState === GameState.Unknown) {
 			this.gameState = await firstValueFrom(this.httpClient.getGameState());
 		}
-		return this.gameState == GameState.Ready;
+		return this.gameState === GameState.Ready;
 	}
 
 	async isPlayer(): Promise<boolean> {
@@ -92,5 +93,10 @@ export class GameMasterService {
 	async getGameState(): Promise<GameState> {
 		this.gameState = await firstValueFrom(this.httpClient.getGameState());
 		return this.gameState;
+	}
+
+	endGame(): void {
+		this.gameState = GameState.Ready;
+		this.router.navigate(["/Start"]);
 	}
 }
