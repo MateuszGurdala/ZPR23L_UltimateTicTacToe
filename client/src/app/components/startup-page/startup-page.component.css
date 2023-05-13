@@ -113,13 +113,13 @@ select {
     font-size: 5vmin;
     border: none;
     margin: auto;
-    width: 40%;
+    width: fit-content;
+    cursor: pointer;
 }
 
 select:focus {
     outline: none;
 }
-
 
 /* Loader */
 
