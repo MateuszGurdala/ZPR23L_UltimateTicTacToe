@@ -1,7 +1,7 @@
 import { Component, ElementRef, ViewChild } from "@angular/core";
 import { GameMasterService } from "../../services/game-master.service";
 import { Router } from "@angular/router";
-import { Enemy, GameMode, GameState, Sign } from "../../structs";
+import { GameMode, GameState, Sign } from "../../structs";
 import { ToastrService } from "ngx-toastr";
 @Component({
 	selector: "startup-page",
@@ -81,8 +81,7 @@ export class StartupPageComponent {
 				//TODO: Start game based on an chosen enemy
 				this.master.setBoardSize(this.boardSize);
 				this.master.setPlayerSign(this.preferredSign);
-				this.master.startNewSoloGame();
-				this.router.navigate(["/Game"]);
+				await this.master.startNewSoloGame();
 				break;
 			case GameState.Ongoing:
 				this.toastr.error("The game is already ongoing.");

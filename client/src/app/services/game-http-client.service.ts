@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, of } from "rxjs";
-import { GameBoard, GameState } from "../structs";
+import { GameBoard, GameMode, GameState } from "../structs";
 
 /*
 GETBoardState -> zwraca cała plansza z podplanszami i segmentami oraz ich znakami
@@ -21,17 +21,27 @@ export class GameHttpClient {
 
 	constructor(private httpClient: HttpClient) {}
 
-	postMove(boardId: number, segmentId: number): Observable<any> {
-		return this.httpClient.post<any>(this.url, {
-			boardId: boardId,
-			segmentId: segmentId,
-		});
-	}
-
 	setServerUrl(url: string): void {
 		this.url = "http://" + url;
 	}
 
+	//#region POST
+	postMove(boardId: number, segmentId: number): Observable<any> {
+		return this.httpClient.post<any>(this.url + "MakeMove", {
+			boardId: boardId,
+			segmentId: segmentId,
+		});
+	}
+	postRequestGameCreation(mode: GameMode): Observable<boolean> {
+		//MOCK
+		return of(true);
+		return this.httpClient.post<boolean>(this.url + "CreateGame", {
+			gameMode: mode,
+		});
+	}
+	//#endregion
+
+	//#region GET
 	getBoardState(): Observable<GameBoard> {
 		return this.httpClient.get<GameBoard>(this.url + "/BoardState");
 	}
@@ -45,4 +55,5 @@ export class GameHttpClient {
 		//MOCK
 		return of(GameState.Ready);
 	}
+	//#endregion
 }

@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { GameHttpClient } from "./game-http-client.service";
 import { GameBoardComponent } from "../components/game-board/game-board.component";
-import { GameState, Sign } from "../structs";
+import { GameMode, GameState, Sign } from "../structs";
 import { firstValueFrom } from "rxjs";
 import { Router } from "@angular/router";
 
@@ -42,16 +42,19 @@ export class GameMasterService {
 	//#endregion
 
 	//#region Utils
+	async getGameState(): Promise<GameState> {
+		this.gameState = await firstValueFrom(this.httpClient.getGameState());
+		return this.gameState;
+	}
 	async canStartGame(): Promise<boolean> {
 		if (this.gameState === GameState.Unknown) {
-			this.gameState = await firstValueFrom(this.httpClient.getGameState());
+			this.gameState = await this.getGameState();
 		}
 		return this.gameState === GameState.Ready;
 	}
-
 	async isPlayer(): Promise<boolean> {
 		if (this.gameState === GameState.Unknown) {
-			this.gameState = await firstValueFrom(this.httpClient.getGameState());
+			this.gameState = await this.getGameState();
 		}
 
 		switch (this.gameState) {
@@ -66,37 +69,34 @@ export class GameMasterService {
 				return true;
 		}
 	}
-
 	checkServerIsAlive(url: string): Promise<boolean> {
 		this.httpClient.setServerUrl(url);
 		return firstValueFrom(this.httpClient.getServerStatus());
 	}
 	//#endregion
 
-	//#region GameRelatedMethods
-	makeMove(boardId: number, segmentId: number): void {
-		this.httpClient.postMove(boardId, segmentId).subscribe((next) => {
-			console.log(next);
-		});
+	//#region CoreGameMethods
+	async makeMove(boardId: number, segmentId: number): Promise<void> {
+		let result = await firstValueFrom(this.httpClient.postMove(boardId, segmentId));
 	}
-	updateBoard(): void {
-		this.httpClient.getBoardState().subscribe((next) => {
-			this.gameBoard.update(next);
-		});
-	}
-	startNewSoloGame(): void {
-		this.gameState = GameState.PlayerSolo;
-		this.boardSize = this.boardSize;
+	async updateBoard(): Promise<void> {
+		let result = await firstValueFrom(this.httpClient.getBoardState());
+		this.gameBoard.update(result);
 	}
 	//#endregion
 
-	async getGameState(): Promise<GameState> {
-		this.gameState = await firstValueFrom(this.httpClient.getGameState());
-		return this.gameState;
+	async startNewSoloGame(): Promise<void> {
+		if (await firstValueFrom(this.httpClient.postRequestGameCreation(GameMode.SinglePlayer))) {
+			// await this.getGameState();
+			this.gameState = GameState.PlayerSolo;
+			this.router.navigate(["/Game"]);
+			await this.mainGameLoop();
+		}
 	}
-
 	endGame(): void {
 		this.gameState = GameState.Ready;
 		this.router.navigate(["/Start"]);
 	}
+
+	async mainGameLoop(): Promise<void> {}
 }
