@@ -28,7 +28,7 @@ public:
       <HumanPlayer>, <Player>, <Point>
     */
     std::array<Point, 2> ChooseMove(const std::vector<Point>& availableOuterBoardMoves,
-                                    std::vector<std::vector<Point>> availableInnerBoardMoves, int boardSize) override;
+                                    std::vector<std::vector<Point>> availableInnerBoardMoves, unsigned int boardSize) override;
 };
 
 #endif //ULTIMATETICTACTOESERVER_HUMANPLAYER_HPP

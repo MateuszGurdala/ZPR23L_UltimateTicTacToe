@@ -6,10 +6,10 @@
 
 
 std::array<Point, 2> ComputerPlayer::ChooseMove(const std::vector<Point>& availableOuterBoardMoves,
-                                                std::vector<std::vector<Point>> availableInnerBoardMoves, int boardSize){
+                                                std::vector<std::vector<Point>> availableInnerBoardMoves, unsigned int boardSize){
     std::array<Point, 2> playerMove{};
     auto& outerBoardCoords = SimulateMove(availableOuterBoardMoves);
-    int innerIndex = BoardIndexConverter::PointToIndex(outerBoardCoords, boardSize);
+    unsigned int innerIndex = BoardIndexConverter::PointToIndex(outerBoardCoords, boardSize);
     auto& innerBoardCoords = SimulateMove(availableInnerBoardMoves[innerIndex]);
     playerMove[0] = outerBoardCoords;
     playerMove[1] = innerBoardCoords;

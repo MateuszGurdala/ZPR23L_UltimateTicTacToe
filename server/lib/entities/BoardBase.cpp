@@ -1,11 +1,17 @@
 
 #include "../../include/entities/BoardBase.hpp"
 
-int BoardBase::GetBoardSize() const {
+unsigned int BoardBase::GetBoardSize() const {
     return boardSize;
 }
 
-BoardBase::BoardBase(int boardSize) : boardSize(boardSize){}
+BoardBase::BoardBase(unsigned int boardSize) : boardSize(boardSize){
+
+    if(boardSize <= 0)
+    {
+        throw std::invalid_argument("size of board must be positive");
+    }
+}
 
 void BoardBase::VerifyFigure(char figure) {
     if(figure != 'X' && figure != 'O')

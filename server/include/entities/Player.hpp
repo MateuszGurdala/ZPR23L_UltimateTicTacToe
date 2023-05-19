@@ -26,7 +26,7 @@ public:
     char GetSymbol() const;
     void IncrementPoints();
     virtual std::array<Point, 2> ChooseMove(const std::vector<Point>& availableOuterBoardMoves,
-                                            std::vector<std::vector<Point>> availableInnerBoardMoves, int boardSize) = 0;
+                                            std::vector<std::vector<Point>> availableInnerBoardMoves, unsigned int boardSize) = 0;
 };
 
 #endif //ULTIMATETICTACTOESERVER_PLAYER_HPP

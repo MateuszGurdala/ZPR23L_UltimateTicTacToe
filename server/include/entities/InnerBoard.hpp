@@ -23,8 +23,7 @@ public:
 /*  Constructor: InnerBoard
     Constructor which takes size of board as parameter. Creates empty board 2 dimensional array
  */
-InnerBoard(int boardSize);
-std::string ToString() const;
+InnerBoard(unsigned int boardSize);
 auto GetLeftDiagonalValues(Point& playBoardCoordinates, Point& innerBoardRowAndColumn);
 auto GetRightDiagonalValues(Point& playBoardCoordinates, Point& innerBoardRowAndColumn);
 auto GetHorizontalValues(Point& playBoardCoordinates, Point& innerBoardRowAndColumn);
@@ -48,6 +47,15 @@ std::string ToJson(bool isNested) override;
     <Point>
 */
 void PlaceFigure(Point& coordinates, char &figure);
+
+/*  Function: GetCell
+    Gets element at given cell.
+
+    Parameters:
+
+    coordinates - (x,y) coordinates of the board where the figure will be placed
+*/
+char GetCell(Point coordinates);
 };
 
 #endif //ULTIMATETICTACTOESERVER_INNERBOARD_HPP

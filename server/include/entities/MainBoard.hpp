@@ -23,8 +23,7 @@ public:
     /*  Constructor: MainBoard
     Constructor which takes size of board as parameter. Initializes winner board and main play board
     */
-    MainBoard(int boardSize);
-    void Print() const;
+    MainBoard(unsigned int boardSize);
     void AddWinnerOfInnerBoard(Point& coordinates, char& figure);
     void MakeMove(Point& boardCoordinates, Point& innerCoordinates, char figure);
     //TODO to be implemented
@@ -40,6 +39,10 @@ public:
 
     */
     std::string WinnerBoardToJson(bool isNested);
+
+    std::unique_ptr<InnerBoard>& GetInnerBoard(Point point);
+
+    char GetWinnerBoardCell(Point point);
 };
 
 #endif //ULTIMATETICTACTOESERVER_MAINBOARD_HPP
