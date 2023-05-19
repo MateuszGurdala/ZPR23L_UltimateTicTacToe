@@ -9,12 +9,14 @@ import { GameMode, GameStage, Sign } from "../../structs";
 })
 export class SettingsBarComponent {
 	isExtended: boolean = false;
-	playerSign: Sign = Sign.X;
-	gameMode: GameMode = GameMode.SinglePlayer;
+	playerSign: Sign = this.master.playerSign;
+	gameMode: GameMode = this.master.gameMode;
 	gameStage: GameStage = GameStage.PlayerTurn;
-	isProcessing: boolean = false;
+	isProcessing: boolean;
 
-	constructor(private master: GameMasterService) {}
+	constructor(private master: GameMasterService) {
+		this.isProcessing = this.master.isProcessing;
+	}
 
 	extend() {
 		this.isExtended = !this.isExtended;
