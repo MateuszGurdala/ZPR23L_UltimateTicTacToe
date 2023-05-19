@@ -10,7 +10,7 @@ import { Segment } from "src/app/structs";
 	styleUrls: ["./board-segment.component.css"],
 })
 export class BoardSegmentComponent extends SegmentLogic implements AfterContentInit {
-	constructor(@Host() parent: GameBoardComponent, private gameMaster: GameMasterService) {
+	constructor(@Host() parent: GameBoardComponent, private master: GameMasterService) {
 		super();
 		this.parent = parent;
 	}
@@ -21,16 +21,14 @@ export class BoardSegmentComponent extends SegmentLogic implements AfterContentI
 	}
 
 	onClick() {
-		// this.ownerSign = "O";
+		this.ownerSign = this.master.playerSign;
+		this.master.playerMadeMove = true;
 		// if (this.parent.id !== undefined && this.id !== undefined) {
-		// 	this.gameMaster.makeMove(this.parent.id, this.id);
+		// 	this.master.makeMove(this.parent.id, this.id);
 		// }
 	}
 
 	update(state: Segment): void {
-		console.log(
-			"Updated DaughterBoard: " + this.parent.id + " Segment: " + this.id + " with symbol: " + state.winner
-		);
 		this.ownerSign = state.winner;
 	}
 }

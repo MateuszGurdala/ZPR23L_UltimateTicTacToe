@@ -11,52 +11,33 @@ import { ToastrService } from "ngx-toastr";
 export class StartupPageComponent {
 	@ViewChild("serverInput") serverURLInput: ElementRef;
 
-	displayWelcome: boolean = true;
 	preferredSign: Sign = Sign.X;
-	xIsChosen: boolean = true;
 	boardSize: number = 3;
-	serverURL: string = "localhost:1337";
 	gameMode: GameMode = GameMode.SinglePlayer;
+	gameModeString: String = "Player vs AI";
+
+	serverURL: string = "localhost:1337";
 	isProcessing: boolean = false;
+	xIsChosen: boolean = true;
+	displayWelcome: boolean = true;
 
-	constructor(private master: GameMasterService, private router: Router, private toastr: ToastrService) {}
+	constructor(private master: GameMasterService, private router: Router, private toastr: ToastrService) {
+		this.xIsChosen = this.preferredSign === Sign.X;
+	}
 
+	//#region  Utils
 	returnClick(): void {
 		this.displayWelcome = true;
 	}
-
 	optionsClick(): void {
 		this.displayWelcome = false;
 	}
-
-	selectSign(arg: PointerEvent | MouseEvent): void {
-		let sign = (arg.target as HTMLElement).innerHTML as "X" | "O";
-		this.preferredSign = sign === "X" ? Sign.X : Sign.O;
-
-		this.xIsChosen = this.preferredSign == Sign.X;
-	}
-
-	increaseBoard(): void {
-		this.boardSize += 1;
-		if (this.boardSize > 5) {
-			this.boardSize = 5;
-		}
-	}
-
-	decreaseBoard(): void {
-		this.boardSize -= 1;
-		if (this.boardSize < 3) {
-			this.boardSize = 3;
-		}
-	}
-
 	onInputChange(): void {
 		if (this.serverURL === "") {
 			this.serverURL = "localhost:1337";
 		}
 	}
-
-	async checkServer(): Promise<boolean> {
+	async checkServerStatus(): Promise<boolean> {
 		let serverStatus = await this.master.checkServerIsAlive(this.serverURL);
 
 		if (!serverStatus) {
@@ -68,31 +49,47 @@ export class StartupPageComponent {
 
 		return serverStatus;
 	}
+	//#endregion
+
+	//#region Setters
+	selectSign(arg: PointerEvent | MouseEvent): void {
+		let sign = (arg.target as HTMLElement).innerHTML as "X" | "O";
+		this.preferredSign = sign === "X" ? Sign.X : Sign.O;
+
+		this.xIsChosen = this.preferredSign == Sign.X;
+		this.master.setPlayerSign(this.preferredSign);
+	}
+	changeGameMode(): void {
+		this.gameMode = this.gameModeString == "Player vs AI" ? GameMode.SinglePlayer : GameMode.Multiplayer;
+		this.master.setGameMode(this.gameMode);
+	}
+	increaseBoard(): void {
+		this.boardSize += 1;
+		if (this.boardSize > 5) {
+			this.boardSize = 5;
+		}
+		this.master.setBoardSize(this.boardSize);
+	}
+	decreaseBoard(): void {
+		this.boardSize -= 1;
+		if (this.boardSize < 3) {
+			this.boardSize = 3;
+		}
+		this.master.setBoardSize(this.boardSize);
+	}
+	//#endregion
 
 	async tryStartGame(): Promise<void> {
+		let errorString: any;
+
 		this.isProcessing = true;
 
-		if (!(await this.checkServer())) {
+		if (!(await this.checkServerStatus())) {
 			return;
 		}
 
-		switch (await this.master.getGameState()) {
-			case GameState.Ready:
-				//TODO: Start game based on an chosen enemy
-				this.master.setBoardSize(this.boardSize);
-				this.master.setPlayerSign(this.preferredSign);
-				await this.master.startNewSoloGame();
-				break;
-			case GameState.Ongoing:
-				this.toastr.error("The game is already ongoing.");
-				break;
-			case GameState.Waiting:
-				this.toastr.error("Someone has already created a new game.");
-				this.toastr.info("Maybe you should join him?");
-				break;
-			default:
-				this.router.navigate(["/Game"]);
-				break;
+		if (typeof (errorString = await this.master.tryStartNewGame()) === "string") {
+			this.toastr.error(errorString);
 		}
 
 		this.isProcessing = false;
@@ -101,11 +98,11 @@ export class StartupPageComponent {
 	async tryJoinGame(): Promise<void> {
 		this.isProcessing = true;
 
-		if (!(await this.checkServer())) {
+		if (!(await this.checkServerStatus())) {
 			return;
 		}
 
-		if ((await this.master.getGameState()) !== GameState.Waiting) {
+		if ((await this.master.getGameState(GameState.Ready)) !== GameState.Waiting) {
 			this.toastr.error("No one is currently waiting for a second player to join.");
 		} else {
 			//TODO: Add logic for joining another player's game
