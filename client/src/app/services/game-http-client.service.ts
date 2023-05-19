@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, of } from "rxjs";
-import { GameBoard, GameMode, GameState } from "../structs";
+import { GameBoard, GameMode, GameStage, GameState, Sign } from "../structs";
 
 /*
 GETBoardState -> zwraca cała plansza z podplanszami i segmentami oraz ich znakami
@@ -26,18 +26,23 @@ export class GameHttpClient {
 	}
 
 	//#region POST
-	postMove(boardId: number, segmentId: number): Observable<any> {
+	postMakeMove(boardId: number, segmentId: number): Observable<any> {
 		return this.httpClient.post<any>(this.url + "MakeMove", {
 			boardId: boardId,
 			segmentId: segmentId,
 		});
 	}
-	postRequestGameCreation(mode: GameMode): Observable<boolean> {
+	postCreateGame(mode: GameMode, sign: Sign, size: number): Observable<boolean> {
 		//MOCK
 		return of(true);
-		return this.httpClient.post<boolean>(this.url + "CreateGame", {
-			gameMode: mode,
-		});
+	}
+	postPickSegment(segmentNumber: number): Observable<boolean> {
+		//MOCK
+		return of(true);
+	}
+	postEndGame(): Observable<boolean> {
+		//MOCk
+		return of(true);
 	}
 	//#endregion
 
@@ -45,15 +50,17 @@ export class GameHttpClient {
 	getBoardState(): Observable<GameBoard> {
 		return this.httpClient.get<GameBoard>(this.url + "/BoardState");
 	}
-
 	getServerStatus(): Observable<boolean> {
 		//MOCK
 		return of(true);
 	}
-
-	getGameState(): Observable<GameState> {
+	getGameState(mockState: GameState): Observable<GameState> {
 		//MOCK
-		return of(GameState.Ready);
+		return of(mockState);
+	}
+	getGameStage(mockStage: GameStage): Observable<GameStage> {
+		//TODO: Change to be http based
+		return of(mockStage);
 	}
 	//#endregion
 }
