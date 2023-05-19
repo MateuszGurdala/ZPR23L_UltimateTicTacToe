@@ -4,10 +4,10 @@
 #include "../../include/helpers/BoardIndexConverter.hpp"
 #include <stdexcept>
 
-InnerBoard::InnerBoard(unsigned int boardSize) : BoardBase(boardSize){
-    playBoard = std::make_unique<std::unique_ptr<char[]>[]>(boardSize);
+InnerBoard::InnerBoard(unsigned int boardSize) : BoardBase(boardSize) {
+    playBoard.resize(boardSize);
     for (unsigned int i = 0; i < boardSize; i++) {
-        playBoard[i] = std::make_unique<char[]>(boardSize);
+        playBoard[i].resize(boardSize);
     }
     FillBoard();
 }
@@ -66,21 +66,6 @@ char InnerBoard::GetCell(Point coordinates) {
     return playBoard[coordinates.x][coordinates.y];
 }
 
-//TODO
-/*
-auto InnerBoard::GetLeftDiagonalValues(Point& playBoardCoordinates, Point& innerBoardRowAndColumn) {
-    return nullptr;
+const std::vector<std::vector<char>>& InnerBoard::GetPlayBoard() const {
+    return playBoard;
 }
-
-auto InnerBoard::GetRightDiagonalValues(Point& playBoardCoordinates, Point& innerBoardRowAndColumn) {
-    return nullptr;
-}
-
-auto InnerBoard::GetHorizontalValues(Point& playBoardCoordinates, Point& innerBoardRowAndColumn) {
-    return nullptr;
-}
-
-auto InnerBoard::GetVerticalValues(Point& playBoardCoordinates, Point& innerBoardRowAndColumn) {
-    return nullptr;
-}
-*/

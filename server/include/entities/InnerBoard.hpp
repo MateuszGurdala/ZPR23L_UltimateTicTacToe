@@ -7,13 +7,13 @@
 #include "BoardBase.hpp"
 
 /*  Class: InnerBoard
-    Class describing sub board which is nested inside Main Board. It includes unique pointer to 2 dimensional board of chars.
+    Class describing sub board which is nested inside Main Board. It includes vector to 2 dimensional vector of chars.
     See also:
     <MainBoard>
  */
 class InnerBoard : public BoardBase{
 private:
-    std::unique_ptr<std::unique_ptr<char[]>[]> playBoard;
+    std::vector<std::vector<char>> playBoard;
     /*  Function: ToJson
     Fills board with whitespaces.
      */
@@ -24,10 +24,7 @@ public:
     Constructor which takes size of board as parameter. Creates empty board 2 dimensional array
  */
 InnerBoard(unsigned int boardSize);
-auto GetLeftDiagonalValues(Point& playBoardCoordinates, Point& innerBoardRowAndColumn);
-auto GetRightDiagonalValues(Point& playBoardCoordinates, Point& innerBoardRowAndColumn);
-auto GetHorizontalValues(Point& playBoardCoordinates, Point& innerBoardRowAndColumn);
-auto GetVerticalValues(Point& playBoardCoordinates, Point& innerBoardRowAndColumn);
+const std::vector<std::vector<char>>& GetPlayBoard() const;
 /*  Function: ToJson
     Converts board to json format which is used in communication with the client.
     Parameters:
