@@ -69,3 +69,63 @@ char InnerBoard::GetCell(Point coordinates) {
 const std::vector<std::vector<char>>& InnerBoard::GetPlayBoard() const {
     return playBoard;
 }
+
+std::vector<char> InnerBoard::GetLeftDiagonalValues(Point &chosenCoordinates) const {
+    std::vector<char> diagonalSymbols;
+    unsigned int tempX = (int)chosenCoordinates.x;
+    for(unsigned int columnUpIndex = chosenCoordinates.y; columnUpIndex < boardSize; columnUpIndex++)
+    {
+        diagonalSymbols.emplace_back(playBoard[tempX][columnUpIndex]);
+        tempX--;
+    }
+    tempX = (int)chosenCoordinates.x - 1;
+    for(int columnDownIndex = (int)chosenCoordinates.y - 1; columnDownIndex >= 0; columnDownIndex--)
+    {
+        diagonalSymbols.emplace_back(playBoard[tempX][columnDownIndex]);
+        tempX--;
+    }
+    return diagonalSymbols;
+}
+
+std::vector<char> InnerBoard::GetRightDiagonalValues(Point &chosenCoordinates) const {
+    std::vector<char> diagonalSymbols;
+    unsigned int tempX = (int)chosenCoordinates.x;
+    for(unsigned int columnUpIndex = chosenCoordinates.y; columnUpIndex < boardSize; columnUpIndex++)
+    {
+        diagonalSymbols.emplace_back(playBoard[tempX][columnUpIndex]);
+        tempX++;
+    }
+    tempX = (int)chosenCoordinates.x - 1;
+    for(int columnDownIndex = (int)chosenCoordinates.y - 1; columnDownIndex >= 0; columnDownIndex--)
+    {
+        diagonalSymbols.emplace_back(playBoard[tempX][columnDownIndex]);
+        tempX++;
+    }
+    return diagonalSymbols;
+}
+
+std::vector<char> InnerBoard::GetHorizontalValues(Point &chosenCoordinates) const {
+    std::vector<char> horizontalSymbols;
+    for(unsigned int rowRightIndex = chosenCoordinates.x; rowRightIndex < boardSize; rowRightIndex++ )
+    {
+        horizontalSymbols.emplace_back(playBoard[chosenCoordinates.x][rowRightIndex]);
+    }
+    for(int columnDownIndex = (int)chosenCoordinates.x; columnDownIndex >= 0; columnDownIndex--)
+    {
+        horizontalSymbols.emplace_back(playBoard[chosenCoordinates.x][columnDownIndex]);
+    }
+    return horizontalSymbols;
+}
+
+std::vector<char> InnerBoard::GetVerticalValues(Point &chosenCoordinates) const {
+    std::vector<char> verticalSymbols;
+    for(unsigned int columnUpIndex = chosenCoordinates.y; columnUpIndex < boardSize; columnUpIndex++)
+    {
+        verticalSymbols.emplace_back(playBoard[chosenCoordinates.x][columnUpIndex]);
+    }
+    for(int columnDownIndex = (int)chosenCoordinates.y; columnDownIndex >= 0; columnDownIndex--)
+    {
+        verticalSymbols.emplace_back(playBoard[chosenCoordinates.x][columnDownIndex]);
+    }
+    return verticalSymbols;
+}

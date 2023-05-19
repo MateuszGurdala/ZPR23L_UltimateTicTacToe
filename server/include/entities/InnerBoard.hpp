@@ -53,6 +53,10 @@ void PlaceFigure(Point& coordinates, char &figure);
     coordinates - (x,y) coordinates of the board where the figure will be placed
 */
 char GetCell(Point coordinates);
+std::vector<char> GetLeftDiagonalValues(Point& chosenCoordinates) const;
+std::vector<char> GetRightDiagonalValues(Point& chosenCoordinates) const;
+std::vector<char> GetHorizontalValues(Point& chosenCoordinates) const;
+std::vector<char> GetVerticalValues(Point& chosenCoordinates) const;
 };
 
 #endif //ULTIMATETICTACTOESERVER_INNERBOARD_HPP

@@ -15,7 +15,7 @@ std::vector<Point> GameEngine::InitializeAvailableSingleBoardMoves(unsigned int 
     availableMoves.reserve(boardSize*boardSize);
     for (unsigned int x = 0; x < boardSize; x++) {
         for (unsigned int y = 0; y < boardSize; y++) {
-            availableMoves.emplace_back(Point(x, y));
+            availableMoves.emplace_back(x, y);
         }
     }
     return availableMoves;
@@ -36,14 +36,63 @@ void GameEngine::HandleMove(Point& boardCoordinates, Point& innerCoordinates, ch
 }
 
 
-//TODO implement
-bool GameEngine::CheckLocalWinner() {
+bool GameEngine::CheckLocalWinner(Point& localBoardCoordinates, Point& changedBoardCellCoordinates) {
+    auto& innerBoard = mainBoard->GetInnerBoard(localBoardCoordinates);
+    auto figuresInPattern = innerBoard->GetHorizontalValues(changedBoardCellCoordinates);
+    if(AreAllValuesTheSame(figuresInPattern))
+    {
+        return true;
+    }
+    figuresInPattern = innerBoard->GetVerticalValues(changedBoardCellCoordinates);
+    if(AreAllValuesTheSame(figuresInPattern))
+    {
+        return true;
+    }
+    figuresInPattern = innerBoard->GetLeftDiagonalValues(changedBoardCellCoordinates);
+    if(AreAllValuesTheSame(figuresInPattern))
+    {
+        return true;
+    }
+    figuresInPattern = innerBoard->GetRightDiagonalValues(changedBoardCellCoordinates);
+    if(AreAllValuesTheSame(figuresInPattern))
+    {
+        return true;
+    }
     return false;
 }
 
-//TODO implement
-bool GameEngine::CheckGlobalWinner() {
+bool GameEngine::CheckGlobalWinner(Point& changedWinnerBoardCellCoordinates) {
+    auto figuresInPattern = mainBoard->GetWinnerBoard().GetHorizontalValues(changedWinnerBoardCellCoordinates);
+    if(AreAllValuesTheSame(figuresInPattern))
+    {
+        return true;
+    }
+    figuresInPattern = mainBoard->GetWinnerBoard().GetVerticalValues(changedWinnerBoardCellCoordinates);
+    if(AreAllValuesTheSame(figuresInPattern))
+    {
+        return true;
+    }
+    figuresInPattern = mainBoard->GetWinnerBoard().GetLeftDiagonalValues(changedWinnerBoardCellCoordinates);
+    if(AreAllValuesTheSame(figuresInPattern))
+    {
+        return true;
+    }
+    figuresInPattern = mainBoard->GetWinnerBoard().GetRightDiagonalValues(changedWinnerBoardCellCoordinates);
+    if(AreAllValuesTheSame(figuresInPattern))
+    {
+        return true;
+    }
     return false;
+}
+
+bool GameEngine::AreAllValuesTheSame(const std::vector<char>& values) {
+    auto it = std::adjacent_find(values.begin(), values.end(), std::not_equal_to<>());
+    return it == values.end();
+}
+
+bool GameEngine::CheckIfBoardWon(Point& boardCoordinates, Point& startingCellCoordinates)
+{
+
 }
 
 std::vector<Point> &GameEngine::getAvailableOuterBoardMoves() {

@@ -32,10 +32,6 @@ public:
     void VerifyCoordinates(Point point) const;
     static void VerifyFigure(char figure) ;
     virtual std::string ToJson(bool isNested) = 0;
-    auto GetLeftDiagonalValues(Point& chosenCoordinates, std::vector<std::vector<char>>& board) const;
-    auto GetRightDiagonalValues(Point& chosenCoordinates, std::vector<std::vector<char>>& board) const;
-    auto GetHorizontalValues(Point& chosenCoordinates, std::vector<std::vector<char>>& board) const;
-    auto GetVerticalValues(Point& chosenCoordinates, std::vector<std::vector<char>>& board) const;
 };
 
 

@@ -38,6 +38,7 @@ public:
     std::unique_ptr<InnerBoard>& GetInnerBoard(Point point);
 
     char GetWinnerBoardCell(Point point);
+    const InnerBoard& GetWinnerBoard() const;
 };
 
 #endif //ULTIMATETICTACTOESERVER_MAINBOARD_HPP

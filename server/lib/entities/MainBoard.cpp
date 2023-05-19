@@ -18,7 +18,9 @@ std::unique_ptr<InnerBoard>& MainBoard::GetInnerBoard(Point point) {
 char MainBoard::GetWinnerBoardCell(Point point) {
     return winnerBoard.GetCell(point);
 }
-
+const InnerBoard& MainBoard::GetWinnerBoard() const {
+    return winnerBoard;
+}
 
 void MainBoard::FillBoard() {
     for (auto& row : mainPlayBoard) {
