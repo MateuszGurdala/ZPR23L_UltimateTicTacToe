@@ -28,11 +28,6 @@ export enum Sign {
 	O = "O",
 }
 
-export enum Enemy {
-	AI = "AI Enemy",
-	Player = "Player",
-}
-
 export enum GameMode {
 	SinglePlayer = "Player vs AI",
 	Multiplayer = "Player vs Player",
