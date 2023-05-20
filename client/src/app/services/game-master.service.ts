@@ -5,6 +5,7 @@ import { GameMode, GameStage, GameState, Sign } from "../structs";
 import { firstValueFrom } from "rxjs";
 import { Router } from "@angular/router";
 import { SettingsBarComponent } from "../components/settings-bar/settings-bar.component";
+import { GlobalVariablesService } from "./global-variables.service";
 
 @Injectable({
 	providedIn: "root",
@@ -17,92 +18,58 @@ export class GameMasterService {
 	//Const/Vars
 	readonly enemyTimeout: number = 500;
 	readonly playerTimeout: number = 500;
-	gameState: GameState;
-	isGameOngoing: boolean = false;
-	isProcessing: boolean = false;
-	playerMadeMove: boolean = false;
-	playerChooseSegment: boolean = false;
+	readonly initTimeout: number = 100;
 
-	//GameSettings
-	boardSize: number = 3;
-	playerSign: Sign = Sign.X;
-	gameMode: GameMode = GameMode.SinglePlayer;
-
-	/* 
-	Ready - new game can be created
-	Waiting - game in player vs player mode, waiting for second player
-	Ongoing - as the name suggests
-	PlayerSolo - client is a player that created new game vs AI
-	PlayerX - client is an X player in player vs player game
-	PlayerO - look above
-	*/
-
-	constructor(private httpClient: GameHttpClient, private router: Router) {
-		this.gameState = GameState.Unknown;
-	}
+	constructor(
+		private readonly httpClient: GameHttpClient,
+		private readonly router: Router,
+		private readonly gVars: GlobalVariablesService
+	) {}
 
 	//#region Setters
 	setBoardComponent(component: GameBoardComponent): void {
 		this.gameBoard = component;
 	}
+	setSettingsBarComponent(component: SettingsBarComponent): void {
+		this.settingsBoard = component;
+	}
 	setBoardSize(size: number): void {
-		this.boardSize = size;
+		this.gVars.boardSize = size;
 	}
 	setPlayerSign(sign: Sign): void {
-		this.playerSign = sign;
+		this.gVars.playerSign = sign;
 	}
 	setGameMode(mode: GameMode): void {
-		this.gameMode = mode;
+		this.gVars.gameMode = mode;
 	}
-	setSettingsBarComponent(component: SettingsBarComponent) {
-		this.settingsBoard = component;
+	setIsProcessing(value: boolean): void {
+		this.gVars.isProcessing = value;
 	}
 	//#endregion
 
 	//#region Utils
-	async getGameState(mockState: GameState): Promise<GameState> {
-		this.gameState = await firstValueFrom(this.httpClient.getGameState(mockState));
-		return this.gameState;
-	}
-	async canStartGame(): Promise<boolean> {
-		if (this.gameState === GameState.Unknown) {
-			this.gameState = await this.getGameState(GameState.Ready);
-		}
-		return this.gameState === GameState.Ready;
-	}
-	async isPlayer(): Promise<boolean> {
-		if (this.gameState === GameState.Unknown) {
-			await this.getGameState(GameState.Ready);
-		}
-
-		switch (this.gameState) {
-			case GameState.Ready:
-			case GameState.Waiting:
-			case GameState.Ongoing:
-			case GameState.Unknown:
-				return false;
-			case GameState.PlayerSolo:
-			case GameState.PlayerX:
-			case GameState.PlayerO:
-				return true;
-		}
-	}
 	checkServerIsAlive(url: string): Promise<boolean> {
 		this.httpClient.setServerUrl(url);
 		return firstValueFrom(this.httpClient.getServerStatus());
 	}
-	setIsProcessing(value: boolean): void {
-		this.isProcessing = value;
-	}
 	sleep(ms: number): Promise<void> {
 		return new Promise((resolve) => setTimeout(resolve, ms));
+	}
+	async waitForGameInit(): Promise<void> {
+		if (this.gameBoard === undefined) {
+			console.log("Waiting for init.");
+			await this.sleep(this.playerTimeout);
+			await this.waitForGameInit();
+		}
+		console.log("Game initialized.");
+		return;
 	}
 	//#endregion
 
 	//#region GameUtils
 	async tryStartNewGame(): Promise<any> {
 		let retVal: any;
-		switch (await this.getGameState(GameState.Ready)) {
+		switch (await this.gVars.getGameState(GameState.Ready)) {
 			case GameState.Ready:
 				//TODO: Start game based on an chosen enemy
 				await this.startNewSoloGame();
@@ -121,39 +88,46 @@ export class GameMasterService {
 	}
 	async startNewSoloGame(): Promise<void> {
 		if (
-			await firstValueFrom(this.httpClient.postCreateGame(this.gameMode, this.playerSign, this.boardSize))
+			await firstValueFrom(
+				this.httpClient.postCreateGame(this.gVars.gameMode, this.gVars.playerSign, this.gVars.boardSize)
+			)
 		) {
-			await this.getGameState(GameState.PlayerSolo);
-			this.isGameOngoing = true;
+			await this.gVars.getGameState(GameState.PlayerSolo);
+			this.gVars.isGameOngoing = true;
 			this.router.navigate(["/Game"]);
 			await this.mainGameLoop();
 		}
 	}
 	async endGame(): Promise<void> {
 		await firstValueFrom(this.httpClient.postEndGame());
-		await this.getGameState(GameState.Ready);
-		this.isGameOngoing = false;
+		await this.gVars.getGameState(GameState.Ready);
+		this.gVars.isGameOngoing = false;
 		this.router.navigate(["/Start"]);
+		window.location.reload(); //TODO: Temporary solution?
 	}
 	async waitForPlayerMove(): Promise<void> {
-		if (!this.playerMadeMove) {
+		if (!this.gVars.playerMadeMove) {
 			console.log("Waiting for player to make move.");
 			await this.sleep(this.playerTimeout);
 			await this.waitForPlayerMove();
 		}
-		console.log("PLAYER MADE MOVE!!!!");
-		this.playerMadeMove = false;
+		this.gVars.playerMadeMove = false;
 		return;
 	}
 	async waitForPlayerChooseSegment(): Promise<void> {
-		if (!this.playerChooseSegment) {
+		if (!this.gVars.playerChoseSegment) {
 			console.log("Waiting for player to choose segment.");
 			await this.sleep(this.playerTimeout);
 			await this.waitForPlayerChooseSegment();
 		}
-		console.log("PLAYER CHOOSE SEGMENT!!!!");
-		this.playerChooseSegment = false;
+		this.gVars.playerChoseSegment = false;
 		return;
+	}
+	signalPlayerMove(): void {
+		this.gVars.playerMadeMove = true;
+	}
+	signalPlayerChoseSegment(): void {
+		this.gVars.playerChoseSegment = true;
 	}
 	//#endregion
 
@@ -168,32 +142,37 @@ export class GameMasterService {
 	//#endregion
 
 	async mainGameLoop(): Promise<void> {
-		console.log("Starting game main loop");
-		while (this.isGameOngoing) {
+		await this.waitForGameInit();
+		console.log("Starting game main loop.");
+		while (this.gVars.isGameOngoing) {
 			this.setIsProcessing(true);
-			console.log("Running loop iteration");
-			switch (await firstValueFrom(this.httpClient.getGameStage(GameStage.EnemyTurn))) {
+			console.log("Running loop iteration.");
+			switch (await this.gVars.getGameStage(GameStage.PlayerChooseSegment)) {
 				case GameStage.PlayerTurn:
 					this.setIsProcessing(false);
 					// await this.updateBoard();
+					if (this.gVars.currentSegment !== undefined) {
+						this.gameBoard.unlockSegment(this.gVars.currentSegment);
+					}
 					await this.waitForPlayerMove();
-					//UnlockSegment
-					//WaitForUserToMakeMove
+					//TODO: Something more should be added here?
 					break;
 				case GameStage.PlayerChooseSegment:
 					this.setIsProcessing(false);
 					// await this.updateBoard();
-					//UnlockSegmentChoosing
-					//WaitForUserToChooseSegment
+					this.gameBoard.unlockSegmentChoosing();
+					await this.waitForPlayerChooseSegment();
 					break;
 				case GameStage.EnemyTurn:
 				case GameStage.EnemyChooseSegment:
+					this.gameBoard.setIsActive(false);
 					this.setIsProcessing(true);
 					await this.sleep(this.enemyTimeout);
 					break;
 				case GameStage.Finished:
 					this.setIsProcessing(false);
-					this.isGameOngoing = false;
+					this.gameBoard.setIsActive(false);
+					this.gVars.isGameOngoing = false;
 					break;
 			}
 		}
