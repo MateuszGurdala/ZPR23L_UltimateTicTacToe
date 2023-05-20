@@ -1,8 +1,9 @@
-<div #board *ngIf="isMotherboard" class="game-board" [createBoard]="size">
+<div #board *ngIf="isMotherBoard()" class="game-board" [createBoard]="size">
     <game-board [size]="size" type="Daughterboard" [parent]="this" *ngFor="let i of childrenCount;"
         [id]="i"></game-board>
 </div>
 
-<div *ngIf="!isMotherboard" class="game-board" [createBoard]="size">
+<div *ngIf="isDaughterBoard()" class="game-board" [createBoard]="size" (mouseenter)="onEnter()"
+    (click)="onDaughterboardClick()" (mouseleave)="onLeave()">
     <board-segment *ngFor="let i of childrenCount;" [id]="i"></board-segment>
 </div>

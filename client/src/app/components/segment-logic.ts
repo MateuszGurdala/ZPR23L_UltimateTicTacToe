@@ -24,4 +24,10 @@ export class SegmentLogic implements AfterContentInit {
 	isOwned(): boolean {
 		return this.ownerSign !== undefined;
 	}
+
+	unlockSegment(number: number): void {
+		if (!this.isOwned()) {
+			this.setIsActive(true);
+		}
+	}
 }

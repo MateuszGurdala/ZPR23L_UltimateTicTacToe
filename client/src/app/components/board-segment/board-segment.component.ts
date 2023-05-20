@@ -11,9 +11,11 @@ import { GlobalVariablesService } from "../../services/global-variables.service"
 	styleUrls: ["./board-segment.component.css"],
 })
 export class BoardSegmentComponent extends SegmentLogic implements AfterContentInit {
+	pseudoHoverState: boolean = false;
+
 	constructor(
 		@Host() parent: GameBoardComponent,
-		private master: GameMasterService,
+		private readonly master: GameMasterService,
 		private readonly gVars: GlobalVariablesService
 	) {
 		super();
@@ -26,24 +28,19 @@ export class BoardSegmentComponent extends SegmentLogic implements AfterContentI
 	}
 
 	onClick() {
+		if (!this.gVars.isPlayerTurn()) {
+			return;
+		}
+
 		if (this.isActive) {
 			this.ownerSign = this.gVars.playerSign;
 			this.master.signalPlayerMove();
 		}
 		this.setIsActive(false);
-		// if (this.parent.id !== undefined && this.id !== undefined) {
-		// 	this.master.makeMove(this.parent.id, this.id);
-		// }
+		//TODO: Send POST to server
 	}
 
 	update(state: Segment): void {
 		this.ownerSign = state.winner;
-	}
-
-	unlockSegment(): void {
-		if (!this.isOwned()) {
-			console.log("Unlocking board " + this.parent.id + " segment " + this.id);
-			this.setIsActive(true);
-		}
 	}
 }
