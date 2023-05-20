@@ -3,6 +3,7 @@ import { GameMasterService } from "../../services/game-master.service";
 import { Router } from "@angular/router";
 import { GameMode, GameState, Sign } from "../../structs";
 import { ToastrService } from "ngx-toastr";
+import { GlobalVariablesService } from "../../services/global-variables.service";
 @Component({
 	selector: "startup-page",
 	templateUrl: "./startup-page.component.html",
@@ -11,9 +12,9 @@ import { ToastrService } from "ngx-toastr";
 export class StartupPageComponent {
 	@ViewChild("serverInput") serverURLInput: ElementRef;
 
-	preferredSign: Sign = Sign.X;
-	boardSize: number = 3;
-	gameMode: GameMode = GameMode.SinglePlayer;
+	preferredSign: Sign = this.gVars.playerSign;
+	boardSize: number = this.gVars.boardSize;
+	gameMode: GameMode = this.gVars.gameMode;
 	gameModeString: String = "Player vs AI";
 
 	serverURL: string = "localhost:1337";
@@ -21,7 +22,12 @@ export class StartupPageComponent {
 	xIsChosen: boolean = true;
 	displayWelcome: boolean = true;
 
-	constructor(private master: GameMasterService, private router: Router, private toastr: ToastrService) {
+	constructor(
+		private readonly master: GameMasterService,
+		private readonly router: Router,
+		private readonly toastr: ToastrService,
+		private readonly gVars: GlobalVariablesService
+	) {
 		this.xIsChosen = this.preferredSign === Sign.X;
 	}
 
@@ -102,7 +108,7 @@ export class StartupPageComponent {
 			return;
 		}
 
-		if ((await this.master.getGameState(GameState.Ready)) !== GameState.Waiting) {
+		if ((await this.gVars.getGameState(GameState.Ready)) !== GameState.Waiting) {
 			this.toastr.error("No one is currently waiting for a second player to join.");
 		} else {
 			//TODO: Add logic for joining another player's game
