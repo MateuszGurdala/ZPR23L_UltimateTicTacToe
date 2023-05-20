@@ -31,3 +31,11 @@
         'GRAD' 0,
         'opsz' 48
 }
+
+
+.disabled,
+.disabled:hover,
+.disabled:active {
+    background-color: rgb(136, 136, 136, 0.5);
+    cursor: default;
+}

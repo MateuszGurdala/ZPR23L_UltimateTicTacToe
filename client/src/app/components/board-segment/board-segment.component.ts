@@ -21,8 +21,11 @@ export class BoardSegmentComponent extends SegmentLogic implements AfterContentI
 	}
 
 	onClick() {
-		this.ownerSign = this.master.playerSign;
-		this.master.playerMadeMove = true;
+		if (this.isActive) {
+			this.ownerSign = this.master.playerSign;
+			this.master.signalPlayerMove();
+		}
+		this.setIsActive(false);
 		// if (this.parent.id !== undefined && this.id !== undefined) {
 		// 	this.master.makeMove(this.parent.id, this.id);
 		// }
@@ -30,5 +33,12 @@ export class BoardSegmentComponent extends SegmentLogic implements AfterContentI
 
 	update(state: Segment): void {
 		this.ownerSign = state.winner;
+	}
+
+	unlockSegment(): void {
+		if (!this.isOwned()) {
+			console.log("Unlocking board " + this.parent.id + " segment " + this.id);
+			this.setIsActive(true);
+		}
 	}
 }

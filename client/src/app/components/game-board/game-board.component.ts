@@ -1,4 +1,4 @@
-import { AfterContentInit, Component, Host, Input, Optional } from "@angular/core";
+import { AfterContentInit, Component, Input } from "@angular/core";
 import { SegmentLogic } from "../segment-logic";
 import { DaughterBoard, GameBoard } from "src/app/structs";
 import { BoardSegmentComponent } from "../board-segment/board-segment.component";
@@ -10,7 +10,7 @@ import { GameMasterService } from "src/app/services/game-master.service";
 	styleUrls: ["./game-board.component.css"],
 })
 export class GameBoardComponent extends SegmentLogic implements AfterContentInit {
-	@Input("type") boardClass: "Motherboard" | "Daughterboard";
+	@Input("type") boardClass: "Motherboard" | "Daughterboard"; //Can't be enum
 	@Input("parent") parentComponent: GameBoardComponent | undefined = undefined;
 	@Input() size: number;
 
@@ -51,5 +51,20 @@ export class GameBoardComponent extends SegmentLogic implements AfterContentInit
 				segmentComponent.update(segment);
 			}
 		});
+	}
+
+	override setIsActive(value: boolean): void {
+		this.segments.forEach((segment: GameBoardComponent | BoardSegmentComponent) => {
+			segment.setIsActive(value);
+		});
+	}
+	unlockSegment(number: number): void {
+		if (this.boardClass == "Motherboard") {
+			this.segments[number].unlockSegment(number);
+		} else {
+			this.segments.forEach((segment: any) => {
+				segment.unlockSegment();
+			});
+		}
 	}
 }

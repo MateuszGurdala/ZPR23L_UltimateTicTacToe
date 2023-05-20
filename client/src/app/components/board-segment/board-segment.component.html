@@ -1,4 +1,4 @@
-<div class="segment" (click)="onClick()">
+<div class="segment" (click)="onClick()" [ngClass]="{'disabled': !isActive}">
     <span *ngIf="ownerSign === 'O'" class="material-symbols-outlined sign">
         circle
     </span>
