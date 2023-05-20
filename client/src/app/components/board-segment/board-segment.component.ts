@@ -43,4 +43,11 @@ export class BoardSegmentComponent extends SegmentLogic implements AfterContentI
 	update(state: Segment): void {
 		this.ownerSign = state.winner;
 	}
+
+	override unlockSegment(number: number): void {
+		if (!this.isOwned()) {
+			super.unlockSegment(number);
+			this.pseudoHoverState = false;
+		}
+	}
 }
