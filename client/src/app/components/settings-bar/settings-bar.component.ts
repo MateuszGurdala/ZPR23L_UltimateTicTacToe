@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 import { GameMasterService } from "src/app/services/game-master.service";
-import { GameMode, GameStage, Sign } from "../../structs";
+import { GlobalVariablesService } from "src/app/services/global-variables.service";
+import { GameMode } from "../../structs";
 
 @Component({
 	selector: "settings-bar",
@@ -9,14 +10,8 @@ import { GameMode, GameStage, Sign } from "../../structs";
 })
 export class SettingsBarComponent {
 	isExtended: boolean = false;
-	playerSign: Sign = this.master.playerSign;
-	gameMode: GameMode = this.master.gameMode;
-	gameStage: GameStage = GameStage.PlayerTurn;
-	isProcessing: boolean;
 
-	constructor(private master: GameMasterService) {
-		this.isProcessing = this.master.isProcessing;
-	}
+	constructor(private master: GameMasterService, readonly gVars: GlobalVariablesService) {}
 
 	extend() {
 		this.isExtended = !this.isExtended;

@@ -16,6 +16,7 @@ import { HoverReactDirective } from "./directives/hover-react.directive";
 import { FormsModule } from "@angular/forms";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { ToastrModule } from "ngx-toastr";
+import { GlobalVariablesService } from "./services/global-variables.service";
 
 @NgModule({
 	declarations: [
@@ -44,7 +45,7 @@ import { ToastrModule } from "ngx-toastr";
 			tapToDismiss: true,
 		}),
 	],
-	providers: [GameMasterService, GameHttpClient],
+	providers: [GameMasterService, GameHttpClient, GlobalVariablesService],
 	bootstrap: [AppComponent],
 })
 export class AppModule {}

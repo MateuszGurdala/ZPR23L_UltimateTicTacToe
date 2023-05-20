@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import { GameMasterService } from "../../services/game-master.service";
+import { GlobalVariablesService } from "../../services/global-variables.service";
 
 @Component({
 	selector: "game-page",
@@ -9,7 +10,7 @@ import { GameMasterService } from "../../services/game-master.service";
 export class GamePageComponent {
 	size: number;
 
-	constructor(private master: GameMasterService) {
-		this.size = master.boardSize;
+	constructor(private readonly gVars: GlobalVariablesService) {
+		this.size = this.gVars.boardSize;
 	}
 }

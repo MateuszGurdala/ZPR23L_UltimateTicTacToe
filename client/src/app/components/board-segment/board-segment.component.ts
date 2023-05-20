@@ -3,6 +3,7 @@ import { SegmentLogic } from "../segment-logic";
 import { GameBoardComponent } from "../game-board/game-board.component";
 import { GameMasterService } from "src/app/services/game-master.service";
 import { Segment } from "src/app/structs";
+import { GlobalVariablesService } from "../../services/global-variables.service";
 
 @Component({
 	selector: "board-segment",
@@ -10,7 +11,11 @@ import { Segment } from "src/app/structs";
 	styleUrls: ["./board-segment.component.css"],
 })
 export class BoardSegmentComponent extends SegmentLogic implements AfterContentInit {
-	constructor(@Host() parent: GameBoardComponent, private master: GameMasterService) {
+	constructor(
+		@Host() parent: GameBoardComponent,
+		private master: GameMasterService,
+		private readonly gVars: GlobalVariablesService
+	) {
 		super();
 		this.parent = parent;
 	}
@@ -22,7 +27,7 @@ export class BoardSegmentComponent extends SegmentLogic implements AfterContentI
 
 	onClick() {
 		if (this.isActive) {
-			this.ownerSign = this.master.playerSign;
+			this.ownerSign = this.gVars.playerSign;
 			this.master.signalPlayerMove();
 		}
 		this.setIsActive(false);
