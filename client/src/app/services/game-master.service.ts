@@ -147,9 +147,10 @@ export class GameMasterService {
 		while (this.gVars.isGameOngoing) {
 			this.setIsProcessing(true);
 			console.log("Running loop iteration.");
-			switch (await this.gVars.getGameStage(GameStage.PlayerChooseSegment)) {
+			switch (await this.gVars.getGameStage(this.gVars.gameStagePub)) {
 				case GameStage.PlayerTurn:
 					this.setIsProcessing(false);
+					this.gameBoard.setIsActive(false);
 					// await this.updateBoard();
 					if (this.gVars.currentSegment !== undefined) {
 						this.gameBoard.unlockSegment(this.gVars.currentSegment);
@@ -162,6 +163,7 @@ export class GameMasterService {
 					// await this.updateBoard();
 					this.gameBoard.unlockSegmentChoosing();
 					await this.waitForPlayerChooseSegment();
+					this.gVars.gameStagePub = GameStage.PlayerTurn;
 					break;
 				case GameStage.EnemyTurn:
 				case GameStage.EnemyChooseSegment:

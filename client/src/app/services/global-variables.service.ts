@@ -9,7 +9,6 @@ import { GameHttpClient } from "./game-http-client.service";
 export class GlobalVariablesService {
 	private gameStage: GameStage;
 	private gameState: GameState = GameState.Unknown;
-	gameStagePub: GameStage; //TODO: Remove
 	isGameOngoing: boolean;
 	isProcessing: boolean;
 	playerMadeMove: boolean;
@@ -18,6 +17,8 @@ export class GlobalVariablesService {
 	boardSize: number = 3;
 	playerSign: Sign = Sign.X;
 	gameMode: GameMode = GameMode.SinglePlayer;
+
+	gameStagePub: GameStage = GameStage.PlayerChooseSegment; //TODO: Remove
 
 	constructor(private readonly httpClient: GameHttpClient) {}
 
