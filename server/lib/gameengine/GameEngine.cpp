@@ -5,12 +5,12 @@
 #include "../../include/helpers/BoardIndexConverter.hpp"
 
 GameEngine::GameEngine(std::unique_ptr<MainBoard> mainBoard) : mainBoard(std::move(mainBoard)) {
-    unsigned int boardSize = this->mainBoard->GetBoardSize();
-    availableOuterBoardMoves = initializeAvailableSingleBoardMoves(boardSize);
-    allAvailableBoardMoves = initializeAvailableInnerBoardMoves(boardSize);
+    availableOuterBoardMoves = initializeAvailableSingleBoardMoves();
+    allAvailableBoardMoves = initializeAvailableInnerBoardMoves();
 }
 
-std::vector<Point> GameEngine::initializeAvailableSingleBoardMoves(unsigned int boardSize) {
+std::vector<Point> GameEngine::initializeAvailableSingleBoardMoves() {
+    unsigned int boardSize = GetBoardSize();
     std::vector<Point> availableMoves;
     availableMoves.reserve(boardSize*boardSize);
     for (unsigned int x = 0; x < boardSize; x++) {
@@ -21,11 +21,12 @@ std::vector<Point> GameEngine::initializeAvailableSingleBoardMoves(unsigned int 
     return availableMoves;
 }
 
-std::vector<std::vector<Point>> GameEngine::initializeAvailableInnerBoardMoves(unsigned int boardSize) {
+std::vector<std::vector<Point>> GameEngine::initializeAvailableInnerBoardMoves() {
+    unsigned int boardSize = GetBoardSize();
     std::vector<std::vector<Point>> availableMoves;
     availableMoves.reserve(boardSize*boardSize);
     for (unsigned int n = 0; n < boardSize*boardSize; n++) {
-        availableMoves.emplace_back(initializeAvailableSingleBoardMoves(boardSize));
+        availableMoves.emplace_back(initializeAvailableSingleBoardMoves());
     }
     return availableMoves;
 }
@@ -33,6 +34,9 @@ std::vector<std::vector<Point>> GameEngine::initializeAvailableInnerBoardMoves(u
 
 void GameEngine::HandleMove(Point& boardCoordinates, Point& innerCoordinates, char figure) {
     mainBoard->MakeMove(boardCoordinates,innerCoordinates,figure);
+    unsigned int boardSize = GetBoardSize();
+    unsigned int innerBoardIndex = BoardIndexConverter::PointToIndex(boardCoordinates,boardSize);
+    removePointFromAllAvailableMoves(innerBoardIndex, innerCoordinates);
 }
 
 
@@ -146,6 +150,20 @@ std::string GameEngine::PickSegmentAsJson(bool isNested, Point& segment, bool is
     {
         ss << "{";
     }
+    ss << "\"moveResponse\":";
+    ss << "{";
+    unsigned int boardSize = GetBoardSize();
+    ss << "\"outerBoardIndex\":" << "\"" <<  BoardIndexConverter::PointToIndex(segment,boardSize) << "\",";
+    ss << "\"innerBoardIndex\":" << "\"" <<  BoardIndexConverter::PointToIndex(segment,boardSize) << "\",";
+    if(isValid)
+    {
+        ss << "\"isMoveValid\":" <<  "true" ;
+    }
+    else
+    {
+        ss << "\"isMoveValid\":" <<  "false" ;
+    }
+    ss << "}";
     if(!isNested)
     {
         ss << "}";
@@ -160,4 +178,14 @@ void GameEngine::removePointFromOuterAvailableMoves(Point &pointToRemove) {
                                         [x, y](const Point& point) {
                                             return (point.x == x && point.y == y);
                                         }), availableOuterBoardMoves.end());
+}
+
+void GameEngine::removePointFromAllAvailableMoves(unsigned int innerBoardIndex, Point &pointofInnerBoardToRemove) {
+    auto& innerBoard = allAvailableBoardMoves[innerBoardIndex];
+    unsigned int x = pointofInnerBoardToRemove.x;
+    unsigned int y = pointofInnerBoardToRemove.y;
+    innerBoard.erase(std::remove_if(innerBoard.begin(), innerBoard.end(),
+                                                  [x, y](const Point& point) {
+                                                      return (point.x == x && point.y == y);
+                                                  }), innerBoard.end());
 }

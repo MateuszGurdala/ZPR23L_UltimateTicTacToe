@@ -13,8 +13,8 @@ private:
     std::vector<Point> availableOuterBoardMoves;
     std::vector<std::vector<Point>> allAvailableBoardMoves;
     std::vector<Point> currentLegalMoves;
-    static std::vector<Point> initializeAvailableSingleBoardMoves(unsigned int boardSize);
-    static std::vector<std::vector<Point>> initializeAvailableInnerBoardMoves(unsigned int boardSize);
+    std::vector<Point> initializeAvailableSingleBoardMoves();
+    std::vector<std::vector<Point>> initializeAvailableInnerBoardMoves();
     static bool AreAllValuesTheSame(const std::vector<char>& values);
     void removePointFromOuterAvailableMoves(Point& pointToRemove);
 
@@ -30,6 +30,8 @@ public:
     std::string MoveAsJson(bool isNested, std::array<Point, 2> move, bool isValid);
 
     std::string PickSegmentAsJson(bool isNested, Point &segment, bool isValid);
+
+    void removePointFromAllAvailableMoves(unsigned int innerBoardIndex, Point &pointofInnerBoardToRemove);
 };
 
 #endif //ULTIMATETICTACTOESERVER_GAMEENGINE_H
