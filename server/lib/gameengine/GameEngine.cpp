@@ -4,7 +4,7 @@
 #include "../../include/gameengine/GameEngine.hpp"
 #include "../../include/helpers/BoardIndexConverter.hpp"
 
-GameEngine::GameEngine(std::unique_ptr <MainBoard> mainBoard) : mainBoard(std::move(mainBoard)) {
+GameEngine::GameEngine(std::unique_ptr<MainBoard> mainBoard) : mainBoard(std::move(mainBoard)) {
     unsigned int boardSize = this->mainBoard->GetBoardSize();
     availableOuterBoardMoves = InitializeAvailableSingleBoardMoves(boardSize);
     availableInnerBoardMoves = InitializeAvailableInnerBoardMoves(boardSize);
@@ -88,11 +88,6 @@ bool GameEngine::CheckGlobalWinner(Point& changedWinnerBoardCellCoordinates) {
 bool GameEngine::AreAllValuesTheSame(const std::vector<char>& values) {
     auto it = std::adjacent_find(values.begin(), values.end(), std::not_equal_to<>());
     return it == values.end();
-}
-
-bool GameEngine::CheckIfBoardWon(Point& boardCoordinates, Point& startingCellCoordinates)
-{
-
 }
 
 std::vector<Point> &GameEngine::getAvailableOuterBoardMoves() {

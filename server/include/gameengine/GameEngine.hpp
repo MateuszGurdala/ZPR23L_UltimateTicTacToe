@@ -14,13 +14,13 @@ private:
     std::vector<std::vector<Point>> availableInnerBoardMoves;
     static std::vector<Point> InitializeAvailableSingleBoardMoves(unsigned int boardSize);
     static std::vector<std::vector<Point>> InitializeAvailableInnerBoardMoves(unsigned int boardSize);
-    bool AreAllValuesTheSame(const std::vector<char>& values)
+    static bool AreAllValuesTheSame(const std::vector<char>& values);
 public:
     GameEngine(std::unique_ptr<MainBoard> mainBoard);
     unsigned int GetBoardSize();
     std::vector<Point>& getAvailableOuterBoardMoves();
     std::vector<std::vector<Point>>& getAvailableInnerBoardMoves();
-    bool CheckLocalWinner(Point& localBoardCoordinates, Point& changedBoardCellCoordinates;
+    bool CheckLocalWinner(Point& localBoardCoordinates, Point& changedBoardCellCoordinates);
     bool CheckGlobalWinner(Point& changedWinnerBoardCellCoordinates);
     void HandleMove(Point& boardCoordinates, Point& innerCoordinates, char figure);
     std::string GetWinnerBoardAsJson(bool isNested);
