@@ -4,6 +4,7 @@ import { GameBoardComponent } from "../game-board/game-board.component";
 import { GameMasterService } from "src/app/services/game-master.service";
 import { Segment } from "src/app/structs";
 import { GlobalVariablesService } from "../../services/global-variables.service";
+import { GameStage } from "../../structs";
 
 @Component({
 	selector: "board-segment",
@@ -27,7 +28,7 @@ export class BoardSegmentComponent extends SegmentLogic implements AfterContentI
 		this.parent.subscribe(this);
 	}
 
-	onClick() {
+	async onClick() {
 		if (!this.gVars.isPlayerTurn()) {
 			return;
 		}
@@ -38,6 +39,13 @@ export class BoardSegmentComponent extends SegmentLogic implements AfterContentI
 		}
 		this.setIsActive(false);
 		//TODO: Send POST to server
+		//TODO: Remove
+		this.gVars.gameStagePub = GameStage.EnemyTurn;
+		if ((await this.gVars.getGameStage(this.gVars.gameStagePub)) === GameStage.EnemyTurn) {
+			if (this.id !== undefined) {
+				this.master.mockEnemyTurn(this.id);
+			}
+		}
 	}
 
 	update(state: Segment): void {
@@ -49,5 +57,10 @@ export class BoardSegmentComponent extends SegmentLogic implements AfterContentI
 			super.unlockSegment(number);
 			this.pseudoHoverState = false;
 		}
+	}
+
+	//TODO: Remove
+	forcePlaceEnemtSign(): void {
+		this.ownerSign = this.gVars.enemySign;
 	}
 }

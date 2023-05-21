@@ -1,11 +1,12 @@
 import { Injectable } from "@angular/core";
 import { GameHttpClient } from "./game-http-client.service";
 import { GameBoardComponent } from "../components/game-board/game-board.component";
-import { GameMode, GameStage, GameState, Sign } from "../structs";
+import { GameMode, GameStage, GameState, Segment, Sign } from "../structs";
 import { firstValueFrom } from "rxjs";
 import { Router } from "@angular/router";
 import { SettingsBarComponent } from "../components/settings-bar/settings-bar.component";
 import { GlobalVariablesService } from "./global-variables.service";
+import { BoardSegmentComponent } from "../components/board-segment/board-segment.component";
 
 @Injectable({
 	providedIn: "root",
@@ -178,5 +179,32 @@ export class GameMasterService {
 					break;
 			}
 		}
+	}
+
+	getRandomInt(): number {
+		return Math.floor(Math.random() * (9 - 1 + 1)) + 1;
+	}
+
+	async mockEnemyTurn(nextSegment: number) {
+		this.gameBoard.unlockSegment(nextSegment);
+		let enemyPlace: number = this.getRandomInt();
+		console.log("Got place: " + enemyPlace);
+
+		while (
+			(<GameBoardComponent>this.gameBoard.segments[nextSegment - 1]).segments[enemyPlace - 1].isOwned()
+		) {
+			enemyPlace = this.getRandomInt();
+			console.log("Got place: " + enemyPlace);
+		}
+		console.log("Final place: " + enemyPlace);
+
+		await this.sleep(500);
+
+		(<BoardSegmentComponent>(
+			(<GameBoardComponent>this.gameBoard.segments[nextSegment - 1]).segments[enemyPlace - 1]
+		)).forcePlaceEnemtSign();
+
+		this.gVars.currentSegment = enemyPlace;
+		this.gVars.gameStagePub = GameStage.PlayerTurn;
 	}
 }

@@ -18,7 +18,9 @@ export class GlobalVariablesService {
 	playerSign: Sign = Sign.X;
 	gameMode: GameMode = GameMode.SinglePlayer;
 
-	gameStagePub: GameStage = GameStage.PlayerChooseSegment; //TODO: Remove
+	//TODO: Remove
+	gameStagePub: GameStage = GameStage.PlayerChooseSegment;
+	enemySign: Sign = Sign.O;
 
 	constructor(private readonly httpClient: GameHttpClient) {}
 
