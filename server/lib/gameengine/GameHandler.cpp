@@ -28,10 +28,12 @@ void GameHandler::startGame(unsigned int boardSize, const std::string& hostName,
     if(hostSymbol == 'O')
     {
         guestSymbol = 'X';
+        isHostTurn = false;
     }
     else
     {
         guestSymbol = 'O';
+        isHostTurn = true;
     }
     hostPlayer = std::make_unique<HumanPlayer>(hostSymbol, hostName);
 
@@ -43,14 +45,13 @@ void GameHandler::startGame(unsigned int boardSize, const std::string& hostName,
     {
         secondPlayer = std::make_unique<HumanPlayer>(guestSymbol, guestName);
     }
-
     auto mainBoard = std::make_unique<MainBoard>(boardSize);
     gameEngine = std::make_unique<GameEngine>(std::move(mainBoard));
 }
 
 //TODO
 void GameHandler::handleGameEnd() {
-    currentGameState = Finished;
+    currentGameState->SetGameStatus("Finished");
 }
 
 std::array<Point, 2> GameHandler::ChooseCoordinatesOfMove(){
@@ -118,6 +119,36 @@ std::string GameHandler::GameStateAsJson() {
     ss << "}";
     return ss.str();
 }
-std::string GameHandler::EndGameAsJson() {
+std::string GameHandler::EndGameAsJson(bool isPlayerSurrender) {
+    std::stringstream ss;
+    std::string invokerName;
+    std::string idlePlayerName;
+    if(isHostTurn)
+    {
+        invokerName = hostPlayer->GetName();
+        idlePlayerName = secondPlayer->GetName();
+    }
+    else
+    {
+        invokerName = secondPlayer->GetName();
+        idlePlayerName = hostPlayer->GetName();
+    }
+    ss << "{";
+        ss << "\"endGame\":";
+        ss << "{";
+            if(isPlayerSurrender)
+            {
+                ss << "\"winner\":" << "\"" << idlePlayerName << "\"" ;
+                ss << "\"winner\":" << "\"" << "true" << "\"" ;
 
+            }
+            else
+            {
+                ss << "\"winner\":" << "\"" << invokerName << "\"";
+                ss << "\"winner\":" << "\"" << "false" << "\"" ;
+
+            }
+        ss << "}";
+    ss << "}";
+    return ss.str();
 }

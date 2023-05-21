@@ -4,18 +4,22 @@
 #include <string>
 
 enum GameStatus {
-    Ready,
-    WaitingForOpponent,
-    Ongoing,
-    Finished
+
 };
 
 class GameStage {
 private:
-    GameStatus gameStatus;
+    std::array<std::string, 5> availableStatuses = {{
+                                                    "Ready",
+                                                    "WaitingForOpponent",
+                                                    "ChoosingSegment",
+                                                    "OngoingMove",
+                                                    "Finished"
+                                                    }};
+    std::string currentGameStatus;
 public:
     GameStatus GetGameStatus();
-    GameStatus SetGameStatus(GameStatus newGameStatus);
+    void SetGameStatus(std::string newGameStatus);
     std::string GameStatusAsJson(bool isNested);
 };
 

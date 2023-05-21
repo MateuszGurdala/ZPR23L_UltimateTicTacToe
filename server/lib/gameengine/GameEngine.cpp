@@ -68,7 +68,6 @@ bool GameEngine::CheckForLocalWinner(Point& mainBoardCoordinates, Point& innerBo
     }
     return false;
 }
-
 bool GameEngine::CheckForGlobalWinner(Point& changedWinnerBoardCellCoordinates) {
     auto figuresInPattern = mainBoard->GetWinnerBoard().GetHorizontalValues(changedWinnerBoardCellCoordinates);
     if(AreAllValuesTheSame(figuresInPattern))

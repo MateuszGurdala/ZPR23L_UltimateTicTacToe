@@ -1,14 +1,32 @@
 
+#include <sstream>
 #include "../../include/gameengine/GameStage.hpp"
 
-GameStatus GameStage::GetGameStatus() {
-    return gameStatus;
+std::string GameStage::GetGameStatus() {
+    return currentGameStatus;
 }
 
-GameStatus GameStage::SetGameStatus(GameStatus newGameStatus) {
-    gameStatus = newGameStatus;
+void GameStage::SetGameStatus(const std::string& newGameStatus) {
+    if (std::find(availableStatuses.begin(), availableStatuses.end(), newGameStatus) == availableStatuses.end()) {
+        throw std::invalid_argument("Invalid game status.");
+    }
+    currentGameStatus = newGameStatus;
 }
+
 
 std::string GameStage::GameStatusAsJson(bool isNested) {
-    return std::string();
+    std::stringstream ss;
+    if(!isNested)
+    {
+        ss << "{";
+    }
+    ss << "\"gameStage\":";
+    ss << "{";
+    ss << "\"currentGameStage\":" <<  currentGameStatus;
+
+    ss << "}";
+    {
+        ss << "}";
+    }
+    return ss.str();
 }
