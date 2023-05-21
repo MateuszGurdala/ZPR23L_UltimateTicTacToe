@@ -7,35 +7,63 @@ GameHandler::GameHandler(std::unique_ptr <HumanPlayer> hostPlayer, std::unique_p
                          : hostPlayer(std::move(hostPlayer)), secondPlayer(std::move(secondPlayer)),
                          gameEngine(std::move(gameEngine)) {}
 
-GameHandler::GameHandler()
+GameHandler::GameHandler(unsigned int boardSize, const std::string& hostName, char hostSymbol, bool isPlayerVsComputer, const std::string& guestName)
 {
-    startGame();
+    startGame(boardSize, hostName, hostSymbol, isPlayerVsComputer, guestName);
 }
 
-void GameHandler::startGame() {
-    hostPlayer = std::make_unique<HumanPlayer>('X', std::string("testHost"));
-    secondPlayer = std::make_unique<ComputerPlayer>('O');
+void GameHandler::startGame(unsigned int boardSize, const std::string& hostName, char hostSymbol, bool isPlayerVsComputer, const std::string& guestName) {
+    if(isPlayerVsComputer && !guestName.empty()) {
+        throw std::invalid_argument("Computer player cannot have a nickname.");
+    }
+    if(hostName.empty())
+    {
+        throw std::invalid_argument("Client must have a name.");
+    }
+    if(hostSymbol != 'X' && hostSymbol != 'O')
+    {
+        throw std::invalid_argument("Invalid symbol of Host");
+    }
+    char guestSymbol;
+    if(hostSymbol == 'O')
+    {
+        guestSymbol = 'X';
+    }
+    else
+    {
+        guestSymbol = 'O';
+    }
+    hostPlayer = std::make_unique<HumanPlayer>(hostSymbol, hostName);
 
-    auto mainBoard = std::make_unique<MainBoard>(3);
+    if(isPlayerVsComputer)
+    {
+        secondPlayer = std::make_unique<ComputerPlayer>(guestSymbol);
+    }
+    else
+    {
+        secondPlayer = std::make_unique<HumanPlayer>(guestSymbol, guestName);
+    }
+
+    auto mainBoard = std::make_unique<MainBoard>(boardSize);
     gameEngine = std::make_unique<GameEngine>(std::move(mainBoard));
 }
 
 //TODO
-bool GameHandler::CheckIfGameEnd() {
-    return false;
+void GameHandler::handleGameEnd() {
+    currentGameState = Finished;
 }
 
 std::array<Point, 2> GameHandler::ChooseCoordinatesOfMove(){
-    std::array<Point, 2> target{};
+    std::array<Point, 2> target;
     if(isHostTurn)
     {
-        target = hostPlayer->ChooseMove(gameEngine->getAvailableOuterBoardMoves(),
-                                        gameEngine->getAvailableInnerBoardMoves(), gameEngine->GetBoardSize());
+        target = hostPlayer->ChooseMove(gameEngine->GetAvailableOuterBoardMoves(),
+                                        gameEngine->GetAvailableInnerBoardMoves(), gameEngine->GetBoardSize());
     }
     else
     {
-       target = secondPlayer->ChooseMove(gameEngine->getAvailableOuterBoardMoves(),
-                                         gameEngine->getAvailableInnerBoardMoves(), gameEngine->GetBoardSize());
+       target = secondPlayer->ChooseMove(gameEngine->GetAvailableOuterBoardMoves(),
+                                         gameEngine->GetAvailableInnerBoardMoves(), gameEngine->GetBoardSize());
     }
     return target;
 }
@@ -52,10 +80,14 @@ void GameHandler::PerformTurn(Point boardCoordinates, Point innerCoordinates) {
         currentFigure = secondPlayer->GetSymbol();
     }
     gameEngine->HandleMove(boardCoordinates, innerCoordinates, currentFigure);
+    gameEngine->CheckForLocalWinner(boardCoordinates, innerCoordinates);
+    if(gameEngine->CheckForGlobalWinner(boardCoordinates))
+    {
+        handleGameEnd();
+    }
     isHostTurn = !isHostTurn;
 }
 
-//TODO consider moving jsons with communication to other class
 std::string GameHandler::GameStateAsJson() {
     std::stringstream ss;
     ss << "{";
@@ -85,4 +117,7 @@ std::string GameHandler::GameStateAsJson() {
             gameEngine->GetWinnerBoardAsJson(true);
     ss << "}";
     return ss.str();
+}
+std::string GameHandler::EndGameAsJson() {
+
 }
