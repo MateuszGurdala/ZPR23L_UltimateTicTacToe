@@ -1,6 +1,7 @@
 
 #include <memory>
 #include <sstream>
+#include <algorithm>
 #include "../../include/gameengine/GameEngine.hpp"
 #include "../../include/helpers/BoardIndexConverter.hpp"
 
@@ -30,7 +31,22 @@ std::vector<std::vector<Point>> GameEngine::initializeAvailableInnerBoardMoves()
     }
     return availableMoves;
 }
-
+void GameEngine::UpdateCurrentLegalMoves(Point& innerBoardCoordinates, Point& outerBoardCoordinates)
+{
+    std::vector<Point>().swap(currentLegalMoves);
+    unsigned int boardSize = GetBoardSize();
+    if(mainBoard->GetWinnerBoardCell(outerBoardCoordinates) == ' ')
+    {
+        for (const auto& moves : allAvailableBoardMoves) {
+            for (const auto& point : moves) {
+                currentLegalMoves.push_back(point);
+            }
+        }
+        return;
+    }
+    unsigned int outerBoardIndex = BoardIndexConverter::PointToIndex(outerBoardCoordinates,boardSize);
+    currentLegalMoves = allAvailableBoardMoves[outerBoardIndex];
+}
 
 void GameEngine::HandleMove(Point& boardCoordinates, Point& innerCoordinates, char figure) {
     mainBoard->MakeMove(boardCoordinates,innerCoordinates,figure);

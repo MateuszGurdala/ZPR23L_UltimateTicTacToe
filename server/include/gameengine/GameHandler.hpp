@@ -21,10 +21,10 @@ private:
     std::unique_ptr<GameEngine> gameEngine;
     bool isHostTurn = false;
     std::unique_ptr<GameStage> currentGameState;
-    std::unique_ptr<Point> currentlyPlayedInnerBoardCoordinates;
     void startGame(unsigned int boardSize, const std::string& hostName, char hostSymbol, bool isPlayerVsComputer = true, const std::string& guestName = "");
     void handleGameEnd();
 public:
+    bool PerformMoveValidation(Point boardCoordinates, Point innerCoordinates);
     void PerformTurn(Point boardCoordinates, Point innerCoordinates);
     GameHandler(std::unique_ptr<HumanPlayer> hostPlayer, std::unique_ptr<Player> secondPlayer, std::unique_ptr<GameEngine> gameEngine);
     GameHandler(unsigned int boardSize, const std::string& hostName, char hostSymbol, bool isPlayerVsComputer = true, const std::string& guestName = "");

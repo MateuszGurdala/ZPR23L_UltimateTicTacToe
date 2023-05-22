@@ -1,6 +1,7 @@
 #include <sstream>
 #include "../../include/gameengine/GameHandler.hpp"
 #include "../../include/entities/ComputerPlayer.hpp"
+#include "../../include/helpers/BoardIndexConverter.hpp"
 
 GameHandler::GameHandler(std::unique_ptr <HumanPlayer> hostPlayer, std::unique_ptr <Player> secondPlayer,
                          std::unique_ptr <GameEngine> gameEngine)
@@ -68,19 +69,18 @@ std::array<Point, 2> GameHandler::ChooseCoordinatesOfMove(){
     }
     return target;
 }
-//TODO
-//void GameHandler::PerformMoveValidation(Point boardCoordinates, Point innerCoordinates){
-//
-//    if(currentlyPlayedInnerBoardCoordinates == nullptr)
-//    {
-//
-//    }
-//    else
-//    {
-//
-//    }
-//
-//}
+
+bool GameHandler::PerformMoveValidation(Point boardCoordinates, Point innerCoordinates){
+    unsigned int boardSize = gameEngine->GetBoardSize();
+    unsigned int winnerBoardIndex = BoardIndexConverter::PointToIndex(boardCoordinates, boardSize);
+    auto const availableMoves = gameEngine->GetAvailableInnerBoardMoves();
+    if(availableMoves[winnerBoardIndex].empty())
+    {
+        return false;
+    }
+    return true;
+
+}
 
 
 void GameHandler::PerformTurn(Point boardCoordinates, Point innerCoordinates) {
@@ -101,9 +101,7 @@ void GameHandler::PerformTurn(Point boardCoordinates, Point innerCoordinates) {
         handleGameEnd();
     }
     isHostTurn = !isHostTurn;
-    //TODO
-//    currentlyPlayedInnerBoardCoordinates = boardCoordinates;
-//    gameEngine->
+    gameEngine->UpdateCurrentLegalMoves(innerCoordinates, boardCoordinates);
 }
 
 std::string GameHandler::GameStateAsJson() {

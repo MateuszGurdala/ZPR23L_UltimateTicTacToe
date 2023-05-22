@@ -35,6 +35,8 @@ public:
 
     void setCurrentLegalMoves(unsigned int currentOuterBoard);
     std::vector<Point> getCurrentLegalMoves();
+
+    void UpdateCurrentLegalMoves(Point &innerBoardCoordinates, Point &outerBoardCoordinates);
 };
 
 #endif //ULTIMATETICTACTOESERVER_GAMEENGINE_H

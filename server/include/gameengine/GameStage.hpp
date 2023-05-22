@@ -2,6 +2,7 @@
 #define ULTIMATETICTACTOESERVER_GAMESTAGE_H
 
 #include <string>
+#include <array>
 
 enum GameStatus {
 
@@ -9,13 +10,13 @@ enum GameStatus {
 
 class GameStage {
 private:
-    std::array<std::string, 5> availableStatuses = {{
+    std::array<std::string, 5> availableStatuses = {
                                                     "Ready",
                                                     "WaitingForOpponent",
                                                     "ChoosingSegment",
                                                     "OngoingMove",
                                                     "Finished"
-                                                    }};
+                                                    };
     std::string currentGameStatus;
 public:
     std::string GetGameStatus();
