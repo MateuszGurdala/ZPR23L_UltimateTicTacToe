@@ -23,7 +23,7 @@ public:
     unsigned int GetBoardSize();
     std::vector<Point>& GetAvailableOuterBoardMoves();
     std::vector<std::vector<Point>>& GetAvailableInnerBoardMoves();
-    bool CheckForLocalWinner(Point& mainBoardCoordinates, Point& innerBoardCellCoordinates);
+    bool CheckForLocalWinner(Point& mainBoardCoordinates, Point& innerBoardCellCoordinates, char figure);
     bool CheckForGlobalWinner(Point& changedWinnerBoardCellCoordinates);
     void HandleMove(Point& boardCoordinates, Point& innerCoordinates, char figure);
     std::string GetWinnerBoardAsJson(bool isNested);
@@ -32,6 +32,9 @@ public:
     std::string PickSegmentAsJson(bool isNested, Point &segment, bool isValid);
 
     void removePointFromAllAvailableMoves(unsigned int innerBoardIndex, Point &pointofInnerBoardToRemove);
+
+    void setCurrentLegalMoves(unsigned int currentOuterBoard);
+    std::vector<Point> getCurrentLegalMoves();
 };
 
 #endif //ULTIMATETICTACTOESERVER_GAMEENGINE_H

@@ -33,7 +33,14 @@ int main() {
     std::cout <<  jsonMove << std::endl;
     std::cout << "------------------------------------" << std::endl;
     std::cout << "GAME STATE JSON TEST" << std::endl;
-    auto handler = std::make_unique<GameHandler>();
+    auto handler = std::make_unique<GameHandler>(3, "Krystian", 'X', false, "Mateusz");
     auto stateJson = handler->GameStateAsJson();
     std::cout << stateJson << std::endl;
+    std::cout << "GAME ENDED JSON TEST" << std::endl;
+    auto winnerJson = handler->EndGameAsJson(false);
+    std::cout << winnerJson << std::endl;
+    std::cout << "GAME CREATED JSON TEST" << std::endl;
+    auto createJson = handler ->CreateGameAsJson(true);
+    std::cout << createJson << std::endl;
+
 }

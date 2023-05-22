@@ -21,6 +21,7 @@ private:
     std::unique_ptr<GameEngine> gameEngine;
     bool isHostTurn = false;
     std::unique_ptr<GameStage> currentGameState;
+    std::unique_ptr<Point> currentlyPlayedInnerBoardCoordinates;
     void startGame(unsigned int boardSize, const std::string& hostName, char hostSymbol, bool isPlayerVsComputer = true, const std::string& guestName = "");
     void handleGameEnd();
 public:
@@ -30,6 +31,7 @@ public:
     std::array<Point, 2> ChooseCoordinatesOfMove();
     std::string GameStateAsJson();
     std::string EndGameAsJson(bool isPlayerSurrender);
+    std::string CreateGameAsJson(bool isSuccess);
 };
 
 #endif //ULTIMATETICTACTOESERVER_GAMEHANDLER_H

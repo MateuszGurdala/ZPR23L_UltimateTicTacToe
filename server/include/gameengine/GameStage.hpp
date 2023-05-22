@@ -18,8 +18,8 @@ private:
                                                     }};
     std::string currentGameStatus;
 public:
-    GameStatus GetGameStatus();
-    void SetGameStatus(std::string newGameStatus);
+    std::string GetGameStatus();
+    void SetGameStatus(const std::string& newGameStatus);
     std::string GameStatusAsJson(bool isNested);
 };
 

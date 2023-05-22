@@ -68,6 +68,20 @@ std::array<Point, 2> GameHandler::ChooseCoordinatesOfMove(){
     }
     return target;
 }
+//TODO
+//void GameHandler::PerformMoveValidation(Point boardCoordinates, Point innerCoordinates){
+//
+//    if(currentlyPlayedInnerBoardCoordinates == nullptr)
+//    {
+//
+//    }
+//    else
+//    {
+//
+//    }
+//
+//}
+
 
 void GameHandler::PerformTurn(Point boardCoordinates, Point innerCoordinates) {
 
@@ -81,12 +95,15 @@ void GameHandler::PerformTurn(Point boardCoordinates, Point innerCoordinates) {
         currentFigure = secondPlayer->GetSymbol();
     }
     gameEngine->HandleMove(boardCoordinates, innerCoordinates, currentFigure);
-    gameEngine->CheckForLocalWinner(boardCoordinates, innerCoordinates);
+    gameEngine->CheckForLocalWinner(boardCoordinates, innerCoordinates, currentFigure);
     if(gameEngine->CheckForGlobalWinner(boardCoordinates))
     {
         handleGameEnd();
     }
     isHostTurn = !isHostTurn;
+    //TODO
+//    currentlyPlayedInnerBoardCoordinates = boardCoordinates;
+//    gameEngine->
 }
 
 std::string GameHandler::GameStateAsJson() {
@@ -138,15 +155,43 @@ std::string GameHandler::EndGameAsJson(bool isPlayerSurrender) {
         ss << "{";
             if(isPlayerSurrender)
             {
-                ss << "\"winner\":" << "\"" << idlePlayerName << "\"" ;
+                ss << "\"whoEndedGame\":" << "\"" << idlePlayerName << "\"," ;
                 ss << "\"winner\":" << "\"" << "true" << "\"" ;
 
             }
             else
             {
-                ss << "\"winner\":" << "\"" << invokerName << "\"";
+                ss << "\"whoEndedGame\":" << "\"" << invokerName << "\",";
                 ss << "\"winner\":" << "\"" << "false" << "\"" ;
 
+            }
+        ss << "}";
+    ss << "}";
+    return ss.str();
+}
+
+std::string GameHandler::CreateGameAsJson(bool isSuccess) {
+    std::stringstream ss;
+        ss << "{";
+        ss << "\"createGameResponse\":";
+        ss << "{";
+            if(isSuccess)
+            {
+                ss << "\"isSuccess\":true" << "\"," ;
+                ss << "\"hostName\":" << "\"" << hostPlayer->GetName() << "\"," ;
+                ss << "\"hostSymbol\":" << "\"" << hostPlayer->GetSymbol() << "\"," ;
+                ss << "\"guestName\":" << "\"" << secondPlayer->GetName() << "\"," ;
+                ss << "\"guestSymbol\":" << "\"" << secondPlayer->GetSymbol() << "\",";
+                ss << "\"boardSize\":" << "\"" <<  gameEngine->GetBoardSize() << "\"";
+            }
+            else
+            {
+                ss << "\"isSuccess\":false" << "\"," ;
+                ss << "\"hostName\":" << "\"" << "" << "\"," ;
+                ss << "\"hostSymbol\":" << "\"" << "" << "\"," ;
+                ss << "\"guestName\":" << "\"" << "" << "\"," ;
+                ss << "\"guestSymbol\":" << "\"" << "" << "\",";
+                ss << "\"boardSize\":" << "\"" <<  "" << "\"";
             }
         ss << "}";
     ss << "}";

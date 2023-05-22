@@ -25,6 +25,7 @@ std::string GameStage::GameStatusAsJson(bool isNested) {
     ss << "\"currentGameStage\":" <<  currentGameStatus;
 
     ss << "}";
+    if(!isNested)
     {
         ss << "}";
     }

@@ -40,11 +40,12 @@ void GameEngine::HandleMove(Point& boardCoordinates, Point& innerCoordinates, ch
 }
 
 
-bool GameEngine::CheckForLocalWinner(Point& mainBoardCoordinates, Point& innerBoardCellCoordinates) {
+bool GameEngine::CheckForLocalWinner(Point& mainBoardCoordinates, Point& innerBoardCellCoordinates, char figure) {
     auto& innerBoard = mainBoard->GetInnerBoard(mainBoardCoordinates);
     auto figuresInPattern = innerBoard->GetHorizontalValues(innerBoardCellCoordinates);
     if(AreAllValuesTheSame(figuresInPattern))
     {
+        mainBoard->AddWinnerOfInnerBoard(mainBoardCoordinates, figure);
         removePointFromOuterAvailableMoves(mainBoardCoordinates);
         return true;
     }
@@ -52,17 +53,20 @@ bool GameEngine::CheckForLocalWinner(Point& mainBoardCoordinates, Point& innerBo
     if(AreAllValuesTheSame(figuresInPattern))
     {
         removePointFromOuterAvailableMoves(mainBoardCoordinates);
+        mainBoard->AddWinnerOfInnerBoard(mainBoardCoordinates, figure);
         return true;
     }
     figuresInPattern = innerBoard->GetLeftDiagonalValues(innerBoardCellCoordinates);
     if(AreAllValuesTheSame(figuresInPattern))
     {
+        mainBoard->AddWinnerOfInnerBoard(mainBoardCoordinates, figure);
         removePointFromOuterAvailableMoves(mainBoardCoordinates);
         return true;
     }
     figuresInPattern = innerBoard->GetRightDiagonalValues(innerBoardCellCoordinates);
     if(AreAllValuesTheSame(figuresInPattern))
     {
+        mainBoard->AddWinnerOfInnerBoard(mainBoardCoordinates, figure);
         removePointFromOuterAvailableMoves(mainBoardCoordinates);
         return true;
     }
