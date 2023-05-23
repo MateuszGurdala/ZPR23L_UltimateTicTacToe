@@ -27,14 +27,9 @@ public:
     bool CheckForGlobalWinner(Point& changedWinnerBoardCellCoordinates);
     void HandleMove(Point& boardCoordinates, Point& innerCoordinates, char figure);
     std::string GetWinnerBoardAsJson(bool isNested);
-    std::string MoveAsJson(bool isNested, std::array<Point, 2> move, bool isValid);
+    std::string GetBoardAsJson(bool isNested);
 
-    std::string PickSegmentAsJson(bool isNested, Point &segment, bool isValid);
-
-    void removePointFromAllAvailableMoves(unsigned int innerBoardIndex, Point &pointofInnerBoardToRemove);
-
-    void setCurrentLegalMoves(unsigned int currentOuterBoard);
-    std::vector<Point> getCurrentLegalMoves();
+    void removePointFromAllAvailableMoves(unsigned int innerBoardIndex, Point &pointOfInnerBoardToRemove);
 
     void UpdateCurrentLegalMoves(Point &innerBoardCoordinates, Point &outerBoardCoordinates);
 };

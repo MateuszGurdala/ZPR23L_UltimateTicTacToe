@@ -3,7 +3,8 @@
 #include "../../include/entities/MainBoard.hpp"
 #include "../../include/helpers/BoardIndexConverter.hpp"
 
-MainBoard::MainBoard(unsigned int boardSize) : BoardBase(boardSize), winnerBoard(boardSize){
+MainBoard::MainBoard(unsigned int boardSize) : BoardBase(boardSize), winnerBoard(std::make_unique<InnerBoard>(boardSize)){
+
     mainPlayBoard.resize(boardSize);
     for (auto& row : mainPlayBoard) {
         row.resize(boardSize);
@@ -11,15 +12,15 @@ MainBoard::MainBoard(unsigned int boardSize) : BoardBase(boardSize), winnerBoard
     FillBoard();
 }
 
-std::unique_ptr<InnerBoard>& MainBoard::GetInnerBoard(Point point) {
-    return mainPlayBoard[point.x][point.y];
+const InnerBoard& MainBoard::GetInnerBoard(Point point) const {
+    return *mainPlayBoard[point.x][point.y];
 }
 
 char MainBoard::GetWinnerBoardCell(Point point) {
-    return winnerBoard.GetCell(point);
+    return winnerBoard->GetCell(point);
 }
 const InnerBoard& MainBoard::GetWinnerBoard() const {
-    return winnerBoard;
+    return *winnerBoard;
 }
 
 void MainBoard::FillBoard() {
@@ -31,7 +32,7 @@ void MainBoard::FillBoard() {
 }
 
 void MainBoard::AddWinnerOfInnerBoard(Point& coordinates, char& figure) {
-    winnerBoard.PlaceFigure(coordinates, figure);
+    winnerBoard->PlaceFigure(coordinates, figure);
 }
 
 void MainBoard::MakeMove(Point& boardCoordinates, Point& innerCoordinates, char figure) {
@@ -52,7 +53,7 @@ std::string MainBoard::WinnerBoardToJson(bool isNested){
             ss << "{";
             ss << R"("id": ")" << id << R"(",)" ;
             ss << R"("winner": )";
-            ss << "\"" << winnerBoard.GetCell(currentPoint) << "\"";
+            ss << "\"" << winnerBoard->GetCell(currentPoint) << "\"";
             ss << "}";
             if (boardColumn != boardSize - 1) {
                 ss << ",";
@@ -84,7 +85,7 @@ std::string MainBoard::ToJson(bool isNested) {
             int id = BoardIndexConverter::PointToIndex(currentPoint, boardSize);
             ss << R"("id": ")" << id << R"(",)";
             ss << R"("winner": )";
-            ss << "\"" << winnerBoard.GetCell(currentPoint) << "\",";
+            ss << "\"" << winnerBoard->GetCell(currentPoint) << "\",";
             ss << mainPlayBoard[boardRow][boardColumn]->ToJson(true);
             ss << "}";
             if (boardColumn != boardSize - 1) {

@@ -17,7 +17,7 @@ private:
                                                     "OngoingMove",
                                                     "Finished"
                                                     };
-    std::string currentGameStatus;
+    std::string currentGameStatus = availableStatuses[0];
 public:
     std::string GetGameStatus();
     void SetGameStatus(const std::string& newGameStatus);

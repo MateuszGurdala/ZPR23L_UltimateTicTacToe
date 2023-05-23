@@ -1,4 +1,6 @@
 #include <sstream>
+#include <ranges>
+
 #include "../../include/gameengine/GameHandler.hpp"
 #include "../../include/entities/ComputerPlayer.hpp"
 #include "../../include/helpers/BoardIndexConverter.hpp"
@@ -6,10 +8,13 @@
 GameHandler::GameHandler(std::unique_ptr <HumanPlayer> hostPlayer, std::unique_ptr <Player> secondPlayer,
                          std::unique_ptr <GameEngine> gameEngine)
                          : hostPlayer(std::move(hostPlayer)), secondPlayer(std::move(secondPlayer)),
-                         gameEngine(std::move(gameEngine)) {}
+                         gameEngine(std::move(gameEngine)) {
+    currentGameState = std::make_unique<GameStage>();
+}
 
 GameHandler::GameHandler(unsigned int boardSize, const std::string& hostName, char hostSymbol, bool isPlayerVsComputer, const std::string& guestName)
 {
+    currentGameState = std::make_unique<GameStage>();
     startGame(boardSize, hostName, hostSymbol, isPlayerVsComputer, guestName);
 }
 
@@ -55,12 +60,12 @@ void GameHandler::handleGameEnd() {
     currentGameState->SetGameStatus("Finished");
 }
 
+//TODO LINK THIS WITH HTTPHANDLER
 std::array<Point, 2> GameHandler::ChooseCoordinatesOfMove(){
     std::array<Point, 2> target;
     if(isHostTurn)
     {
-        target = hostPlayer->ChooseMove(gameEngine->GetAvailableOuterBoardMoves(),
-                                        gameEngine->GetAvailableInnerBoardMoves(), gameEngine->GetBoardSize());
+        target = hostPlayer->ChooseMove(gameEngine->GetAvailableOuterBoardMoves(),gameEngine->GetAvailableInnerBoardMoves(), gameEngine->GetBoardSize());
     }
     else
     {
@@ -74,11 +79,10 @@ bool GameHandler::PerformMoveValidation(Point boardCoordinates, Point innerCoord
     unsigned int boardSize = gameEngine->GetBoardSize();
     unsigned int winnerBoardIndex = BoardIndexConverter::PointToIndex(boardCoordinates, boardSize);
     auto const availableMoves = gameEngine->GetAvailableInnerBoardMoves();
-    if(availableMoves[winnerBoardIndex].empty())
-    {
-        return false;
-    }
-    return true;
+    bool isPointValid = std::ranges::any_of(availableMoves[winnerBoardIndex], [&](const Point& point) {
+        return point.x == innerCoordinates.x && point.y == innerCoordinates.y;
+    });
+    return isPointValid;
 
 }
 
@@ -194,4 +198,73 @@ std::string GameHandler::CreateGameAsJson(bool isSuccess) {
         ss << "}";
     ss << "}";
     return ss.str();
+}
+
+std::string GameHandler::BoardStateAsJson(){
+    return gameEngine->GetBoardAsJson(false);
+}
+
+std::string GameHandler::WinnerBoardAsJson(){
+    return  gameEngine->GetWinnerBoardAsJson(false);
+}
+
+std::string GameHandler::MoveAsJson(bool isNested, std::array<Point,2> move, bool isValid) {
+    std::stringstream ss;
+    if(!isNested)
+    {
+        ss << "{";
+    }
+    ss << "\"moveResponse\":";
+    ss << "{";
+    unsigned int boardSize = gameEngine->GetBoardSize();
+    ss << "\"outerBoardIndex\":" << "\"" <<  BoardIndexConverter::PointToIndex(move[0],boardSize) << "\",";
+    ss << "\"innerBoardIndex\":" << "\"" <<  BoardIndexConverter::PointToIndex(move[1],boardSize) << "\",";
+    if(isValid)
+    {
+        ss << "\"isMoveValid\":" <<  "true" ;
+    }
+    else
+    {
+        ss << "\"isMoveValid\":" <<  "false" ;
+    }
+    ss << "}";
+    if(!isNested)
+    {
+        ss << "}";
+    }
+    return ss.str();
+}
+
+std::string GameHandler::PickSegmentAsJson(bool isNested, Point& segment, bool isValid){
+
+    std::stringstream ss;
+    if(!isNested)
+    {
+        ss << "{";
+    }
+    ss << "\"moveResponse\":";
+    ss << "{";
+    unsigned int boardSize = gameEngine->GetBoardSize();
+    ss << "\"outerBoardIndex\":" << "\"" <<  BoardIndexConverter::PointToIndex(segment,boardSize) << "\",";
+    ss << "\"innerBoardIndex\":" << "\"" <<  BoardIndexConverter::PointToIndex(segment,boardSize) << "\",";
+    if(isValid)
+    {
+        ss << "\"isMoveValid\":" <<  "true" ;
+    }
+    else
+    {
+        ss << "\"isMoveValid\":" <<  "false" ;
+    }
+    ss << "}";
+    if(!isNested)
+    {
+        ss << "}";
+    }
+    return ss.str();
+}
+
+
+//TODO delete later
+std::string GameHandler::GetCurrentGameState() {
+    return currentGameState->GetGameStatus();
 }

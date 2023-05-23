@@ -24,6 +24,7 @@ private:
     void startGame(unsigned int boardSize, const std::string& hostName, char hostSymbol, bool isPlayerVsComputer = true, const std::string& guestName = "");
     void handleGameEnd();
 public:
+    std::string GetCurrentGameState();
     bool PerformMoveValidation(Point boardCoordinates, Point innerCoordinates);
     void PerformTurn(Point boardCoordinates, Point innerCoordinates);
     GameHandler(std::unique_ptr<HumanPlayer> hostPlayer, std::unique_ptr<Player> secondPlayer, std::unique_ptr<GameEngine> gameEngine);
@@ -32,6 +33,10 @@ public:
     std::string GameStateAsJson();
     std::string EndGameAsJson(bool isPlayerSurrender);
     std::string CreateGameAsJson(bool isSuccess);
+    std::string MoveAsJson(bool isNested, std::array<Point, 2> move, bool isValid);
+    std::string PickSegmentAsJson(bool isNested, Point &segment, bool isValid);
+    std::string WinnerBoardAsJson();
+    std::string BoardStateAsJson();
 };
 
 #endif //ULTIMATETICTACTOESERVER_GAMEHANDLER_H

@@ -14,7 +14,7 @@
 class MainBoard : public BoardBase {
 private:
     std::vector<std::vector<std::unique_ptr<InnerBoard>>> mainPlayBoard;
-    InnerBoard winnerBoard;
+    std::unique_ptr<InnerBoard> winnerBoard;
     /*  Function: FillBoard
     Fills main play board with InnerBoard objects and winner board with whitespaces.
      */
@@ -35,7 +35,7 @@ public:
     */
     std::string WinnerBoardToJson(bool isNested);
 
-    std::unique_ptr<InnerBoard>& GetInnerBoard(Point point);
+    const InnerBoard& GetInnerBoard(Point point) const;
 
     char GetWinnerBoardCell(Point point);
     const InnerBoard& GetWinnerBoard() const;
