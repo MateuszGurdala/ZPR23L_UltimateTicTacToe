@@ -1,0 +1,55 @@
+<div class="container">
+    <!-- WelcomePage -->
+    <div [ngClass]="{'hide': !displayWelcome}">
+        <div class="credits">
+            <h1>UltimateTicTacToe</h1>
+            <h3>A ZPR project.</h3>
+            <h4>Credits</h4>
+            <h4>Mateusz Gurdała</h4>
+            <h4>Krystian Grela</h4>
+        </div>
+
+        <div class="options-panel">
+            <h3 colorReact class="button" (click)="tryStartGame()">Start Game</h3>
+            <h3 colorReact class="button" (click)="tryJoinGame()">Join Game</h3>
+            <h3 colorReact class="button" (click)="optionsClick()">Options</h3>
+        </div>
+
+        <div class="loader-container" [ngClass]="{'hide': !isProcessing}">
+            <div class="lds-ellipsis">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+    </div>
+    <!-- OtherPages -->
+    <div [ngClass]="{'hide': displayWelcome}" class="page-with-return">
+        <span class="material-symbols-outlined return-btn" (click)="returnClick()" colorReact>
+            arrow_back_ios
+        </span>
+        <!-- OptionsPage -->
+        <div class="settings-page">
+            <h4 class="setting-label">Server IP</h4>
+            <input #serverInput name="server" type="text" [(ngModel)]="serverURL" class="server-url"
+                (input)="onInputChange()" (focusout)="onInputChange()" />
+            <h4 class="setting-label">Preferred Sign</h4>
+            <div class="signs-container">
+                <h1 [ngClass]="{'selected': xIsChosen}" (click)="selectSign($event)">X</h1>
+                <h1 [ngClass]="{'selected': !xIsChosen}" (click)="selectSign($event)">O</h1>
+            </div>
+            <h4 class="setting-label">Game Mode</h4>
+            <select [(ngModel)]="gameModeString" (change)="changeGameMode()">
+                <option>Player vs AI</option>
+                <option>Player vs Player</option>
+            </select>
+            <h4 class="setting-label">Board Size</h4>
+            <div class="board-size">
+                <h1 colorReact style="cursor: pointer;" (click)="decreaseBoard()">-</h1>
+                <h1>{{ boardSize }}</h1>
+                <h1 colorReact class="plus-style" (click)="increaseBoard()">+</h1>
+            </div>
+        </div>
+    </div>
+</div>
