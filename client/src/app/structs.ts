@@ -39,4 +39,5 @@ export enum GameStage {
 	PlayerChooseSegment = "Pick Next Segment",
 	EnemyChooseSegment = "Enemy is Choosing Next Segment",
 	Finished = "Game is Finished",
+	Unknown = "Unknown",
 }
