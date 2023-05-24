@@ -3,16 +3,6 @@ import { Injectable } from "@angular/core";
 import { Observable, of } from "rxjs";
 import { GameBoard, GameMode, GameStage, GameState, Sign } from "../structs";
 
-/*
-GETBoardState -> zwraca cała plansza z podplanszami i segmentami oraz ich znakami
-GETGameState -> kto wygrywa jaką podplanszę + kto teraz wykonuje ruch (metadane rozgrywki)
-POSTMakeMove -> jak nazwa wskazuje
-POSTCreateGame -> tworzy planszę z wybranym przeciwnikiem
-GETStartGame -> rozpoczyna rozgrywkę
-GETEndGame -> jak nazwa wskazuje
-GETTestConnection -> sprawdza czy serwer pod danym url odpowiada
-*/
-
 @Injectable({
 	providedIn: "root",
 })
@@ -33,16 +23,16 @@ export class GameHttpClient {
 		});
 	}
 	postCreateGame(mode: GameMode, sign: Sign, size: number): Observable<boolean> {
-		//MOCK
-		return of(true);
+		return this.httpClient.post<boolean>(this.url + "/CreateGame", {
+			gameMode: mode,
+			playerSign: sign,
+			boardSize: size,
+		});
 	}
 	postPickSegment(segmentNumber: number): Observable<boolean> {
-		//MOCK
-		return of(true);
-	}
-	postEndGame(): Observable<boolean> {
-		//MOCk
-		return of(true);
+		return this.httpClient.post<boolean>(this.url + "/PickSegment", {
+			segmentNumber: segmentNumber,
+		});
 	}
 	//#endregion
 
@@ -51,16 +41,16 @@ export class GameHttpClient {
 		return this.httpClient.get<GameBoard>(this.url + "/BoardState");
 	}
 	getServerStatus(): Observable<boolean> {
-		//MOCK
-		return of(true);
+		return this.httpClient.get<any>(this.url + "/ServerStatus");
 	}
-	getGameState(mockState: GameState): Observable<GameState> {
-		//MOCK
-		return of(mockState);
+	getGameState(): Observable<GameState> {
+		return this.httpClient.get<GameState>(this.url + "/GameState");
 	}
-	getGameStage(mockStage: GameStage): Observable<GameStage> {
-		//TODO: Change to be http based
-		return of(mockStage);
+	getGameStage(): Observable<GameStage> {
+		return this.httpClient.get<GameStage>(this.url + "/GameStage");
+	}
+	getEndGame(): Observable<boolean> {
+		return this.httpClient.get<boolean>(this.url + "/EndGame");
 	}
 	//#endregion
 }
