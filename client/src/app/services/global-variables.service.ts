@@ -7,7 +7,7 @@ import { GameHttpClient } from "./game-http-client.service";
 	providedIn: "root",
 })
 export class GlobalVariablesService {
-	private gameStage: GameStage;
+	private gameStage: GameStage = GameStage.Unknown;
 	private gameState: GameState = GameState.Unknown;
 	isGameOngoing: boolean;
 	isProcessing: boolean;
@@ -34,13 +34,13 @@ export class GlobalVariablesService {
 
 	async canStartGame(): Promise<boolean> {
 		if (this.gameState === GameState.Unknown) {
-			this.gameState = await this.getGameState(GameState.Ready);
+			this.gameState = await this.getGameState();
 		}
 		return this.gameState === GameState.Ready;
 	}
 	async isPlayer(): Promise<boolean> {
 		if (this.gameState === GameState.Unknown) {
-			await this.getGameState(GameState.Ready);
+			await this.getGameState();
 		}
 
 		switch (this.gameState) {
@@ -55,13 +55,21 @@ export class GlobalVariablesService {
 				return true;
 		}
 	}
-	async getGameState(mockState: GameState): Promise<GameState> {
-		this.gameState = await firstValueFrom(this.httpClient.getGameState(mockState));
+	async getGameState(): Promise<GameState> {
+		this.gameState = await firstValueFrom(this.httpClient.getGameState());
+		switch (this.gameState) {
+			case GameState.PlayerSolo:
+			case GameState.PlayerX:
+			case GameState.PlayerO:
+				this.isGameOngoing = true;
+				break;
+		}
 		return this.gameState;
 	}
-	async getGameStage(mockStage: GameStage): Promise<GameStage> {
-		this.gameStage = await firstValueFrom(this.httpClient.getGameStage(mockStage));
+	async getGameStage(): Promise<GameStage> {
+		this.gameStage = await firstValueFrom(this.httpClient.getGameStage());
 		this.gameStagePub = this.gameStage;
+		console.log(this.gameStagePub);
 		return this.gameStage;
 	}
 }
