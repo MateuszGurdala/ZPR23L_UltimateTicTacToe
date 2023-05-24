@@ -40,8 +40,7 @@ export class BoardSegmentComponent extends SegmentLogic implements AfterContentI
 		this.setIsActive(false);
 		//TODO: Send POST to server
 		//TODO: Remove
-		this.gVars.gameStagePub = GameStage.EnemyTurn;
-		if ((await this.gVars.getGameStage(this.gVars.gameStagePub)) === GameStage.EnemyTurn) {
+		if ((await this.gVars.getGameStage()) === GameStage.EnemyTurn) {
 			if (this.id !== undefined) {
 				this.master.mockEnemyTurn(this.id);
 			}

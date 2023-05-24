@@ -70,7 +70,7 @@ export class GameMasterService {
 	//#region GameUtils
 	async tryStartNewGame(): Promise<any> {
 		let retVal: any;
-		switch (await this.gVars.getGameState(GameState.Ready)) {
+		switch (await this.gVars.getGameState()) {
 			case GameState.Ready:
 				//TODO: Start game based on an chosen enemy
 				await this.startNewSoloGame();
@@ -93,15 +93,14 @@ export class GameMasterService {
 				this.httpClient.postCreateGame(this.gVars.gameMode, this.gVars.playerSign, this.gVars.boardSize)
 			)
 		) {
-			await this.gVars.getGameState(GameState.PlayerSolo);
-			this.gVars.isGameOngoing = true;
+			await this.gVars.getGameState();
 			this.router.navigate(["/Game"]);
 			await this.mainGameLoop();
 		}
 	}
 	async endGame(): Promise<void> {
-		await firstValueFrom(this.httpClient.postEndGame());
-		await this.gVars.getGameState(GameState.Ready);
+		await firstValueFrom(this.httpClient.getEndGame());
+		await this.gVars.getGameState();
 		this.gVars.isGameOngoing = false;
 		this.router.navigate(["/Start"]);
 		window.location.reload(); //TODO: Temporary solution?
@@ -148,7 +147,7 @@ export class GameMasterService {
 		while (this.gVars.isGameOngoing) {
 			this.setIsProcessing(true);
 			console.log("Running loop iteration.");
-			switch (await this.gVars.getGameStage(this.gVars.gameStagePub)) {
+			switch (await this.gVars.getGameStage()) {
 				case GameStage.PlayerTurn:
 					this.setIsProcessing(false);
 					this.gameBoard.setIsActive(false);
@@ -176,6 +175,8 @@ export class GameMasterService {
 					this.setIsProcessing(false);
 					this.gameBoard.setIsActive(false);
 					this.gVars.isGameOngoing = false;
+					break;
+				default:
 					break;
 			}
 		}
