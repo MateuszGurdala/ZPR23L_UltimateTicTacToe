@@ -1,0 +1,199 @@
+.container {
+    padding: 10% 20%;
+}
+
+h1 {
+    font-size: 9vmin;
+}
+
+h3 {
+    font-size: 5vmin;
+    margin-bottom: 4vh;
+}
+
+h4 {
+    font-size: 3vmin;
+}
+
+.credits {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+}
+
+.options-panel {
+    margin-top: 16vh;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.button {
+    margin: auto;
+    cursor: pointer;
+}
+
+.hide {
+    display: none !important;
+}
+
+.selected {
+    color: var(--highlight);
+}
+
+.page-with-return {
+    display: flex;
+    flex-direction: column;
+}
+
+.return-btn {
+    cursor: pointer;
+    font-size: 5vmin;
+    display: block;
+    width: fit-content;
+    height: fit-content;
+}
+
+.settings-page {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    flex-direction: column;
+    align-items: center;
+    height: fit-content;
+    gap: 5vmin;
+    margin-top: 5vh;
+}
+
+.setting-label {
+    font-size: 6vmin;
+    margin-right: 8vmin;
+}
+
+.server-url {
+    background-color: transparent;
+    border-style: solid;
+    border-color: var(--grey);
+    border-width: 0 0 0 0.4vmin;
+    padding-left: 1vmin;
+    font-size: 5vmin;
+    text-align: center;
+}
+
+.server-url:focus {
+    outline: none;
+}
+
+.signs-container {
+    display: flex;
+    flex-direction: row;
+    gap: 4vmin;
+    margin: auto;
+}
+
+.signs-container h1 {
+    cursor: pointer;
+}
+
+.board-size {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: auto;
+    gap: 3vmin;
+}
+
+.plus-style {
+    font-size: 7vmin;
+    cursor: pointer;
+}
+
+
+select {
+    background: transparent;
+    font-size: 5vmin;
+    border: none;
+    margin: auto;
+    width: fit-content;
+    cursor: pointer;
+}
+
+select:focus {
+    outline: none;
+}
+
+/* Loader */
+
+.loader-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-top: 8vmin;
+}
+
+.lds-ellipsis {
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+}
+
+.lds-ellipsis div {
+    position: absolute;
+    top: 33px;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: var(--grey);
+    animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+
+.lds-ellipsis div:nth-child(1) {
+    left: 8px;
+    animation: lds-ellipsis1 0.6s infinite;
+}
+
+.lds-ellipsis div:nth-child(2) {
+    left: 8px;
+    animation: lds-ellipsis2 0.6s infinite;
+}
+
+.lds-ellipsis div:nth-child(3) {
+    left: 32px;
+    animation: lds-ellipsis2 0.6s infinite;
+}
+
+.lds-ellipsis div:nth-child(4) {
+    left: 56px;
+    animation: lds-ellipsis3 0.6s infinite;
+}
+
+@keyframes lds-ellipsis1 {
+    0% {
+        transform: scale(0);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes lds-ellipsis3 {
+    0% {
+        transform: scale(1);
+    }
+
+    100% {
+        transform: scale(0);
+    }
+}
+
+@keyframes lds-ellipsis2 {
+    0% {
+        transform: translate(0, 0);
+    }
+
+    100% {
+        transform: translate(24px, 0);
+    }
+}

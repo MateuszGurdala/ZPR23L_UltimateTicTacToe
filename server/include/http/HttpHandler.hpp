@@ -56,10 +56,6 @@ private:
 
     Processes requests with OPTIONS method.
 
-    Parameters:
-
-      request - HttpRequest object for processing.
-
     Returns:
 
       HttpResponse object with Accept Headers.
@@ -69,7 +65,7 @@ private:
       <HttpRequest>
 */
   HttpResponse
-  handleOPTIONSRequest(const std::shared_ptr<HttpRequest>& request) const;
+  handleOPTIONSRequest() const;
 
 public:
   /*  Function: handle

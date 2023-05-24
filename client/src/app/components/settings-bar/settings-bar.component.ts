@@ -1,5 +1,7 @@
 import { Component } from "@angular/core";
 import { GameMasterService } from "src/app/services/game-master.service";
+import { GlobalVariablesService } from "src/app/services/global-variables.service";
+import { GameMode } from "../../structs";
 
 @Component({
 	selector: "settings-bar",
@@ -7,21 +9,15 @@ import { GameMasterService } from "src/app/services/game-master.service";
 	styleUrls: ["./settings-bar.component.css"],
 })
 export class SettingsBarComponent {
-	isExtended: boolean = true;
-	boardSize: string = "3";
-	serverUrl: string = "localhost:4200";
+	isExtended: boolean = false;
 
-	constructor(private game: GameMasterService) {}
+	constructor(private master: GameMasterService, readonly gVars: GlobalVariablesService) {}
 
 	extend() {
 		this.isExtended = !this.isExtended;
 	}
 
-	test() {
-		this.game.updateBoard();
-	}
-
-	mock() {
-		this.game.mockFun();
+	endGame(): void {
+		this.master.endGame();
 	}
 }

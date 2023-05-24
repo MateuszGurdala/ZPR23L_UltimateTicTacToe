@@ -1,39 +1,56 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
-import { GameBoard } from "../structs";
-
-/*
-GETBoardState -> zwraca cała plansza z podplanszami i segmentami oraz ich znakami
-GETGameState -> kto wygrywa jaką podplanszę + kto teraz wykonuje ruch (metadane rozgrywki)
-POSTMakeMove -> jak nazwa wskazuje
-POSTCreateGame -> tworzy planszę z wybranym przeciwnikiem
-GETStartGame -> rozpoczyna rozgrywkę
-GETEndGame -> jak nazwa wskazuje
-GETTestConnection -> sprawdza czy serwer pod danym url odpowiada
-*/
+import { Observable, of } from "rxjs";
+import { GameBoard, GameMode, GameStage, GameState, Sign } from "../structs";
 
 @Injectable({
 	providedIn: "root",
 })
 export class GameHttpClient {
-	url: string = "http://localhost:1337";
+	private url: string = "http://localhost:1337";
 
 	constructor(private httpClient: HttpClient) {}
 
-	postMove(boardId: number, segmentId: number): Observable<any> {
-		return this.httpClient.post<any>(this.url, {
+	setServerUrl(url: string): void {
+		this.url = "http://" + url;
+	}
+
+	//#region POST
+	postMakeMove(boardId: number, segmentId: number): Observable<any> {
+		return this.httpClient.post<any>(this.url + "MakeMove", {
 			boardId: boardId,
 			segmentId: segmentId,
 		});
 	}
+	postCreateGame(mode: GameMode, sign: Sign, size: number): Observable<boolean> {
+		return this.httpClient.post<boolean>(this.url + "/CreateGame", {
+			gameMode: mode,
+			playerSign: sign,
+			boardSize: size,
+		});
+	}
+	postPickSegment(segmentNumber: number): Observable<boolean> {
+		return this.httpClient.post<boolean>(this.url + "/PickSegment", {
+			segmentNumber: segmentNumber,
+		});
+	}
+	//#endregion
 
+	//#region GET
 	getBoardState(): Observable<GameBoard> {
 		return this.httpClient.get<GameBoard>(this.url + "/BoardState");
 	}
-
-	mockFun() {
-		console.log("click");
-		this.getBoardState().subscribe(next => {console.log(next)});
+	getServerStatus(): Observable<boolean> {
+		return this.httpClient.get<any>(this.url + "/ServerStatus");
 	}
+	getGameState(): Observable<GameState> {
+		return this.httpClient.get<GameState>(this.url + "/GameState");
+	}
+	getGameStage(): Observable<GameStage> {
+		return this.httpClient.get<GameStage>(this.url + "/GameStage");
+	}
+	getEndGame(): Observable<boolean> {
+		return this.httpClient.get<boolean>(this.url + "/EndGame");
+	}
+	//#endregion
 }

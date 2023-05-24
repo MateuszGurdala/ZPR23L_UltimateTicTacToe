@@ -10,10 +10,24 @@ export class SegmentLogic implements AfterContentInit {
 	parent: GameBoardComponent;
 
 	id: number | undefined = undefined;
-	isActive: boolean | undefined = undefined;
+	isActive: boolean;
 	ownerSign: "X" | "O" | undefined = undefined;
 
 	ngAfterContentInit(): void {
 		this.id = this.setId;
+	}
+
+	setIsActive(value: boolean): void {
+		this.isActive = value;
+	}
+
+	isOwned(): boolean {
+		return this.ownerSign !== undefined;
+	}
+
+	unlockSegment(number: number): void {
+		if (!this.isOwned()) {
+			this.setIsActive(true);
+		}
 	}
 }

@@ -10,14 +10,6 @@
     display: flex;
 }
 
-.segment:hover {
-    background-color: rgb(136, 136, 136, 0.3);
-}
-
-.segment:active {
-    background-color: rgb(136, 136, 136, 0.5);
-}
-
 .sign {
     color: var(--grey);
     margin: auto;
@@ -30,4 +22,23 @@
         'wght' 700,
         'GRAD' 0,
         'opsz' 48
+}
+
+.disabled,
+.disabled:hover,
+.disabled:active {
+    background-color: rgb(136, 136, 136, 0.5) !important;
+    cursor: default !important;
+}
+
+.pseudo-hover {
+    background-color: rgb(136, 136, 136, 0.3);
+}
+
+.real-hover:hover {
+    background-color: rgb(136, 136, 136, 0.3);
+}
+
+.real-hover:active {
+    background-color: rgb(136, 136, 136, 0.5);
 }
