@@ -37,17 +37,23 @@ HttpResponse HttpHandler::handleGETRequest(
 	/* Game State */
 	else if (endpoint == "/GameState")
 	{
-		return HttpResponse::GETResponse(R"({"state":"ready"})");
+		return HttpResponse::GETResponse(R"(0)"); //Client parses value into numerical enum
 	}
 	/* Game Stage */
 	else if (endpoint == "/GameStage")
 	{
-		return HttpResponse::GETResponse(R"({"stage":"unknown"})");
+		return HttpResponse::GETResponse(R"("Unknown")"); //State must be inside ""
 	}
 	/* Server Status */
 	else if (endpoint == "/ServerStatus")
 	{
-		return HttpResponse::GETResponse(R"({"status":"alive"})");
+		return HttpResponse::GETResponse(R"(true)");
+	}
+	/* End Gmae */
+	// Changed to GET response becouse there is no need for request body
+	else if (endpoint == "/EndGame")
+	{
+		return HttpResponse::GETResponse(R"(true)");
 	}
 	/* Invalid Endpoint */
 	else {
@@ -73,12 +79,7 @@ HttpResponse HttpHandler::handlePOSTRequest(
 	/* Create Game */
 	else if (endpoint == "/CreateGame")
 	{
-		return HttpResponse::ERRORResponse();
-	}
-	/* End Game */
-	else if (endpoint == "/EndGame")
-	{
-		return HttpResponse::ERRORResponse();
+		return HttpResponse::POSTResponse(R"(false)"); //Only true/false
 	}
 	/* Invalid Endpoint */
 	else
