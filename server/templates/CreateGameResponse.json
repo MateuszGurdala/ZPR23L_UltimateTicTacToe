@@ -1,0 +1,10 @@
+{
+  "createGameResponse":{
+    "isSuccess":true,
+    "hostName":"Krystian",
+    "hostSymbol":"X",
+    "guestName":"Mateusz",
+    "guestSymbol":"O",
+    "boardSize":"3"
+  }
+}

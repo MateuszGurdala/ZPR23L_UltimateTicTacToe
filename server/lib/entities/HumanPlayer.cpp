@@ -18,7 +18,7 @@ HumanPlayer::HumanPlayer(char symbol,std::string name): Player(symbol){
 }
 
 
-//TODO
+//TODO THIS MAY BE LINKED WITH HTTP HANDLER
 std::array<Point, 2> HumanPlayer::ChooseMove([[maybe_unused]]const std::vector<Point> &availableOuterBoardMoves,
                                              [[maybe_unused]]std::vector<std::vector<Point>> availableInnerBoardMoves, [[maybe_unused]]unsigned int boardSize) {
     return std::array<Point, 2>();

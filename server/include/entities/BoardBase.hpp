@@ -2,6 +2,7 @@
 #define ULTIMATETICTACTOESERVER_BOARDBASE_HPP
 
 #include <stdexcept>
+#include <memory>
 
 /*  Struct: Point
     Contains coordinates of board defined as (x,y) which translates to (index of row, index of column)

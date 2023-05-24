@@ -1,4 +1,5 @@
 
+#include <vector>
 #include "../../include/entities/BoardBase.hpp"
 
 unsigned int BoardBase::GetBoardSize() const {

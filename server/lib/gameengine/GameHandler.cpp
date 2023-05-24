@@ -1,44 +1,91 @@
 #include <sstream>
+#include <ranges>
+
 #include "../../include/gameengine/GameHandler.hpp"
 #include "../../include/entities/ComputerPlayer.hpp"
+#include "../../include/helpers/BoardIndexConverter.hpp"
 
 GameHandler::GameHandler(std::unique_ptr <HumanPlayer> hostPlayer, std::unique_ptr <Player> secondPlayer,
                          std::unique_ptr <GameEngine> gameEngine)
                          : hostPlayer(std::move(hostPlayer)), secondPlayer(std::move(secondPlayer)),
-                         gameEngine(std::move(gameEngine)) {}
-
-GameHandler::GameHandler()
-{
-    startGame();
+                         gameEngine(std::move(gameEngine)) {
+    currentGameState = std::make_unique<GameStage>();
 }
 
-void GameHandler::startGame() {
-    hostPlayer = std::make_unique<HumanPlayer>('X', std::string("testHost"));
-    secondPlayer = std::make_unique<ComputerPlayer>('O');
+GameHandler::GameHandler(unsigned int boardSize, const std::string& hostName, char hostSymbol, bool isPlayerVsComputer, const std::string& guestName)
+{
+    currentGameState = std::make_unique<GameStage>();
+    startGame(boardSize, hostName, hostSymbol, isPlayerVsComputer, guestName);
+}
 
-    auto mainBoard = std::make_unique<MainBoard>(3);
+void GameHandler::startGame(unsigned int boardSize, const std::string& hostName, char hostSymbol, bool isPlayerVsComputer, const std::string& guestName) {
+    if(isPlayerVsComputer && !guestName.empty()) {
+        throw std::invalid_argument("Computer player cannot have a nickname.");
+    }
+    if(hostName.empty())
+    {
+        throw std::invalid_argument("Client must have a name.");
+    }
+    if(hostSymbol != 'X' && hostSymbol != 'O')
+    {
+        throw std::invalid_argument("Invalid symbol of Host");
+    }
+    char guestSymbol;
+    if(hostSymbol == 'O')
+    {
+        guestSymbol = 'X';
+        isHostTurn = false;
+    }
+    else
+    {
+        guestSymbol = 'O';
+        isHostTurn = true;
+    }
+    hostPlayer = std::make_unique<HumanPlayer>(hostSymbol, hostName);
+
+    if(isPlayerVsComputer)
+    {
+        secondPlayer = std::make_unique<ComputerPlayer>(guestSymbol);
+    }
+    else
+    {
+        secondPlayer = std::make_unique<HumanPlayer>(guestSymbol, guestName);
+    }
+    auto mainBoard = std::make_unique<MainBoard>(boardSize);
     gameEngine = std::make_unique<GameEngine>(std::move(mainBoard));
 }
 
 //TODO
-bool GameHandler::CheckIfGameEnd() {
-    return false;
+void GameHandler::handleGameEnd() {
+    currentGameState->SetGameStatus("Finished");
 }
 
+//TODO LINK THIS WITH HTTPHANDLER
 std::array<Point, 2> GameHandler::ChooseCoordinatesOfMove(){
-    std::array<Point, 2> target{};
+    std::array<Point, 2> target;
     if(isHostTurn)
     {
-        target = hostPlayer->ChooseMove(gameEngine->getAvailableOuterBoardMoves(),
-                                        gameEngine->getAvailableInnerBoardMoves(), gameEngine->GetBoardSize());
+        target = hostPlayer->ChooseMove(gameEngine->GetAvailableOuterBoardMoves(),gameEngine->GetAvailableInnerBoardMoves(), gameEngine->GetBoardSize());
     }
     else
     {
-       target = secondPlayer->ChooseMove(gameEngine->getAvailableOuterBoardMoves(),
-                                         gameEngine->getAvailableInnerBoardMoves(), gameEngine->GetBoardSize());
+       target = secondPlayer->ChooseMove(gameEngine->GetAvailableOuterBoardMoves(),
+                                         gameEngine->GetAvailableInnerBoardMoves(), gameEngine->GetBoardSize());
     }
     return target;
 }
+
+bool GameHandler::PerformMoveValidation(Point boardCoordinates, Point innerCoordinates){
+    unsigned int boardSize = gameEngine->GetBoardSize();
+    unsigned int winnerBoardIndex = BoardIndexConverter::PointToIndex(boardCoordinates, boardSize);
+    auto const availableMoves = gameEngine->GetAvailableInnerBoardMoves();
+    bool isPointValid = std::ranges::any_of(availableMoves[winnerBoardIndex], [&](const Point& point) {
+        return point.x == innerCoordinates.x && point.y == innerCoordinates.y;
+    });
+    return isPointValid;
+
+}
+
 
 void GameHandler::PerformTurn(Point boardCoordinates, Point innerCoordinates) {
 
@@ -52,10 +99,15 @@ void GameHandler::PerformTurn(Point boardCoordinates, Point innerCoordinates) {
         currentFigure = secondPlayer->GetSymbol();
     }
     gameEngine->HandleMove(boardCoordinates, innerCoordinates, currentFigure);
+    gameEngine->CheckForLocalWinner(boardCoordinates, innerCoordinates, currentFigure);
+    if(gameEngine->CheckForGlobalWinner(boardCoordinates))
+    {
+        handleGameEnd();
+    }
     isHostTurn = !isHostTurn;
+    gameEngine->UpdateCurrentLegalMoves(innerCoordinates, boardCoordinates);
 }
 
-//TODO consider moving jsons with communication to other class
 std::string GameHandler::GameStateAsJson() {
     std::stringstream ss;
     ss << "{";
@@ -85,4 +137,134 @@ std::string GameHandler::GameStateAsJson() {
             gameEngine->GetWinnerBoardAsJson(true);
     ss << "}";
     return ss.str();
+}
+std::string GameHandler::EndGameAsJson(bool isPlayerSurrender) {
+    std::stringstream ss;
+    std::string invokerName;
+    std::string idlePlayerName;
+    if(isHostTurn)
+    {
+        invokerName = hostPlayer->GetName();
+        idlePlayerName = secondPlayer->GetName();
+    }
+    else
+    {
+        invokerName = secondPlayer->GetName();
+        idlePlayerName = hostPlayer->GetName();
+    }
+    ss << "{";
+        ss << "\"endGame\":";
+        ss << "{";
+            if(isPlayerSurrender)
+            {
+                ss << "\"whoEndedGame\":" << "\"" << idlePlayerName << "\"," ;
+                ss << "\"winner\":" << "\"" << "true" << "\"" ;
+
+            }
+            else
+            {
+                ss << "\"whoEndedGame\":" << "\"" << invokerName << "\",";
+                ss << "\"winner\":" << "\"" << "false" << "\"" ;
+
+            }
+        ss << "}";
+    ss << "}";
+    return ss.str();
+}
+
+std::string GameHandler::CreateGameAsJson(bool isSuccess) {
+    std::stringstream ss;
+        ss << "{";
+        ss << "\"createGameResponse\":";
+        ss << "{";
+            if(isSuccess)
+            {
+                ss << "\"isSuccess\":true" << "\"," ;
+                ss << "\"hostName\":" << "\"" << hostPlayer->GetName() << "\"," ;
+                ss << "\"hostSymbol\":" << "\"" << hostPlayer->GetSymbol() << "\"," ;
+                ss << "\"guestName\":" << "\"" << secondPlayer->GetName() << "\"," ;
+                ss << "\"guestSymbol\":" << "\"" << secondPlayer->GetSymbol() << "\",";
+                ss << "\"boardSize\":" << "\"" <<  gameEngine->GetBoardSize() << "\"";
+            }
+            else
+            {
+                ss << "\"isSuccess\":false" << "\"," ;
+                ss << "\"hostName\":" << "\"" << "" << "\"," ;
+                ss << "\"hostSymbol\":" << "\"" << "" << "\"," ;
+                ss << "\"guestName\":" << "\"" << "" << "\"," ;
+                ss << "\"guestSymbol\":" << "\"" << "" << "\",";
+                ss << "\"boardSize\":" << "\"" <<  "" << "\"";
+            }
+        ss << "}";
+    ss << "}";
+    return ss.str();
+}
+
+std::string GameHandler::BoardStateAsJson(){
+    return gameEngine->GetBoardAsJson(false);
+}
+
+std::string GameHandler::WinnerBoardAsJson(){
+    return  gameEngine->GetWinnerBoardAsJson(false);
+}
+
+std::string GameHandler::MoveAsJson(bool isNested, std::array<Point,2> move, bool isValid) {
+    std::stringstream ss;
+    if(!isNested)
+    {
+        ss << "{";
+    }
+    ss << "\"moveResponse\":";
+    ss << "{";
+    unsigned int boardSize = gameEngine->GetBoardSize();
+    ss << "\"outerBoardIndex\":" << "\"" <<  BoardIndexConverter::PointToIndex(move[0],boardSize) << "\",";
+    ss << "\"innerBoardIndex\":" << "\"" <<  BoardIndexConverter::PointToIndex(move[1],boardSize) << "\",";
+    if(isValid)
+    {
+        ss << "\"isMoveValid\":" <<  "true" ;
+    }
+    else
+    {
+        ss << "\"isMoveValid\":" <<  "false" ;
+    }
+    ss << "}";
+    if(!isNested)
+    {
+        ss << "}";
+    }
+    return ss.str();
+}
+
+std::string GameHandler::PickSegmentAsJson(bool isNested, Point& segment, bool isValid){
+
+    std::stringstream ss;
+    if(!isNested)
+    {
+        ss << "{";
+    }
+    ss << "\"moveResponse\":";
+    ss << "{";
+    unsigned int boardSize = gameEngine->GetBoardSize();
+    ss << "\"outerBoardIndex\":" << "\"" <<  BoardIndexConverter::PointToIndex(segment,boardSize) << "\",";
+    ss << "\"innerBoardIndex\":" << "\"" <<  BoardIndexConverter::PointToIndex(segment,boardSize) << "\",";
+    if(isValid)
+    {
+        ss << "\"isMoveValid\":" <<  "true" ;
+    }
+    else
+    {
+        ss << "\"isMoveValid\":" <<  "false" ;
+    }
+    ss << "}";
+    if(!isNested)
+    {
+        ss << "}";
+    }
+    return ss.str();
+}
+
+
+//TODO delete later
+std::string GameHandler::GetCurrentGameState() {
+    return currentGameState->GetGameStatus();
 }

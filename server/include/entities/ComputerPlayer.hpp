@@ -37,7 +37,7 @@ public:
     Parameters:
 
         availableOuterBoardMoves - Vector of Points which points to outer board which was not won yet.
-        availableInnerBoardMoves - Vector of Points of board inside outer board which indicates which cell is available to place
+        allAvailableBoardMoves - Vector of Points of board inside outer board which indicates which cell is available to place
                                     figure.
         boardSize - size of game board
      Returns:
