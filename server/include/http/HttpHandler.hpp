@@ -67,6 +67,9 @@ private:
   HttpResponse
   handleOPTIONSRequest() const;
 
+  //TODO: Documentation
+  bool verifyPlayer(const std::shared_ptr<HttpRequest> request) const;
+  std::string extractCookieValue(const std::shared_ptr<HttpRequest> request) const;
 public:
   /*  Function: handle
 
@@ -85,6 +88,7 @@ public:
       <HttpRequest>
 */
   HttpResponse handle(const std::shared_ptr<HttpRequest>& request) const;
+
 };
 
 #endif
