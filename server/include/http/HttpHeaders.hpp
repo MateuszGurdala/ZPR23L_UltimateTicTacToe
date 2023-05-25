@@ -173,6 +173,19 @@ public:
 		  Header data.
   */
 	const std::string& operator[](const std::string& key) const;
+	/*  Function: operator[]
+
+		  Operator overload used to more easily obtain header data by its name.
+
+		Parameters:
+
+		  key - Header name.
+
+		Returns:
+
+		  Header data.
+  */
+	const std::string& operator[](const std::string&& key) const;
 	/*  Function: operator=
 
 		  Copy operator.
