@@ -37,7 +37,7 @@ HttpResponse HttpHandler::handleGETRequest(
 	/* Game State */
 	else if (endpoint == "/GameState")
 	{
-		return HttpResponse::GETResponse(R"(0)"); //Client parses value into numerical enum
+		return HttpResponse::GETResponse(R"(0)");; //Client parses value into numerical enum
 	}
 	/* Game Stage */
 	else if (endpoint == "/GameStage")
@@ -79,7 +79,7 @@ HttpResponse HttpHandler::handlePOSTRequest(
 	/* Create Game */
 	else if (endpoint == "/CreateGame")
 	{
-		return HttpResponse::POSTResponse(R"(false)"); //Only true/false
+		return HttpResponse::POSTResponse(R"(false)");;//Only true/false
 	}
 	/* Invalid Endpoint */
 	else

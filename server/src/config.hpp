@@ -9,9 +9,10 @@ const int requestBuffer = 1024;
 const bool verbose = true;
 const std::string serverName = "UltimateTicTacToeServer";
 const std::string contentType = "application/json";
-const std::string allowOrigin = "*";
+const std::string allowOrigin = "http://localhost:4200";
 const std::string allowMethods = "GET,POST";
 const std::string allowHeaders = "Content-Type";
+const std::string allowCredentials = "true";
 } // namespace config
 
 #endif

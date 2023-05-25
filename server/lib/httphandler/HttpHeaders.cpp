@@ -84,10 +84,12 @@ int HttpHeaders::addCORSHeaders() {
   std::string origin = "Access-Control-Allow-Origin";
   std::string methods = "Access-Control-Allow-Methods";
   std::string headers = "Access-Control-Allow-Headers";
+  std::string credentails = "Access-Control-Allow-Credentials";
 
   addHeader(origin, globalHeaders.at(origin));
   addHeader(methods, globalHeaders.at(methods));
   addHeader(headers, globalHeaders.at(headers));
+  addHeader(credentails, globalHeaders.at(credentails));
   return 0;
 }
 
@@ -101,4 +103,8 @@ HttpHeaders &HttpHeaders::operator=(const HttpHeaders &obj) {
     _headers[mapPair.first] = mapPair.second;
   }
   return *this;
+}
+
+int HttpHeaders::setCookie(const std::string& keyValueCookie) {
+    return addHeader("Set-Cookie", keyValueCookie);
 }

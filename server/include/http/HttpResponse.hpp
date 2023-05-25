@@ -6,100 +6,102 @@
 #include <string>
 
 /*  Class: HttpResponse
-    A class that acts as abstraction between raw http response data and
-    HttpHandler.
+	A class that acts as abstraction between raw http response data and
+	HttpHandler.
 */
 class HttpResponse {
 private:
-  HttpHeaders _headers;
-  std::string _statusLine, _body;
+	HttpHeaders _headers;
+	std::string _statusLine, _body;
 
 public:
-  /*  Constructor: HttpResponse
+	/*  Constructor: HttpResponse
 
-        Default constructor.
-    */
-  HttpResponse();
-  /*  Constructor: HttpResponse
+		  Default constructor.
+	  */
+	HttpResponse();
+	/*  Constructor: HttpResponse
 
-        Constructor for responses with body.
+		  Constructor for responses with body.
 
-      Parameters:
+		Parameters:
 
-        body - Response body.
-    */
-  explicit HttpResponse(std::string &body);
-  /*  Constructor: HttpResponse
+		  body - Response body.
+	  */
+	explicit HttpResponse(std::string& body);
+	/*  Constructor: HttpResponse
 
-        Constructor for responses with body.
+		  Constructor for responses with body.
 
-      Parameters:
+		Parameters:
 
-        body - Response body.
-    */
-  explicit HttpResponse(std::string &&body);
-  /*  Constructor: HttpResponse
+		  body - Response body.
+	  */
+	explicit HttpResponse(std::string&& body);
+	/*  Constructor: HttpResponse
 
-        Copy constructor.
+		  Copy constructor.
 
-      Parameters:
+		Parameters:
 
-        obj - HttpResponse object to copy.
-    */
-  HttpResponse(HttpResponse &&obj);
-  /*  Constructor: OPTIONSResponse
+		  obj - HttpResponse object to copy.
+	  */
+	HttpResponse(HttpResponse&& obj);
+	/*  Constructor: OPTIONSResponse
 
-        Static method that creates default response for request with OPTIONS
-        method.
+		  Static method that creates default response for request with OPTIONS
+		  method.
 
-      Returns:
+		Returns:
 
-        Default HttpResponse object with Allow headers.
-    */
-  static HttpResponse OPTIONSResponse();
-  /*  Function: ERRORResponse
+		  Default HttpResponse object with Allow headers.
+	  */
+	static HttpResponse OPTIONSResponse();
+	/*  Function: ERRORResponse
 
-        Static method that creates response object for invalid requests.
+		  Static method that creates response object for invalid requests.
 
-      Returns:
+		Returns:
 
-        Default HttpResponse object with status code 400.
-    */
-  static HttpResponse ERRORResponse();
-  /*  Function: GETResponse
+		  Default HttpResponse object with status code 400.
+	  */
+	static HttpResponse ERRORResponse();
+	/*  Function: GETResponse
 
-        Static method that creates response object with body for GET request.
+		  Static method that creates response object with body for GET request.
 
-      Parameters:
+		Parameters:
 
-        body - Response body.
+		  body - Response body.
 
-      Returns:
+		Returns:
 
-        Default HttpResponse object with body.
-    */
-  static HttpResponse GETResponse(std::string &&body);
-  /*  Function: GETResponse
+		  Default HttpResponse object with body.
+	  */
+	static HttpResponse GETResponse(std::string&& body);
+	/*  Function: GETResponse
 
-        Static method that creates response object with body for GET request.
+		  Static method that creates response object with body for GET request.
 
-      Parameters:
+		Parameters:
 
-        body - response body.
+		  body - response body.
 
-      Returns:
+		Returns:
 
-        Default HttpResponse object with body.
-    */
-  static HttpResponse POSTResponse(std::string &&body);
-  /*  Function: toString
+		  Default HttpResponse object with body.
+	  */
+	static HttpResponse POSTResponse(std::string&& body);
+	/*  Function: toString
 
-      Returns:
+		Returns:
 
-        HttpResponse data as raw std::string that can be interpreted by web
-        browsers.
-    */
-  std::string toString() const;
+		  HttpResponse data as raw std::string that can be interpreted by web
+		  browsers.
+	  */
+	std::string toString() const;
+	//TODO: Documentation
+	int setCookie(std::string&& cookie, std::string&& value);
 };
 
 #endif

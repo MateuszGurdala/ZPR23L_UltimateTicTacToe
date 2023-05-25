@@ -82,3 +82,13 @@ HttpResponse HttpResponse::ERRORResponse() {
 
   return response;
 }
+
+
+int HttpResponse::setCookie(std::string&& cookie, std::string&& value) {
+    std::stringstream keyValueStream;
+    keyValueStream << cookie;
+    keyValueStream << "=";
+    keyValueStream << value;
+
+    return _headers.setCookie(keyValueStream.str());
+}
