@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, of } from "rxjs";
 import { GameBoard, GameMode, GameStage, GameState, Sign } from "../structs";
@@ -17,34 +17,30 @@ export class GameHttpClient {
 
 	//#region POST
 	postMakeMove(boardId: number, segmentId: number): Observable<any> {
-		return this.httpClient.post<any>(
-			this.url + "MakeMove",
-			{
+		return this.httpClient.get<any>(this.url + "MakeMove", {
+			withCredentials: true,
+			params: {
 				boardId: boardId,
 				segmentId: segmentId,
 			},
-			{ withCredentials: true }
-		);
+		});
 	}
 	postCreateGame(mode: GameMode, sign: Sign, size: number): Observable<boolean> {
-		return this.httpClient.post<boolean>(
-			this.url + "/CreateGame",
-			{
+		return this.httpClient.get<boolean>(this.url + "/CreateGame", {
+			params: {
 				gameMode: mode,
 				playerSign: sign,
 				boardSize: size,
 			},
-			{ withCredentials: true }
-		);
+		});
 	}
 	postPickSegment(segmentNumber: number): Observable<boolean> {
-		return this.httpClient.post<boolean>(
-			this.url + "/PickSegment",
-			{
+		return this.httpClient.get<boolean>(this.url + "/PickSegment", {
+			withCredentials: true,
+			params: {
 				segmentNumber: segmentNumber,
 			},
-			{ withCredentials: true }
-		);
+		});
 	}
 	//#endregion
 
@@ -56,7 +52,12 @@ export class GameHttpClient {
 		return this.httpClient.get<any>(this.url + "/ServerStatus");
 	}
 	getGameState(): Observable<GameState> {
-		return this.httpClient.get<GameState>(this.url + "/GameState", { withCredentials: true });
+		return this.httpClient.get<GameState>(this.url + "/GameState", {
+			withCredentials: true,
+			headers: new HttpHeaders({
+				"Content-Type": "text/plain",
+			}),
+		});
 	}
 	getGameStage(): Observable<GameStage> {
 		return this.httpClient.get<GameStage>(this.url + "/GameStage", { withCredentials: true });
