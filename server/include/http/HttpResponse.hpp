@@ -63,9 +63,9 @@ public:
 
 		Returns:
 
-		  Default HttpResponse object with status code 400.
+		  Default HttpResponse object with given status code.
 	  */
-	static HttpResponse ERRORResponse();
+	static HttpResponse ERRORResponse(std::string&& errorCode, std::string&& errorMessage);
 	/*  Function: GETResponse
 
 		  Static method that creates response object with body for GET request.

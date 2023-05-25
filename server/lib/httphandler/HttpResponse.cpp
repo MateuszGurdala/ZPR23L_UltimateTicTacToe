@@ -34,6 +34,7 @@ HttpResponse HttpResponse::OPTIONSResponse() {
   response._headers.addDateHeader();
   response._headers.addAllowHeader();
   response._headers.closeConnection();
+  response._headers.addContentLengthHeader(0);
   response._headers.addCORSHeaders();
 
   return response;
@@ -71,10 +72,17 @@ HttpResponse HttpResponse::POSTResponse(std::string &&body) {
   return response;
 }
 
-HttpResponse HttpResponse::ERRORResponse() {
+HttpResponse HttpResponse::ERRORResponse(std::string&& errorCode, std::string&& errorMessage) {
   HttpResponse response;
+  std::stringstream stream;
 
-  response._statusLine = "HTTP/1.1 400 BAD REQUEST";
+  stream << "HTTP/1.1 ";
+  stream << errorCode;
+  stream << " ";
+  stream << errorMessage;
+
+  //response._statusLine = "HTTP/1.1 400 BAD REQUEST";
+  response._statusLine = stream.str();
 
   response._headers.addDateHeader();
   response._headers.closeConnection();
