@@ -90,10 +90,6 @@ export class StartupPageComponent {
 
 		this.isProcessing = true;
 
-		if (!(await this.checkServerStatus())) {
-			return;
-		}
-
 		if (typeof (errorString = await this.master.tryStartNewGame()) === "string") {
 			this.toastr.error(errorString);
 		}
@@ -103,10 +99,6 @@ export class StartupPageComponent {
 
 	async tryJoinGame(): Promise<void> {
 		this.isProcessing = true;
-
-		if (!(await this.checkServerStatus())) {
-			return;
-		}
 
 		if ((await this.gVars.getGameState()) !== GameState.Waiting) {
 			this.toastr.error("No one is currently waiting for a second player to join.");
