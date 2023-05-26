@@ -31,7 +31,6 @@ public:
     GameHandler(unsigned int boardSize,
                 char hostSymbol, bool isPlayerVsComputer, const std::string &hostName = "Host",
                 const std::string &guestName = "Guest");
-    std::array<Point, 2> ChooseCoordinatesOfMove();
     std::string GameStateAsJson();
     std::string EndGameAsJson(bool isPlayerSurrender);
     std::string CreateGameAsJson(bool isSuccess);

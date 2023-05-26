@@ -1,4 +1,3 @@
-#include <ranges>
 #include <sstream>
 
 #include "../../include/entities/ComputerPlayer.hpp"
@@ -56,21 +55,6 @@ void GameHandler::handleGameEnd() {
   currentGameState->SetGameStatus("Finished");
 }
 
-// TODO LINK THIS WITH HTTPHANDLER
-std::array<Point, 2> GameHandler::ChooseCoordinatesOfMove() {
-  std::array<Point, 2> target;
-  if (isHostTurn) {
-    target = hostPlayer->ChooseMove(gameEngine->GetAvailableOuterBoardMoves(),
-                                    gameEngine->GetAvailableInnerBoardMoves(),
-                                    gameEngine->GetBoardSize());
-  } else {
-    target = secondPlayer->ChooseMove(gameEngine->GetAvailableOuterBoardMoves(),
-                                      gameEngine->GetAvailableInnerBoardMoves(),
-                                      gameEngine->GetBoardSize());
-  }
-  return target;
-}
-
 bool GameHandler::PerformMoveValidation(Point boardCoordinates,
                                         Point innerCoordinates) {
   unsigned int boardSize = gameEngine->GetBoardSize();
@@ -113,8 +97,6 @@ std::string GameHandler::GameStateAsJson() {
      << "\"" << hostPlayer->GetName() << "\",";
   ss << "\"symbol\":"
      << "\"" << hostPlayer->GetSymbol() << "\",";
-  ss << "\"points\":"
-     << "\"" << hostPlayer->GetPoints() << "\"";
   ss << "},";
   ss << "\"guestPlayer\":";
   ss << "{";
@@ -122,8 +104,6 @@ std::string GameHandler::GameStateAsJson() {
      << "\"" << secondPlayer->GetName() << "\",";
   ss << "\"symbol\":"
      << "\"" << secondPlayer->GetSymbol() << "\",";
-  ss << "\"points\":"
-     << "\"" << secondPlayer->GetPoints() << "\"";
   ss << "},";
   ss << "\"currentTurn\":";
   ss << "{";
