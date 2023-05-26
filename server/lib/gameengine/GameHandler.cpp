@@ -86,6 +86,7 @@ bool GameHandler::PerformMoveValidation(Point boardCoordinates,
 
 void GameHandler::PerformTurn(Point boardCoordinates, Point innerCoordinates) {
 
+<<<<<<< HEAD
   char currentFigure;
   if (isHostTurn) {
     currentFigure = hostPlayer->GetSymbol();
@@ -100,6 +101,25 @@ void GameHandler::PerformTurn(Point boardCoordinates, Point innerCoordinates) {
   }
   isHostTurn = !isHostTurn;
   gameEngine->UpdateCurrentLegalMoves(innerCoordinates, boardCoordinates);
+=======
+    char currentFigure;
+    if(isHostTurn)
+    {
+        currentFigure = hostPlayer->GetSymbol();
+    }
+    else
+    {
+        currentFigure = secondPlayer->GetSymbol();
+    }
+    gameEngine->HandleMove(boardCoordinates, innerCoordinates, currentFigure);
+    gameEngine->CheckForLocalWinner(boardCoordinates, innerCoordinates, currentFigure);
+    if(gameEngine->CheckForGlobalWinner(boardCoordinates))
+    {
+        handleGameEnd();
+    }
+    isHostTurn = !isHostTurn;
+    gameEngine->UpdateCurrentLegalMoves(innerCoordinates);
+>>>>>>> 1491aba48921f7799a9f91cdcea4cc9d67fb311b
 }
 
 std::string GameHandler::GameStateAsJson() {

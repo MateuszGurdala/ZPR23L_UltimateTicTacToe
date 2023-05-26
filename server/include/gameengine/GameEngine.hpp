@@ -15,7 +15,7 @@ private:
     std::vector<Point> currentLegalMoves;
     std::vector<Point> initializeAvailableSingleBoardMoves();
     std::vector<std::vector<Point>> initializeAvailableInnerBoardMoves();
-    static bool AreAllValuesTheSame(const std::vector<char>& values);
+    static bool areAllValuesTheSame(const std::vector<char>& values);
     void removePointFromOuterAvailableMoves(Point& pointToRemove);
 
 public:
@@ -31,7 +31,7 @@ public:
 
     void removePointFromAllAvailableMoves(unsigned int innerBoardIndex, Point &pointOfInnerBoardToRemove);
 
-    void UpdateCurrentLegalMoves(Point &innerBoardCoordinates, Point &outerBoardCoordinates);
+    void UpdateCurrentLegalMoves(Point &innerBoardCoordinates);
 };
 
 #endif //ULTIMATETICTACTOESERVER_GAMEENGINE_H

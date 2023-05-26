@@ -93,7 +93,7 @@ std::vector<char> InnerBoard::GetRightDiagonalValues(Point &chosenCoordinates) c
     int tempX = (int)chosenCoordinates.x;
     int tempY = (int)chosenCoordinates.y;
 
-    while (tempX < boardSize-1 && tempY < boardSize-1) {
+    while (tempX < (int)boardSize-1 && tempY < (int)boardSize-1) {
         ++tempX;
         ++tempY;
     }
