@@ -105,7 +105,7 @@ void GameHandler::PerformTurn(Point boardCoordinates, Point innerCoordinates) {
         handleGameEnd();
     }
     isHostTurn = !isHostTurn;
-    gameEngine->UpdateCurrentLegalMoves(innerCoordinates, boardCoordinates);
+    gameEngine->UpdateCurrentLegalMoves(innerCoordinates);
 }
 
 std::string GameHandler::GameStateAsJson() {
