@@ -90,10 +90,9 @@ export class GameMasterService {
 	async startNewSoloGame(): Promise<void> {
 		if (
 			await firstValueFrom(
-				this.httpClient.postCreateGame(this.gVars.gameMode, this.gVars.playerSign, this.gVars.boardSize)
+				await this.httpClient.postCreateGame(this.gVars.gameMode, this.gVars.playerSign, this.gVars.boardSize)
 			)
 		) {
-			await this.gVars.getGameState();
 			this.router.navigate(["/Game"]);
 			await this.mainGameLoop();
 		}

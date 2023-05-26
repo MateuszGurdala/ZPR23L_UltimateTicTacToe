@@ -1,6 +1,6 @@
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable, of } from "rxjs";
+import { Observable, catchError, of } from "rxjs";
 import { GameBoard, GameMode, GameStage, GameState, Sign } from "../structs";
 
 @Injectable({
@@ -25,14 +25,21 @@ export class GameHttpClient {
 			},
 		});
 	}
-	postCreateGame(mode: GameMode, sign: Sign, size: number): Observable<boolean> {
-		return this.httpClient.get<boolean>(this.url + "/CreateGame", {
-			params: {
-				gameMode: mode,
-				playerSign: sign,
-				boardSize: size,
-			},
-		});
+	async postCreateGame(mode: GameMode, sign: Sign, size: number): Promise<Observable<boolean>> {
+		await new Promise((r) => setTimeout(r, 1000));
+		return this.httpClient
+			.get<boolean>(this.url + "/CreateGame", {
+				params: {
+					gameMode: mode,
+					playerSign: sign,
+					boardSize: size,
+				},
+			})
+			.pipe(
+				catchError((): Observable<boolean> => {
+					return of(false);
+				})
+			);
 	}
 	postPickSegment(segmentNumber: number): Observable<boolean> {
 		return this.httpClient.get<boolean>(this.url + "/PickSegment", {
@@ -52,12 +59,7 @@ export class GameHttpClient {
 		return this.httpClient.get<any>(this.url + "/ServerStatus");
 	}
 	getGameState(): Observable<GameState> {
-		return this.httpClient.get<GameState>(this.url + "/GameState", {
-			withCredentials: true,
-			headers: new HttpHeaders({
-				"Content-Type": "text/plain",
-			}),
-		});
+		return this.httpClient.get<GameState>(this.url + "/GameState", { withCredentials: true });
 	}
 	getGameStage(): Observable<GameStage> {
 		return this.httpClient.get<GameStage>(this.url + "/GameStage", { withCredentials: true });

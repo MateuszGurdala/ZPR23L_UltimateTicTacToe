@@ -57,19 +57,7 @@ HttpResponse HttpHandler::handleGETRequest(
 	{
 		return HttpResponse::GETResponse(R"(true)");
 	}
-	/* Invalid Endpoint */
-	else {
-		return HttpResponse::ERRORResponse("400", "INVALID REQUEST");
-	}
-}
-
-HttpResponse HttpHandler::handlePOSTRequest(
-	const std::shared_ptr<HttpRequest>& request) const {
-
-	const std::string endpoint = request->getEndpoint();
-
-	/* Make Move */
-	if (endpoint == "/MakeMove")
+	else if (endpoint == "/MakeMove")
 	{
 		return HttpResponse::ERRORResponse("400", "NOT IMPLEMENTED");
 	}
@@ -83,15 +71,45 @@ HttpResponse HttpHandler::handlePOSTRequest(
 	{
 		if (!verifyPlayer(request))
 		{
-			return HttpResponse::ERRORResponse("469", "UNAUTHORISED");
+			return HttpResponse::GETResponse(R"(false)");
 		}
-		return HttpResponse::POSTResponse(R"(false)");;//Only true/false
+		return HttpResponse::GETResponse(R"(true)");;//Only true/false
 	}
 	/* Invalid Endpoint */
-	else
-	{
+	else {
 		return HttpResponse::ERRORResponse("400", "INVALID REQUEST");
 	}
+}
+
+HttpResponse HttpHandler::handlePOSTRequest(
+	const std::shared_ptr<HttpRequest>& request) const {
+
+	const std::string endpoint = request->getEndpoint();
+
+	///* Make Move */
+	//if (endpoint == "/MakeMove")
+	//{
+	//	return HttpResponse::ERRORResponse("400", "NOT IMPLEMENTED");
+	//}
+	///* Pick Segment */
+	//else if (endpoint == "/PickSegment")
+	//{
+	//	return HttpResponse::ERRORResponse("400", "NOT IMPLEMENTED");
+	//}
+	///* Create Game */
+	//else if (endpoint == "/CreateGame")
+	//{
+	//	if (!verifyPlayer(request))
+	//	{
+	//		return HttpResponse::ERRORResponse("469", "UNAUTHORISED");
+	//	}
+	//	return HttpResponse::POSTResponse(R"(false)");;//Only true/false
+	//}
+	///* Invalid Endpoint */
+	//else
+	//{
+		return HttpResponse::ERRORResponse("500", "NOT IMPLEMENTED");
+	//}
 }
 
 HttpResponse HttpHandler::handleOPTIONSRequest() const {
@@ -120,7 +138,7 @@ std::string HttpHandler::extractCookieValue(const std::shared_ptr<HttpRequest> r
 	rawCookie = (*request->headers)["Cookie"];
 	std::cout << rawCookie << "\n";
 
-	if (!rawCookie.empty() &&  (p = rawCookie.find("=") != std::string::npos))
+	if (!rawCookie.empty() && (p = rawCookie.find("=")) != std::string::npos)
 	{
 		cookie = rawCookie.substr(0, p);
 		value = rawCookie.substr(p + 1, rawCookie.size());

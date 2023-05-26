@@ -21,6 +21,9 @@ private:
   const std::string _newLine = "\n";
   const std::string _colon = ":";
   const std::string _space = " ";
+  const std::string _questionmark = "?";
+  const std::string _ampersand = "&";
+  const std::string _equals = "=";
 
   std::string _body, _endpoint;
   method _method;
@@ -69,10 +72,13 @@ private:
         Prints parsed request to the standard output.
     */
   void verboseRequest() const;
+  //TODO: Documentation
+  void extractQueryParameters();
 
 public:
   UHeaders headers;
-  /*  Constructor: HttpRequest
+  std::map<std::string, std::string> queryParams;
+      /*  Constructor: HttpRequest
 
         Parses body from json format.
 
