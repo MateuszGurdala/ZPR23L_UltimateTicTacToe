@@ -29,7 +29,7 @@ public:
     std::string GetWinnerBoardAsJson(bool isNested);
     std::string GetBoardAsJson(bool isNested);
 
-    void removePointFromAllAvailableMoves(unsigned int innerBoardIndex, Point &pointOfInnerBoardToRemove);
+    void RemovePointFromAllAvailableMoves(unsigned int innerBoardIndex, Point &pointOfInnerBoardToRemove);
 
     void UpdateCurrentLegalMoves(Point &innerBoardCoordinates);
 };

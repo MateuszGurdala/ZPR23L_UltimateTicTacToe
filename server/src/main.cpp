@@ -13,7 +13,7 @@ int main() {
   LinuxServerSocket serverSocket(config::port, config::requestBuffer);
 #endif
 
-  const HttpHandler handler;
+  HttpHandler handler;
   URequest request;
   UResponse response(nullptr);
 

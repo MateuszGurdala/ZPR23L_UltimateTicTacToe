@@ -5,6 +5,8 @@
 
 #include "HttpRequest.hpp"
 #include "HttpResponse.hpp"
+#include "../gameengine/GameHandler.hpp"
+
 /*  Class: HttpHandler
     A singleton class that receives and processes HttpRequest objects.
     Runs GameHandler methods based on request method and endpoint.
@@ -13,7 +15,8 @@
 */
 class HttpHandler {
 private:
-  /*  Function: handleGETRequest
+
+    /*  Function: handleGETRequest
 
       Processes requests with GET method.
 
@@ -31,8 +34,7 @@ private:
 
         <HttpRequest>
   */
-  HttpResponse
-  handleGETRequest(const std::shared_ptr<HttpRequest> &request) const;
+  HttpResponse handleGETRequest(const std::shared_ptr<HttpRequest> &request);
   //   /*  Function: handlePOSTRequest
 
   //     Processes requests with POST method.
@@ -67,12 +69,13 @@ private:
   HttpResponse handleOPTIONSRequest() const;
 
   // TODO: Documentation
-  bool verifyPlayer(const std::shared_ptr<HttpRequest> request) const;
-  std::string
-  extractCookieValue(const std::shared_ptr<HttpRequest> request) const;
+  bool verifyPlayer(const std::shared_ptr<HttpRequest>& request) const;
+  std::string extractCookieValue(const std::shared_ptr<HttpRequest>& request) const;
+  std::unique_ptr<GameHandler> gameHandler;
 
 public:
-  /*  Function: handle
+
+    /*  Function: handle
 
     Processes HttpRequest objects.
 
@@ -88,7 +91,7 @@ public:
 
       <HttpRequest>
 */
-  HttpResponse handle(const std::shared_ptr<HttpRequest> &request) const;
+  HttpResponse handle(const std::shared_ptr<HttpRequest> &request);
 };
 
 #endif

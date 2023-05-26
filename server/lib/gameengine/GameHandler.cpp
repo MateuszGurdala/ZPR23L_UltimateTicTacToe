@@ -13,8 +13,8 @@ GameHandler::GameHandler(std::unique_ptr<HumanPlayer> hostPlayer,
   currentGameState = std::make_unique<GameStage>();
 }
 
-GameHandler::GameHandler(unsigned int boardSize, const std::string &hostName,
-                         char hostSymbol, bool isPlayerVsComputer,
+GameHandler::GameHandler(unsigned int boardSize,
+                         char hostSymbol, bool isPlayerVsComputer, const std::string &hostName,
                          const std::string &guestName) {
   currentGameState = std::make_unique<GameStage>();
   startGame(boardSize, hostName, hostSymbol, isPlayerVsComputer, guestName);
@@ -284,7 +284,6 @@ std::string GameHandler::PickSegmentAsJson(bool isNested, Point &segment,
   return ss.str();
 }
 
-// TODO delete later
-std::string GameHandler::GetCurrentGameState() {
-  return currentGameState->GetGameStatus();
+const GameStage& GameHandler::GetGameStage() {
+  return *currentGameState;
 }

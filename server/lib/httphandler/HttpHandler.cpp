@@ -1,8 +1,8 @@
 #include "../../include/http/HttpHandler.hpp"
-#include "../../include/entities/MainBoard.hpp"
+
 
 HttpResponse
-HttpHandler::handle(const std::shared_ptr<HttpRequest> &request) const {
+HttpHandler::handle(const std::shared_ptr<HttpRequest> &request) {
   switch (request->getMethod()) {
   case OPTIONS:
     return handleOPTIONSRequest();
@@ -19,23 +19,18 @@ HttpHandler::handle(const std::shared_ptr<HttpRequest> &request) const {
   }
 }
 
-// TODO expand later (prototype test purpose)
 HttpResponse HttpHandler::handleGETRequest(
-    const std::shared_ptr<HttpRequest> &request) const {
+    const std::shared_ptr<HttpRequest> &request) {
 
   const std::string endpoint = request->getEndpoint();
 
   /* Board State */
   if (endpoint == "/BoardState") {
-    /* TEMP */
-    // auto mainBoard = std::make_unique<MainBoard>(3);
-    // Point outerBoardCoords = Point(1, 1);
-    // Point innerBoardCoords = Point(1, 1);
-    // mainBoard->MakeMove(outerBoardCoords, innerBoardCoords, 'X');
-    /* Return board state */
-    // TODO: Krystian
-    // return HttpResponse::GETResponse("XD");
-    return HttpResponse::ERRORResponse("501", "NOT IMPLEMENTED");
+    if(gameHandler)
+    {
+      return HttpResponse::GETResponse(gameHandler->BoardStateAsJson());
+    }
+    return HttpResponse::ERRORResponse("400", "Game not yet created");
   }
   /* Game State */
   else if (endpoint == "/GameState") {
@@ -48,9 +43,11 @@ HttpResponse HttpHandler::handleGETRequest(
         5 - PlayerO
         6 - Unknown
     */
-    // TODO: Krystian
-    return HttpResponse::GETResponse(
-        R"(0)"); // Client parses value into numerical enum
+    if(gameHandler)
+    {
+      return HttpResponse::GETResponse(gameHandler->GameStateAsJson());
+    }
+    return HttpResponse::GETResponse("0");
   }
   /* Game Stage */
   else if (endpoint == "/GameStage") {
@@ -83,8 +80,8 @@ HttpResponse HttpHandler::handleGETRequest(
   } else if (endpoint == "/MakeMove") {
     if (verifyPlayer(request)) {
       std::string player = extractCookieValue(request);
-      std::string boadId = (*request->headers)["boardId"];
-      std::string segmentId = (*request->headers)["segmentId"];
+      std::string boardId = (request->queryParams)["boardId"];
+      std::string segmentId = (request->queryParams)["segmentId"];
       // TODO: Krystian
       // return HttpResponse::GETResponse(R"(true)");
       return HttpResponse::ERRORResponse("501", "NOT IMPLEMENTED");
@@ -107,14 +104,24 @@ HttpResponse HttpHandler::handleGETRequest(
   /* Create Game */
   else if (endpoint == "/CreateGame") {
     if (verifyPlayer(request)) {
-      return HttpResponse::GETResponse(R"(false)");
+      return HttpResponse::GETResponse(gameHandler->CreateGameAsJson(false));
     } else {
-      std::string gameMode = (*request->headers)["gameMode"];
-      std::string playerSign = (*request->headers)["playerSign"];
-      std::string boardSize = (*request->headers)["boardSize"];
-      // TODO: Krystian
-      // return HttpResponse::GETResponse(R"(true)"); // Only true/false
-      return HttpResponse::ERRORResponse("501", "NOT IMPLEMENTED");
+      std::string gameMode = (request->queryParams)["gameMode"];
+      std::string playerSign = (request->queryParams)["playerSign"];
+      std::string boardSize = (request->queryParams)["boardSize"];
+      bool isPlayerVsComputer = false;
+      char playerSignAsChar = playerSign.c_str()[0];
+      if(playerSignAsChar != 'X' && playerSignAsChar != 'O')
+      {
+          return HttpResponse::ERRORResponse("400", "Invalid player "
+                                                  "figure while creating game.");
+      }
+      if(gameMode == "Player")
+      {
+          isPlayerVsComputer = true;
+      }
+    gameHandler = std::make_unique<GameHandler>(std::stoi(boardSize), playerSignAsChar, isPlayerVsComputer);
+    return HttpResponse::GETResponse(gameHandler->CreateGameAsJson(true));
     }
   }
   /* Invalid Endpoint */
@@ -159,7 +166,7 @@ HttpResponse HttpHandler::handleOPTIONSRequest() const {
 }
 
 bool HttpHandler::verifyPlayer(
-    const std::shared_ptr<HttpRequest> request) const {
+    const std::shared_ptr<HttpRequest>& request) const {
   try {
     extractCookieValue(request);
     return true;
@@ -169,7 +176,7 @@ bool HttpHandler::verifyPlayer(
 }
 
 std::string HttpHandler::extractCookieValue(
-    const std::shared_ptr<HttpRequest> request) const {
+    const std::shared_ptr<HttpRequest>& request) const {
   size_t p;
   std::string rawCookie;
   std::string cookie;
@@ -178,11 +185,11 @@ std::string HttpHandler::extractCookieValue(
   rawCookie = (*request->headers)["Cookie"];
   std::cout << rawCookie << "\n";
 
-  if (!rawCookie.empty() && (p = rawCookie.find("=")) != std::string::npos) {
+  if (!rawCookie.empty() && (p = rawCookie.find('=')) != std::string::npos) {
     cookie = rawCookie.substr(0, p);
     value = rawCookie.substr(p + 1, rawCookie.size());
   } else {
-    throw new std::exception;
+    throw std::exception();
   }
 
   if (cookie == "player" && std::find(std::begin(config::playerCookies),
@@ -190,6 +197,6 @@ std::string HttpHandler::extractCookieValue(
                                 std::end(config::playerCookies)) {
     return value;
   } else {
-    throw new std::exception;
+    throw std::exception();
   }
 }
