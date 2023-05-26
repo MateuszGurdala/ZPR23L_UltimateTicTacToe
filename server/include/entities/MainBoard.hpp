@@ -14,7 +14,7 @@
 class MainBoard : public BoardBase {
 private:
     std::vector<std::vector<std::unique_ptr<InnerBoard>>> mainPlayBoard;
-    std::unique_ptr<std::unique_ptr<char[]>[]> winnerBoard;
+    std::unique_ptr<InnerBoard> winnerBoard;
     /*  Function: FillBoard
     Fills main play board with InnerBoard objects and winner board with whitespaces.
      */
@@ -26,11 +26,6 @@ public:
     MainBoard(unsigned int boardSize);
     void AddWinnerOfInnerBoard(Point& coordinates, char& figure);
     void MakeMove(Point& boardCoordinates, Point& innerCoordinates, char figure);
-    //TODO to be implemented
-    auto GetInnerBoardVerticalValues(Point& playBoardCoordinates, Point& innerBoardRowAndColumn);
-    auto GetInnerBoarHorizontalValues(Point& playBoardCoordinates, Point& innerBoardRowAndColumn);
-    auto GetInnerBoardLeftDiagonalValues(Point& playBoardCoordinates, Point& innerBoardRowAndColumn);
-    auto GetInnerBoardRightDiagonalValues(Point& playBoardCoordinates, Point& innerBoardRowAndColumn);
     /*  Function: ToJson
 
      */
@@ -40,9 +35,10 @@ public:
     */
     std::string WinnerBoardToJson(bool isNested);
 
-    std::unique_ptr<InnerBoard>& GetInnerBoard(Point point);
+    const InnerBoard& GetInnerBoard(Point point) const;
 
     char GetWinnerBoardCell(Point point);
+    const InnerBoard& GetWinnerBoard() const;
 };
 
 #endif //ULTIMATETICTACTOESERVER_MAINBOARD_HPP

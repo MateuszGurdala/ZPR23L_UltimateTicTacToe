@@ -3,7 +3,8 @@
 #include "../../include/entities/MainBoard.hpp"
 #include "../../include/helpers/BoardIndexConverter.hpp"
 
-MainBoard::MainBoard(unsigned int boardSize) : BoardBase(boardSize), winnerBoard(new std::unique_ptr<char[]>[boardSize]){
+MainBoard::MainBoard(unsigned int boardSize) : BoardBase(boardSize), winnerBoard(std::make_unique<InnerBoard>(boardSize)){
+
     mainPlayBoard.resize(boardSize);
     for (auto& row : mainPlayBoard) {
         row.resize(boardSize);
@@ -11,14 +12,16 @@ MainBoard::MainBoard(unsigned int boardSize) : BoardBase(boardSize), winnerBoard
     FillBoard();
 }
 
-std::unique_ptr<InnerBoard>& MainBoard::GetInnerBoard(Point point) {
-    return mainPlayBoard[point.x][point.y];
+const InnerBoard& MainBoard::GetInnerBoard(Point point) const {
+    return *mainPlayBoard[point.x][point.y];
 }
 
 char MainBoard::GetWinnerBoardCell(Point point) {
-    return winnerBoard[point.x][point.y];
+    return winnerBoard->GetCell(point);
 }
-
+const InnerBoard& MainBoard::GetWinnerBoard() const {
+    return *winnerBoard;
+}
 
 void MainBoard::FillBoard() {
     for (auto& row : mainPlayBoard) {
@@ -26,40 +29,11 @@ void MainBoard::FillBoard() {
             row[j] = std::make_unique<InnerBoard>(boardSize);
         }
     }
-    for (unsigned int i = 0; i < boardSize; i++) {
-        winnerBoard[i] = std::make_unique<char[]>(boardSize);
-        for (unsigned int j = 0; j < boardSize; j++) {
-            winnerBoard[i][j] = ' ';
-        }
-    }
 }
 
 void MainBoard::AddWinnerOfInnerBoard(Point& coordinates, char& figure) {
-    VerifyFigure(figure);
-    VerifyCoordinates(coordinates);
-    if(winnerBoard[coordinates.x][coordinates.y] != ' ')
-    {
-        throw std::invalid_argument("given cell is already filled");
-    }
-    winnerBoard[coordinates.x][coordinates.y] = figure;
+    winnerBoard->PlaceFigure(coordinates, figure);
 }
-
-//TODO
-/*auto MainBoard::GetInnerBoardVerticalValues(Point& playBoardCoordinates, Point& innerBoardRowAndColumn) {
-    return nullptr;
-}
-
-auto MainBoard::GetInnerBoardRightDiagonalValues(Point& playBoardCoordinates, Point& innerBoardRowAndColumn) {
-    return nullptr;
-}
-
-auto MainBoard::GetInnerBoardLeftDiagonalValues(Point& playBoardCoordinates, Point& innerBoardRowAndColumn) {
-    return nullptr;
-}
-
-auto MainBoard::GetInnerBoarHorizontalValues(Point& playBoardCoordinates, Point& innerBoardRowAndColumn) {
-    return nullptr;
-}*/
 
 void MainBoard::MakeMove(Point& boardCoordinates, Point& innerCoordinates, char figure) {
     mainPlayBoard[boardCoordinates.x][boardCoordinates.y]->PlaceFigure(innerCoordinates, figure);
@@ -79,7 +53,7 @@ std::string MainBoard::WinnerBoardToJson(bool isNested){
             ss << "{";
             ss << R"("id": ")" << id << R"(",)" ;
             ss << R"("winner": )";
-            ss << "\"" << winnerBoard[boardRow][boardColumn] << "\"";
+            ss << "\"" << winnerBoard->GetCell(currentPoint) << "\"";
             ss << "}";
             if (boardColumn != boardSize - 1) {
                 ss << ",";
@@ -111,7 +85,7 @@ std::string MainBoard::ToJson(bool isNested) {
             int id = BoardIndexConverter::PointToIndex(currentPoint, boardSize);
             ss << R"("id": ")" << id << R"(",)";
             ss << R"("winner": )";
-            ss << "\"" << winnerBoard[boardRow][boardColumn] << "\",";
+            ss << "\"" << winnerBoard->GetCell(currentPoint) << "\",";
             ss << mainPlayBoard[boardRow][boardColumn]->ToJson(true);
             ss << "}";
             if (boardColumn != boardSize - 1) {
