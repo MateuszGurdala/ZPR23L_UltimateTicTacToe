@@ -32,26 +32,26 @@ private:
         <HttpRequest>
   */
   HttpResponse
-  handleGETRequest(const std::shared_ptr<HttpRequest>& request) const;
-  /*  Function: handlePOSTRequest
+  handleGETRequest(const std::shared_ptr<HttpRequest> &request) const;
+  //   /*  Function: handlePOSTRequest
 
-    Processes requests with POST method.
+  //     Processes requests with POST method.
 
-    Parameters:
+  //     Parameters:
 
-      request - HttpRequest object for processing.
+  //       request - HttpRequest object for processing.
 
-    Returns:
+  //     Returns:
 
-      HttpResponse object with status code 200 or 400, based on if GameHandler
-      method ended with success.
+  //       HttpResponse object with status code 200 or 400, based on if
+  //       GameHandler method ended with success.
 
-    See Also:
+  //     See Also:
 
-      <HttpRequest>
-*/
-  HttpResponse
-  handlePOSTRequest(const std::shared_ptr<HttpRequest>& request) const;
+  //       <HttpRequest>
+  // */
+  //   HttpResponse
+  //   handlePOSTRequest(const std::shared_ptr<HttpRequest>& request) const;
   /*  Function: handleOPTIONSRequest
 
     Processes requests with OPTIONS method.
@@ -64,12 +64,13 @@ private:
 
       <HttpRequest>
 */
-  HttpResponse
-  handleOPTIONSRequest() const;
+  HttpResponse handleOPTIONSRequest() const;
 
-  //TODO: Documentation
+  // TODO: Documentation
   bool verifyPlayer(const std::shared_ptr<HttpRequest> request) const;
-  std::string extractCookieValue(const std::shared_ptr<HttpRequest> request) const;
+  std::string
+  extractCookieValue(const std::shared_ptr<HttpRequest> request) const;
+
 public:
   /*  Function: handle
 
@@ -87,8 +88,7 @@ public:
 
       <HttpRequest>
 */
-  HttpResponse handle(const std::shared_ptr<HttpRequest>& request) const;
-
+  HttpResponse handle(const std::shared_ptr<HttpRequest> &request) const;
 };
 
 #endif

@@ -45,7 +45,7 @@ export class GameHttpClient {
 		return this.httpClient.get<boolean>(this.url + "/PickSegment", {
 			withCredentials: true,
 			params: {
-				segmentNumber: segmentNumber,
+				segmentId: segmentNumber,
 			},
 		});
 	}
