@@ -69,6 +69,8 @@ private:
   HttpResponse handleOPTIONSRequest() const;
 
   // TODO: Documentation
+  unsigned int boardSize;
+  bool isPlayerVsComputer;
   bool verifyPlayer(const std::shared_ptr<HttpRequest>& request) const;
   std::string extractCookieValue(const std::shared_ptr<HttpRequest>& request) const;
   std::unique_ptr<GameHandler> gameHandler;

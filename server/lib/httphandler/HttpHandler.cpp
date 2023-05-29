@@ -1,5 +1,6 @@
 #include "../../include/http/HttpHandler.hpp"
-
+#include "../../include/helpers/BoardIndexConverter.hpp"
+#include "../../include/helpers/MoveSimulator.hpp"
 
 HttpResponse
 HttpHandler::handle(const std::shared_ptr<HttpRequest> &request) {
@@ -26,8 +27,7 @@ HttpResponse HttpHandler::handleGETRequest(
 
   /* Board State */
   if (endpoint == "/BoardState") {
-    if(gameHandler)
-    {
+    if (gameHandler) {
       return HttpResponse::GETResponse(gameHandler->BoardStateAsJson());
     }
     return HttpResponse::ERRORResponse("400", "Game not yet created");
@@ -43,22 +43,19 @@ HttpResponse HttpHandler::handleGETRequest(
         5 - PlayerO
         6 - Unknown
     */
-    if(gameHandler)
-    {
-      return HttpResponse::GETResponse(gameHandler->GameStateAsJson());
-    }
-    return HttpResponse::GETResponse("0");
+    return HttpResponse::GETResponse("3");
   }
   /* Game Stage */
   else if (endpoint == "/GameStage") {
     /*
-        "Your Turn",
-        "Enemy Turn",
-        "Pick Next Segment",
-        "Enemy is Choosing Next Segment",
+        "Player X Turn",
+        "Player O Turn",
         "Game is Finished",
         "Unknown",
     */
+    //    if (gameHandler) {
+    //      return HttpResponse::GETResponse(gameHandler->GameStateAsJson());
+    //    }
     // TODO: Krystian
     // return HttpResponse::GETResponse(R"("Unknown")"); // State must be inside
     return HttpResponse::ERRORResponse("501", "NOT IMPLEMENTED");
@@ -78,13 +75,21 @@ HttpResponse HttpHandler::handleGETRequest(
       return HttpResponse::ERRORResponse("401", "UNAUTHORIZED");
     }
   } else if (endpoint == "/MakeMove") {
-    if (verifyPlayer(request)) {
+    if (verifyPlayer(request) && gameHandler) {
       std::string player = extractCookieValue(request);
       std::string boardId = (request->queryParams)["boardId"];
       std::string segmentId = (request->queryParams)["segmentId"];
-      // TODO: Krystian
-      // return HttpResponse::GETResponse(R"(true)");
-      return HttpResponse::ERRORResponse("501", "NOT IMPLEMENTED");
+      unsigned int boardIdIndex = std::stoul(boardId);
+      unsigned int segmentIdIndex = std::stoul(segmentId);
+      Point outerCoordinates =
+          BoardIndexConverter::IndexToPoint(segmentIdIndex, boardSize);
+      Point innerCoordinates =
+          BoardIndexConverter::IndexToPoint(boardIdIndex, boardSize);
+      std::array<Point, 2> move = {outerCoordinates, innerCoordinates};
+      bool isValid = gameHandler->PerformMoveValidation(outerCoordinates,
+                                                        innerCoordinates);
+      return HttpResponse::GETResponse(
+          gameHandler->MoveAsJson(false, move, isValid));
     } else {
       return HttpResponse::ERRORResponse("401", "UNAUTHORIZED");
     }
@@ -93,7 +98,7 @@ HttpResponse HttpHandler::handleGETRequest(
   else if (endpoint == "/PickSegment") {
     if (verifyPlayer(request)) {
       std::string player = extractCookieValue(request);
-      std::string segmentNumber = (*request->headers)["segmentNumber"];
+      std::string segmentNumber = (request->queryParams)["segmentNumber"];
       // TODO: Krystian
       // return HttpResponse::GETResponse(R"(true)");
       return HttpResponse::ERRORResponse("501", "NOT IMPLEMENTED");
@@ -108,20 +113,21 @@ HttpResponse HttpHandler::handleGETRequest(
     } else {
       std::string gameMode = (request->queryParams)["gameMode"];
       std::string playerSign = (request->queryParams)["playerSign"];
-      std::string boardSize = (request->queryParams)["boardSize"];
-      bool isPlayerVsComputer = false;
+      std::string boardSizeQuery = (request->queryParams)["boardSize"];
       char playerSignAsChar = playerSign.c_str()[0];
-      if(playerSignAsChar != 'X' && playerSignAsChar != 'O')
-      {
-          return HttpResponse::ERRORResponse("400", "Invalid player "
-                                                  "figure while creating game.");
+      if (playerSignAsChar != 'X' && playerSignAsChar != 'O') {
+        return HttpResponse::ERRORResponse("400",
+                                           "Invalid player "
+                                           "figure while creating game.");
       }
-      if(gameMode == "Player")
-      {
-          isPlayerVsComputer = true;
+      if (gameMode == "Player") {
+        isPlayerVsComputer = true;
       }
-    gameHandler = std::make_unique<GameHandler>(std::stoi(boardSize), playerSignAsChar, isPlayerVsComputer);
-    return HttpResponse::GETResponse(gameHandler->CreateGameAsJson(true));
+      boardSize = std::stoi(boardSizeQuery);
+      gameHandler = std::make_unique<GameHandler>(
+          std::stoi(boardSizeQuery), playerSignAsChar, isPlayerVsComputer);
+      //return HttpResponse::GETResponse(gameHandler->CreateGameAsJson(true));
+      return HttpResponse::GETResponse(R"(true)");
     }
   }
   /* Invalid Endpoint */
