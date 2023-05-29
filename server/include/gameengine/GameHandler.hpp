@@ -20,6 +20,7 @@ private:
     std::unique_ptr<Player> secondPlayer;
     std::unique_ptr<GameEngine> gameEngine;
     bool isHostTurn = false;
+    bool isSecondPlayerComputer;
     std::unique_ptr<GameStage> currentGameState;
     void startGame(unsigned int boardSize, const std::string& hostName, char hostSymbol, bool isPlayerVsComputer = true, const std::string& guestName = "");
     void handleGameEnd();

@@ -16,8 +16,10 @@ GameHandler::GameHandler(unsigned int boardSize,
                          char hostSymbol, bool isPlayerVsComputer, const std::string &hostName,
                          const std::string &guestName) {
   currentGameState = std::make_unique<GameStage>();
+  isSecondPlayerComputer = isPlayerVsComputer;
   startGame(boardSize, hostName, hostSymbol, isPlayerVsComputer, guestName);
 }
+
 
 void GameHandler::startGame(unsigned int boardSize, const std::string &hostName,
                             char hostSymbol, bool isPlayerVsComputer,

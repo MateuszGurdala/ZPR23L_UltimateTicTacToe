@@ -7,7 +7,7 @@
 
 class MoveSimulator {
 public:
-  static std::array<Point, 2> simulateMove(GameHandler& gameHandler, int depth);
-}
+  static std::array<Point, 2> SimulateMove(GameHandler& gameHandler, int depth);
+};
 
 #endif // ULTIMATETICTACTOESERVER_MOVESIMULATOR_H
