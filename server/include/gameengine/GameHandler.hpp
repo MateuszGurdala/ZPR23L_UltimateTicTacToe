@@ -24,12 +24,13 @@ private:
     void startGame(unsigned int boardSize, const std::string& hostName, char hostSymbol, bool isPlayerVsComputer = true, const std::string& guestName = "");
     void handleGameEnd();
 public:
-    std::string GetCurrentGameState();
+    const GameStage& GetGameStage();
     bool PerformMoveValidation(Point boardCoordinates, Point innerCoordinates);
     void PerformTurn(Point boardCoordinates, Point innerCoordinates);
     GameHandler(std::unique_ptr<HumanPlayer> hostPlayer, std::unique_ptr<Player> secondPlayer, std::unique_ptr<GameEngine> gameEngine);
-    GameHandler(unsigned int boardSize, const std::string& hostName, char hostSymbol, bool isPlayerVsComputer = true, const std::string& guestName = "");
-    std::array<Point, 2> ChooseCoordinatesOfMove();
+    GameHandler(unsigned int boardSize,
+                char hostSymbol, bool isPlayerVsComputer, const std::string &hostName = "Host",
+                const std::string &guestName = "Guest");
     std::string GameStateAsJson();
     std::string EndGameAsJson(bool isPlayerSurrender);
     std::string CreateGameAsJson(bool isSuccess);

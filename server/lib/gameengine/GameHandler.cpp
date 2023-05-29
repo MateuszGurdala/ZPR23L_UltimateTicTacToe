@@ -1,4 +1,3 @@
-#include <ranges>
 #include <sstream>
 
 #include "../../include/entities/ComputerPlayer.hpp"
@@ -13,8 +12,8 @@ GameHandler::GameHandler(std::unique_ptr<HumanPlayer> hostPlayer,
   currentGameState = std::make_unique<GameStage>();
 }
 
-GameHandler::GameHandler(unsigned int boardSize, const std::string &hostName,
-                         char hostSymbol, bool isPlayerVsComputer,
+GameHandler::GameHandler(unsigned int boardSize,
+                         char hostSymbol, bool isPlayerVsComputer, const std::string &hostName,
                          const std::string &guestName) {
   currentGameState = std::make_unique<GameStage>();
   startGame(boardSize, hostName, hostSymbol, isPlayerVsComputer, guestName);
@@ -54,21 +53,6 @@ void GameHandler::startGame(unsigned int boardSize, const std::string &hostName,
 // TODO
 void GameHandler::handleGameEnd() {
   currentGameState->SetGameStatus("Finished");
-}
-
-// TODO LINK THIS WITH HTTPHANDLER
-std::array<Point, 2> GameHandler::ChooseCoordinatesOfMove() {
-  std::array<Point, 2> target;
-  if (isHostTurn) {
-    target = hostPlayer->ChooseMove(gameEngine->GetAvailableOuterBoardMoves(),
-                                    gameEngine->GetAvailableInnerBoardMoves(),
-                                    gameEngine->GetBoardSize());
-  } else {
-    target = secondPlayer->ChooseMove(gameEngine->GetAvailableOuterBoardMoves(),
-                                      gameEngine->GetAvailableInnerBoardMoves(),
-                                      gameEngine->GetBoardSize());
-  }
-  return target;
 }
 
 bool GameHandler::PerformMoveValidation(Point boardCoordinates,
@@ -113,8 +97,6 @@ std::string GameHandler::GameStateAsJson() {
      << "\"" << hostPlayer->GetName() << "\",";
   ss << "\"symbol\":"
      << "\"" << hostPlayer->GetSymbol() << "\",";
-  ss << "\"points\":"
-     << "\"" << hostPlayer->GetPoints() << "\"";
   ss << "},";
   ss << "\"guestPlayer\":";
   ss << "{";
@@ -122,8 +104,6 @@ std::string GameHandler::GameStateAsJson() {
      << "\"" << secondPlayer->GetName() << "\",";
   ss << "\"symbol\":"
      << "\"" << secondPlayer->GetSymbol() << "\",";
-  ss << "\"points\":"
-     << "\"" << secondPlayer->GetPoints() << "\"";
   ss << "},";
   ss << "\"currentTurn\":";
   ss << "{";
@@ -284,7 +264,6 @@ std::string GameHandler::PickSegmentAsJson(bool isNested, Point &segment,
   return ss.str();
 }
 
-// TODO delete later
-std::string GameHandler::GetCurrentGameState() {
-  return currentGameState->GetGameStatus();
+const GameStage& GameHandler::GetGameStage() {
+  return *currentGameState;
 }

@@ -52,7 +52,7 @@ void GameEngine::HandleMove(Point& boardCoordinates, Point& innerCoordinates, ch
     mainBoard->MakeMove(boardCoordinates,innerCoordinates,figure);
     unsigned int boardSize = GetBoardSize();
     unsigned int innerBoardIndex = BoardIndexConverter::PointToIndex(boardCoordinates,boardSize);
-    removePointFromAllAvailableMoves(innerBoardIndex, innerCoordinates);
+    RemovePointFromAllAvailableMoves(innerBoardIndex, innerCoordinates);
 }
 
 
@@ -150,7 +150,7 @@ void GameEngine::removePointFromOuterAvailableMoves(Point &pointToRemove) {
                                         }), availableOuterBoardMoves.end());
 }
 
-void GameEngine::removePointFromAllAvailableMoves(unsigned int innerBoardIndex, Point &pointOfInnerBoardToRemove) {
+void GameEngine::RemovePointFromAllAvailableMoves(unsigned int innerBoardIndex, Point &pointOfInnerBoardToRemove) {
     auto& innerBoard = allAvailableBoardMoves[innerBoardIndex];
     unsigned int x = pointOfInnerBoardToRemove.x;
     unsigned int y = pointOfInnerBoardToRemove.y;

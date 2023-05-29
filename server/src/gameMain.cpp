@@ -39,7 +39,7 @@ int main() {
 
 
     //CLIENT PROVIDE PROPERTIES TO HANDLER
-    auto handler = std::make_unique<GameHandler>(3, "Krystian", 'X', false, "Mati");
+    auto handler = std::make_unique<GameHandler>(3, 'X', false, "Mati", "Krystian");
     //GAME CREATED -  handler ->CreateGameAsJson(true); IF FAIL handler ->CreateGameAsJson(false);
     while(handler->GetCurrentGameState() != "Finished")
     {
