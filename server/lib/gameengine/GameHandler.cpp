@@ -12,14 +12,13 @@ GameHandler::GameHandler(std::unique_ptr<HumanPlayer> hostPlayer,
   currentGameState = std::make_unique<GameStage>();
 }
 
-GameHandler::GameHandler(unsigned int boardSize,
-                         char hostSymbol, bool isPlayerVsComputer, const std::string &hostName,
+GameHandler::GameHandler(unsigned int boardSize, char hostSymbol,
+                         bool isPlayerVsComputer, const std::string &hostName,
                          const std::string &guestName) {
   currentGameState = std::make_unique<GameStage>();
   isSecondPlayerComputer = isPlayerVsComputer;
   startGame(boardSize, hostName, hostSymbol, isPlayerVsComputer, guestName);
 }
-
 
 void GameHandler::startGame(unsigned int boardSize, const std::string &hostName,
                             char hostSymbol, bool isPlayerVsComputer,
@@ -63,31 +62,29 @@ bool GameHandler::PerformMoveValidation(Point boardCoordinates,
   unsigned int winnerBoardIndex =
       BoardIndexConverter::PointToIndex(boardCoordinates, boardSize);
   auto const availableMoves = gameEngine->GetAvailableInnerBoardMoves();
-  bool isPointValid = std::ranges::any_of(
-      availableMoves[winnerBoardIndex], [&](const Point &point) {
+  bool isPointValid = std::any_of(
+      availableMoves[winnerBoardIndex].begin(),
+      availableMoves[winnerBoardIndex].end(), [&](const Point &point) {
         return point.x == innerCoordinates.x && point.y == innerCoordinates.y;
       });
   return isPointValid;
 }
 
 void GameHandler::PerformTurn(Point boardCoordinates, Point innerCoordinates) {
-    char currentFigure;
-    if(isHostTurn)
-    {
-        currentFigure = hostPlayer->GetSymbol();
-    }
-    else
-    {
-        currentFigure = secondPlayer->GetSymbol();
-    }
-    gameEngine->HandleMove(boardCoordinates, innerCoordinates, currentFigure);
-    gameEngine->CheckForLocalWinner(boardCoordinates, innerCoordinates, currentFigure);
-    if(gameEngine->CheckForGlobalWinner(boardCoordinates))
-    {
-        handleGameEnd();
-    }
-    isHostTurn = !isHostTurn;
-    gameEngine->UpdateCurrentLegalMoves(innerCoordinates);
+  char currentFigure;
+  if (isHostTurn) {
+    currentFigure = hostPlayer->GetSymbol();
+  } else {
+    currentFigure = secondPlayer->GetSymbol();
+  }
+  gameEngine->HandleMove(boardCoordinates, innerCoordinates, currentFigure);
+  gameEngine->CheckForLocalWinner(boardCoordinates, innerCoordinates,
+                                  currentFigure);
+  if (gameEngine->CheckForGlobalWinner(boardCoordinates)) {
+    handleGameEnd();
+  }
+  isHostTurn = !isHostTurn;
+  gameEngine->UpdateCurrentLegalMoves(innerCoordinates);
 }
 
 std::string GameHandler::GameStateAsJson() {
@@ -266,6 +263,4 @@ std::string GameHandler::PickSegmentAsJson(bool isNested, Point &segment,
   return ss.str();
 }
 
-const GameStage& GameHandler::GetGameStage() {
-  return *currentGameState;
-}
+const GameStage &GameHandler::GetGameStage() { return *currentGameState; }
