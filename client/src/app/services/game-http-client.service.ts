@@ -1,7 +1,17 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable, catchError, of } from "rxjs";
-import { GameBoard, GameMode, GameStage, GameState, Sign } from "../structs";
+import { Observable, catchError, firstValueFrom, of } from "rxjs";
+import {
+	CreateGameResponse,
+	EndGameResponse,
+	GameBoard,
+	GameMode,
+	GameStage,
+	GameState,
+	GameStateResponse,
+	MoveResponse,
+	Sign,
+} from "../structs";
 
 @Injectable({
 	providedIn: "root",
@@ -16,32 +26,35 @@ export class GameHttpClient {
 	}
 
 	//#region POST
-	postMakeMove(boardId: number, segmentId: number): Observable<any> {
-		return this.httpClient.get<any>(this.url + "MakeMove", {
-			withCredentials: true,
-			params: {
-				boardId: boardId,
-				segmentId: segmentId,
-			},
-		});
+	async postMakeMove(boardId: number, segmentId: number): Promise<Observable<boolean>> {
+		let response: MoveResponse = await firstValueFrom(
+			this.httpClient.get<MoveResponse>(this.url + "MakeMove", {
+				withCredentials: true,
+				params: {
+					boardId: boardId,
+					segmentId: segmentId,
+				},
+			})
+		);
+
+		return of(response.isMoveValid);
 	}
 	async postCreateGame(mode: GameMode, sign: Sign, size: number): Promise<Observable<boolean>> {
 		await new Promise((r) => setTimeout(r, 1000));
-		return this.httpClient
-			.get<boolean>(this.url + "/CreateGame", {
+		let response: CreateGameResponse = await firstValueFrom(
+			this.httpClient.get<CreateGameResponse>(this.url + "/CreateGame", {
 				params: {
 					gameMode: mode,
 					playerSign: sign,
 					boardSize: size,
 				},
 			})
-			.pipe(
-				catchError((): Observable<boolean> => {
-					return of(false);
-				})
-			);
+		);
+
+		return of(response.isSuccess);
 	}
 	postPickSegment(segmentNumber: number): Observable<boolean> {
+		/* Deprecated */
 		return this.httpClient.get<boolean>(this.url + "/PickSegment", {
 			withCredentials: true,
 			params: {
@@ -58,14 +71,27 @@ export class GameHttpClient {
 	getServerStatus(): Observable<boolean> {
 		return this.httpClient.get<any>(this.url + "/ServerStatus");
 	}
-	getGameState(): Observable<GameState> {
-		return this.httpClient.get<GameState>(this.url + "/GameState", { withCredentials: true });
+	async getGameState(): Promise<Observable<GameState>> {
+		return await this.httpClient.get<GameState>(this.url + "/GameState", { withCredentials: true });
 	}
-	getGameStage(): Observable<GameStage> {
-		return this.httpClient.get<GameStage>(this.url + "/GameStage", { withCredentials: true });
+	async getGameStage(): Promise<Observable<GameStage>> {
+		let response: GameStateResponse = await firstValueFrom(
+			this.httpClient.get<GameStateResponse>(this.url + "/GameStage", { withCredentials: true })
+		);
+
+		//TODO: Make compatible with server response object
+		// switch (response.currentTurn.nowPlaying) {
+		// 	case Sign.X:
+
+		// 	case Sign.O:
+		// }
+		return of(GameStage.Unknown);
 	}
-	getEndGame(): Observable<boolean> {
-		return this.httpClient.get<boolean>(this.url + "/EndGame", { withCredentials: true });
+	async getEndGame(): Promise<Observable<boolean>> {
+		let response: EndGameResponse = await firstValueFrom(
+			this.httpClient.get<EndGameResponse>(this.url + "/EndGame", { withCredentials: true })
+		);
+		return of(true);
 	}
 	//#endregion
 }

@@ -41,3 +41,40 @@ export enum GameStage {
 	Finished = "Game is Finished",
 	Unknown = "Unknown",
 }
+
+/* Responses */
+export interface CreateGameResponse {
+	isSuccess: boolean;
+	hostName: string;
+	hostSymbol: Sign;
+	guestName: string;
+	guestSymbol: Sign;
+	boardSize: number;
+}
+
+export interface EndGameResponse {
+	whoEndedGame: string;
+	winner: boolean;
+}
+
+export interface GameStateResponse {
+	hostPlayer: {
+		name: string;
+		symbol: Sign;
+		points: number;
+	};
+	guestPlayer: {
+		name: string;
+		symbol: Sign;
+		points: number;
+	};
+	currentTurn: {
+		nowPlaying: Sign;
+	};
+}
+
+export interface MoveResponse {
+	outerBoardIndex: number;
+	innerBoardIndex: number;
+	isMoveValid: boolean;
+}

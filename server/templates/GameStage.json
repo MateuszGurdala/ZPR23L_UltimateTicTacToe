@@ -1,5 +1,6 @@
+//TODO: Return value itself
 {
-  "gameStage":{
-    "currentGameStage":"Ready"
-  }
+	"gameStage": {
+		"currentGameStage": "Ready"
+	}
 }
