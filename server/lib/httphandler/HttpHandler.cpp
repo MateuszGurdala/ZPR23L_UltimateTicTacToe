@@ -2,8 +2,7 @@
 #include "../../include/helpers/BoardIndexConverter.hpp"
 #include "../../include/helpers/MoveSimulator.hpp"
 
-HttpResponse
-HttpHandler::handle(const std::shared_ptr<HttpRequest> &request) {
+HttpResponse HttpHandler::handle(const std::shared_ptr<HttpRequest> &request) {
   switch (request->getMethod()) {
   case OPTIONS:
     return handleOPTIONSRequest();
@@ -11,17 +10,14 @@ HttpHandler::handle(const std::shared_ptr<HttpRequest> &request) {
   case GET:
     return handleGETRequest(request);
     break;
-  // case POST:
-  // return handlePOSTRequest(request);
-  // break;
   default:
     return HttpResponse::ERRORResponse("400", "INVALID REQUEST");
     break;
   }
 }
 
-HttpResponse HttpHandler::handleGETRequest(
-    const std::shared_ptr<HttpRequest> &request) {
+HttpResponse
+HttpHandler::handleGETRequest(const std::shared_ptr<HttpRequest> &request) {
 
   const std::string endpoint = request->getEndpoint();
 
@@ -33,17 +29,8 @@ HttpResponse HttpHandler::handleGETRequest(
     return HttpResponse::ERRORResponse("400", "Game not yet created");
   }
   /* Game State */
-  else if (endpoint == "/GameState") {
-    /*
-        0 - Ready
-        1 - Waiting
-        2 - Ongoing
-        3 - PlayerSolo
-        4 - PlayerX
-        5 - PlayerO
-        6 - Unknown
-    */
-    return HttpResponse::GETResponse("3");
+  else if (endpoint == "/ServerState") {
+    return serverState(request);
   }
   /* Game Stage */
   else if (endpoint == "/GameStage") {
@@ -126,7 +113,7 @@ HttpResponse HttpHandler::handleGETRequest(
       boardSize = std::stoi(boardSizeQuery);
       gameHandler = std::make_unique<GameHandler>(
           std::stoi(boardSizeQuery), playerSignAsChar, isPlayerVsComputer);
-      //return HttpResponse::GETResponse(gameHandler->CreateGameAsJson(true));
+      // return HttpResponse::GETResponse(gameHandler->CreateGameAsJson(true));
       return HttpResponse::GETResponse(R"(true)");
     }
   }
@@ -136,43 +123,12 @@ HttpResponse HttpHandler::handleGETRequest(
   }
 }
 
-// HttpResponse HttpHandler::handlePOSTRequest(
-//     const std::shared_ptr<HttpRequest> &request) const {
-
-//   const std::string endpoint = request->getEndpoint();
-
-//   ///* Make Move */
-//   // if (endpoint == "/MakeMove")
-//   //{
-//   //	return HttpResponse::ERRORResponse("400", "NOT IMPLEMENTED");
-//   // }
-//   ///* Pick Segment */
-//   // else if (endpoint == "/PickSegment")
-//   //{
-//   //	return HttpResponse::ERRORResponse("400", "NOT IMPLEMENTED");
-//   // }
-//   ///* Create Game */
-//   // else if (endpoint == "/CreateGame")
-//   //{
-//   //	if (!verifyPlayer(request))
-//   //	{
-//   //		return HttpResponse::ERRORResponse("469", "UNAUTHORISED");
-//   //	}
-//   //	return HttpResponse::POSTResponse(R"(false)");;//Only true/false
-//   // }
-//   ///* Invalid Endpoint */
-//   // else
-//   //{
-//   return HttpResponse::ERRORResponse("500", "NOT IMPLEMENTED");
-//   //}
-// }
-
 HttpResponse HttpHandler::handleOPTIONSRequest() const {
   return HttpResponse::OPTIONSResponse();
 }
 
 bool HttpHandler::verifyPlayer(
-    const std::shared_ptr<HttpRequest>& request) const {
+    const std::shared_ptr<HttpRequest> &request) const {
   try {
     extractCookieValue(request);
     return true;
@@ -182,7 +138,7 @@ bool HttpHandler::verifyPlayer(
 }
 
 std::string HttpHandler::extractCookieValue(
-    const std::shared_ptr<HttpRequest>& request) const {
+    const std::shared_ptr<HttpRequest> &request) const {
   size_t p;
   std::string rawCookie;
   std::string cookie;
@@ -205,4 +161,45 @@ std::string HttpHandler::extractCookieValue(
   } else {
     throw std::exception();
   }
+}
+
+HttpResponse
+HttpHandler::serverState(const std::shared_ptr<HttpRequest> &request) const {
+  /*
+    0 - Ready
+    1 - Waiting
+    2 - Ongoing
+    3 - PlayerSolo
+    4 - PlayerX
+    5 - PlayerO
+    6 - Unknown
+*/
+  std::string stateStr = "6";
+  std::string playerCookie;
+  bool isGameOngoing = gameHandler.get() != nullptr;
+  bool isPlayer = verifyPlayer(request);
+
+  if (isGameOngoing && isPlayer) {
+
+    if (isPlayerVsComputer) {
+      stateStr = "3";
+    } else {
+
+      playerCookie = extractCookieValue(request);
+
+      if (playerCookie == "playerX") {
+        stateStr = "4";
+      } else if (playerCookie == "playerO") {
+        stateStr = "5";
+      }
+    }
+  } else if (isGameOngoing && isPlayerVsComputer) {
+    stateStr = "2";
+  } else if (isGameOngoing && !isPlayerVsComputer) {
+    stateStr = "1";
+  } else if (!isGameOngoing) {
+    stateStr = "0";
+  }
+
+  return HttpResponse::GETResponse(stateStr);
 }

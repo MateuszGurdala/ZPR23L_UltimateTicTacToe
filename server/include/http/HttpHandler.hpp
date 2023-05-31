@@ -3,9 +3,9 @@
 
 #include <memory.h>
 
+#include "../gameengine/GameHandler.hpp"
 #include "HttpRequest.hpp"
 #include "HttpResponse.hpp"
-#include "../gameengine/GameHandler.hpp"
 
 /*  Class: HttpHandler
     A singleton class that receives and processes HttpRequest objects.
@@ -15,25 +15,24 @@
 */
 class HttpHandler {
 private:
+  /*  Function: handleGETRequest
 
-    /*  Function: handleGETRequest
+    Processes requests with GET method.
 
-      Processes requests with GET method.
+    Parameters:
 
-      Parameters:
+      request - HttpRequest object for processing.
 
-        request - HttpRequest object for processing.
+    Returns:
 
-      Returns:
+      HttpResponse object with/without body and status code 200 or empty
+      response with status code 400, based on if GameHandler method ended with
+      success.
 
-        HttpResponse object with/without body and status code 200 or empty
-        response with status code 400, based on if GameHandler method ended with
-        success.
+    See Also:
 
-      See Also:
-
-        <HttpRequest>
-  */
+      <HttpRequest>
+*/
   HttpResponse handleGETRequest(const std::shared_ptr<HttpRequest> &request);
   //   /*  Function: handlePOSTRequest
 
@@ -71,27 +70,28 @@ private:
   // TODO: Documentation
   unsigned int boardSize;
   bool isPlayerVsComputer;
-  bool verifyPlayer(const std::shared_ptr<HttpRequest>& request) const;
-  std::string extractCookieValue(const std::shared_ptr<HttpRequest>& request) const;
   std::unique_ptr<GameHandler> gameHandler;
+  bool verifyPlayer(const std::shared_ptr<HttpRequest> &request) const;
+  std::string
+  extractCookieValue(const std::shared_ptr<HttpRequest> &request) const;
+  HttpResponse serverState(const std::shared_ptr<HttpRequest> &request) const;
 
 public:
+  /*  Function: handle
 
-    /*  Function: handle
+  Processes HttpRequest objects.
 
-    Processes HttpRequest objects.
+  Parameters:
 
-    Parameters:
+    request - HttpRequest object for processing.
 
-      request - HttpRequest object for processing.
+  Returns:
 
-    Returns:
+    HttpResponse object.
 
-      HttpResponse object.
+  See Also:
 
-    See Also:
-
-      <HttpRequest>
+    <HttpRequest>
 */
   HttpResponse handle(const std::shared_ptr<HttpRequest> &request);
 };

@@ -56,6 +56,10 @@ HttpResponse HttpResponse::GETResponse(std::string &&body) {
   return response;
 }
 
+HttpResponse HttpResponse::GETResponse(std::string &body) {
+  return GETResponse(std::move(body));
+}
+
 HttpResponse HttpResponse::POSTResponse(std::string &&body) {
   HttpResponse response;
 
@@ -72,7 +76,8 @@ HttpResponse HttpResponse::POSTResponse(std::string &&body) {
   return response;
 }
 
-HttpResponse HttpResponse::ERRORResponse(std::string&& errorCode, std::string&& errorMessage) {
+HttpResponse HttpResponse::ERRORResponse(std::string &&errorCode,
+                                         std::string &&errorMessage) {
   HttpResponse response;
   std::stringstream stream;
 
@@ -81,7 +86,7 @@ HttpResponse HttpResponse::ERRORResponse(std::string&& errorCode, std::string&& 
   stream << " ";
   stream << errorMessage;
 
-  //response._statusLine = "HTTP/1.1 400 BAD REQUEST";
+  // response._statusLine = "HTTP/1.1 400 BAD REQUEST";
   response._statusLine = stream.str();
 
   response._headers.addDateHeader();
@@ -91,12 +96,11 @@ HttpResponse HttpResponse::ERRORResponse(std::string&& errorCode, std::string&& 
   return response;
 }
 
+int HttpResponse::setCookie(std::string &&cookie, std::string &&value) {
+  std::stringstream keyValueStream;
+  keyValueStream << cookie;
+  keyValueStream << "=";
+  keyValueStream << value;
 
-int HttpResponse::setCookie(std::string&& cookie, std::string&& value) {
-    std::stringstream keyValueStream;
-    keyValueStream << cookie;
-    keyValueStream << "=";
-    keyValueStream << value;
-
-    return _headers.setCookie(keyValueStream.str());
+  return _headers.setCookie(keyValueStream.str());
 }
