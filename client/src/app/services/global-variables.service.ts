@@ -56,7 +56,7 @@ export class GlobalVariablesService {
 		}
 	}
 	async getGameState(): Promise<GameState> {
-		this.gameState = await firstValueFrom(this.httpClient.getGameState());
+		this.gameState = await firstValueFrom(await this.httpClient.getGameState());
 		switch (this.gameState) {
 			case GameState.PlayerSolo:
 			case GameState.PlayerX:
@@ -67,7 +67,7 @@ export class GlobalVariablesService {
 		return this.gameState;
 	}
 	async getGameStage(): Promise<GameStage> {
-		this.gameStage = await firstValueFrom(this.httpClient.getGameStage());
+		this.gameStage = await firstValueFrom(await this.httpClient.getGameStage());
 		this.gameStagePub = this.gameStage;
 		console.log(this.gameStagePub);
 		return this.gameStage;

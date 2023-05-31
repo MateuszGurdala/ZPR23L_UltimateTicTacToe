@@ -98,7 +98,7 @@ export class GameMasterService {
 		}
 	}
 	async endGame(): Promise<void> {
-		await firstValueFrom(this.httpClient.getEndGame());
+		await firstValueFrom(await this.httpClient.getEndGame());
 		await this.gVars.getGameState();
 		this.gVars.isGameOngoing = false;
 		this.router.navigate(["/Start"]);
@@ -132,7 +132,7 @@ export class GameMasterService {
 
 	//#region CoreGameMethods
 	async makeMove(boardId: number, segmentId: number): Promise<void> {
-		let result = await firstValueFrom(this.httpClient.postMakeMove(boardId, segmentId));
+		let result = await firstValueFrom(await this.httpClient.postMakeMove(boardId, segmentId));
 	}
 	async updateBoard(): Promise<void> {
 		let result = await firstValueFrom(this.httpClient.getBoardState());

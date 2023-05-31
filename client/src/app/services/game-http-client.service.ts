@@ -72,7 +72,7 @@ export class GameHttpClient {
 		return this.httpClient.get<any>(this.url + "/ServerStatus");
 	}
 	async getGameState(): Promise<Observable<GameState>> {
-		return await this.httpClient.get<GameState>(this.url + "/GameState", { withCredentials: true });
+		return await this.httpClient.get<GameState>(this.url + "/ServerState", { withCredentials: true });
 	}
 	async getGameStage(): Promise<Observable<GameStage>> {
 		let response: GameStateResponse = await firstValueFrom(
