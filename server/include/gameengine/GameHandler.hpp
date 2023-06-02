@@ -24,6 +24,7 @@ private:
     std::unique_ptr<GameStage> currentGameState;
     void startGame(unsigned int boardSize, const std::string& hostName, char hostSymbol, bool isPlayerVsComputer = true, const std::string& guestName = "");
     void handleGameEnd();
+    void updateGameStage(Point& outerBoardCoordinates, Point& innerCoordinates);
 public:
     const GameStage& GetGameStage();
     bool PerformMoveValidation(Point boardCoordinates, Point innerCoordinates);

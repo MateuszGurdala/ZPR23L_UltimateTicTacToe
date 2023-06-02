@@ -4,20 +4,17 @@
 #include <string>
 #include <array>
 
-enum GameStatus {
-
-};
-
 class GameStage {
 private:
-    std::array<std::string, 5> availableStatuses = {
-                                                    "Ready",
-                                                    "WaitingForOpponent",
-                                                    "ChoosingSegment",
-                                                    "OngoingMove",
-                                                    "Finished"
-                                                    };
-    std::string currentGameStatus = availableStatuses[0];
+    std::array<std::string, 6> validStages = {
+                                              "Unknown"
+                                              "Player X Turn",
+                                              "Player O Turn",
+                                              "Player X Turn, choose segment",
+                                              "Player O Turn, choose segment",
+                                              "Game is Finished",
+                                              };
+    std::string currentGameStatus = validStages[0];
 public:
     std::string GetGameStatus();
     void SetGameStatus(const std::string& newGameStatus);

@@ -31,11 +31,19 @@ std::vector<std::vector<Point>> GameEngine::initializeAvailableInnerBoardMoves()
     }
     return availableMoves;
 }
+bool GameEngine::IsSegmentChoosen(Point& innerBoardCoordinates){
+    if(mainBoard->GetWinnerBoardCell(innerBoardCoordinates) != ' ')
+    {
+        return true;
+    }
+    return false;
+}
+
 void GameEngine::UpdateCurrentLegalMoves(Point& innerBoardCoordinates)
 {
     std::vector<Point>().swap(currentLegalMoves);
     unsigned int boardSize = GetBoardSize();
-    if(mainBoard->GetWinnerBoardCell(innerBoardCoordinates) != ' ')
+    if(IsSegmentChoosen(innerBoardCoordinates))
     {
         for (const auto& moves : allAvailableBoardMoves) {
             for (const auto& point : moves) {

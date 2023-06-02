@@ -7,7 +7,8 @@ std::string GameStage::GetGameStatus() {
 }
 
 void GameStage::SetGameStatus(const std::string& newGameStatus) {
-    if (std::find(availableStatuses.begin(), availableStatuses.end(), newGameStatus) == availableStatuses.end()) {
+    if (std::find(validStages.begin(), validStages.end(), newGameStatus) ==
+      validStages.end()) {
         throw std::invalid_argument("Invalid game status.");
     }
     currentGameStatus = newGameStatus;
