@@ -42,6 +42,15 @@ export enum GameStage {
 	Unknown = "Unknown",
 }
 
+export enum GameStageResponse {
+	Unknown = "Unknown",
+	PlayerX = "Player X Turn",
+	PlayerO = "Player O Turn",
+	PlayerXSegment = "Player X Turn, choose segment",
+	PlayerOSegment = "Player O Turn, choose segment",
+	Finished = "Game is Finished",
+}
+
 /* Responses */
 export interface CreateGameResponse {
 	isSuccess: boolean;

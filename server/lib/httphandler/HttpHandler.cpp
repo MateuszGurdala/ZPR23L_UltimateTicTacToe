@@ -80,7 +80,7 @@ HttpHandler::handleGETRequest(const std::shared_ptr<HttpRequest> &request) {
       std::array<Point, 2> move = {outerCoordinates, innerCoordinates};
       bool isValid = gameHandler->PerformMoveValidation(outerCoordinates,
                                                         innerCoordinates);
-      if(isValid){
+      if (isValid) {
         gameHandler->PerformTurn(outerCoordinates, innerCoordinates);
       }
       return HttpResponse::GETResponse(
@@ -194,10 +194,6 @@ HttpHandler::serverState(const std::shared_ptr<HttpRequest> &request) const {
   bool isGameOngoing = gameHandler.get() != NULL;
   bool isPlayer = verifyPlayer(request);
 
-  std::cout << "isGameOngoing " << isGameOngoing << "\n";
-  std::cout << "isPlayer " << isPlayer << "\n";
-  std::cout << "isPlayerVsComputer " << isPlayerVsComputer << "\n";
-
   if (isGameOngoing && isPlayer) {
 
     if (isPlayerVsComputer) {
@@ -212,12 +208,14 @@ HttpHandler::serverState(const std::shared_ptr<HttpRequest> &request) const {
         stateStr = "5";
       }
     }
-  } else if (isGameOngoing && isPlayerVsComputer) {
-    stateStr = "2";
-  } else if (isGameOngoing && !isPlayerVsComputer) {
-    stateStr = "1";
-  } else if (!isGameOngoing) {
-    stateStr = "0";
+  } else {
+    if (isGameOngoing && isPlayerVsComputer) {
+      stateStr = "2";
+    } else if (isGameOngoing && !isPlayerVsComputer) {
+      stateStr = "1";
+    } else if (!isGameOngoing) {
+      stateStr = "0";
+    }
   }
 
   return HttpResponse::GETResponse(stateStr);

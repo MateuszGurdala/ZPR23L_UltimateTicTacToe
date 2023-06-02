@@ -12,8 +12,8 @@ export const GameRouteGuard: CanActivateFn = async (
 	let router = inject<Router>(Router);
 
 	if (await gVars.isPlayer()) {
-		master.mainGameLoop();
 		router.navigate(["/Game"]);
+		master.mainGameLoop();
 		return false;
 	} else {
 		return true;

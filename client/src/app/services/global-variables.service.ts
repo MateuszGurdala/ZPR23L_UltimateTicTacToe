@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { GameMode, GameStage, GameState, Sign } from "../structs";
+import { GameMode, GameStage, GameStageResponse, GameState, Sign } from "../structs";
 import { firstValueFrom } from "rxjs";
 import { GameHttpClient } from "./game-http-client.service";
 
@@ -15,7 +15,7 @@ export class GlobalVariablesService {
 	playerChoseSegment: boolean;
 	currentSegment: number | undefined = 5;
 	boardSize: number = 3;
-	playerSign: Sign = Sign.X;
+	playerSign: Sign = Sign.X; //TODO: Set the player sign when joining a game that has been already created
 	gameMode: GameMode = GameMode.Multiplayer;
 
 	//TODO: Remove
@@ -33,15 +33,11 @@ export class GlobalVariablesService {
 	}
 
 	async canStartGame(): Promise<boolean> {
-		if (this.gameState === GameState.Unknown) {
-			this.gameState = await this.getGameState();
-		}
+		this.gameState = await this.getGameState();
 		return this.gameState === GameState.Ready;
 	}
 	async isPlayer(): Promise<boolean> {
-		if (this.gameState === GameState.Unknown) {
-			await this.getGameState();
-		}
+		await this.getGameState();
 
 		switch (this.gameState) {
 			case GameState.Ready:
@@ -67,9 +63,26 @@ export class GlobalVariablesService {
 		return this.gameState;
 	}
 	async getGameStage(): Promise<GameStage> {
-		this.gameStage = await firstValueFrom(await this.httpClient.getGameStage());
+		this.gameStage = this.parseResponseGameStage(await this.httpClient.getGameStage());
 		this.gameStagePub = this.gameStage;
 		console.log(this.gameStagePub);
 		return this.gameStage;
+	}
+
+	parseResponseGameStage(response: GameStageResponse): GameStage {
+		console.log(response);
+		console.log(response[7]);
+		switch (response) {
+			case GameStageResponse.Unknown:
+				return GameStage.Unknown;
+			case GameStageResponse.Finished:
+				return GameStage.Finished;
+			case GameStageResponse.PlayerX:
+			case GameStageResponse.PlayerO:
+				return response[7] == this.playerSign ? GameStage.PlayerTurn : GameStage.EnemyTurn;
+			case GameStageResponse.PlayerXSegment:
+			case GameStageResponse.PlayerOSegment:
+				return response[7] == this.playerSign ? GameStage.PlayerChooseSegment : GameStage.EnemyChooseSegment;
+		}
 	}
 }

@@ -7,11 +7,13 @@ import {
 	GameBoard,
 	GameMode,
 	GameStage,
+	GameStageResponse,
 	GameState,
 	GameStateResponse,
 	MoveResponse,
 	Sign,
 } from "../structs";
+import { GlobalVariablesService } from "./global-variables.service";
 
 @Injectable({
 	providedIn: "root",
@@ -74,18 +76,13 @@ export class GameHttpClient {
 	async getGameState(): Promise<Observable<GameState>> {
 		return await this.httpClient.get<GameState>(this.url + "/ServerState", { withCredentials: true });
 	}
-	async getGameStage(): Promise<Observable<GameStage>> {
-		let response: GameStateResponse = await firstValueFrom(
-			this.httpClient.get<GameStateResponse>(this.url + "/GameStage", { withCredentials: true })
-		);
-
-		//TODO: Make compatible with server response object
-		// switch (response.currentTurn.nowPlaying) {
-		// 	case Sign.X:
-
-		// 	case Sign.O:
-		// }
-		return of(GameStage.Unknown);
+	async getGameStage(): Promise<GameStageResponse> {
+		return (await firstValueFrom(
+			this.httpClient.get(this.url + "/GameStage", {
+				withCredentials: true,
+				responseType: "text",
+			})
+		)) as GameStageResponse;
 	}
 	async getEndGame(): Promise<Observable<boolean>> {
 		let response: EndGameResponse = await firstValueFrom(
