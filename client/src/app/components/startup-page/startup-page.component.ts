@@ -15,7 +15,7 @@ export class StartupPageComponent {
 	preferredSign: Sign = this.gVars.playerSign;
 	boardSize: number = this.gVars.boardSize;
 	gameMode: GameMode = this.gVars.gameMode;
-	gameModeString: String = "Player vs AI";
+	gameModeString: String = "Player_vs_Player";
 
 	serverURL: string = "localhost:1337";
 	isProcessing: boolean = false;
@@ -66,7 +66,7 @@ export class StartupPageComponent {
 		this.master.setPlayerSign(this.preferredSign);
 	}
 	changeGameMode(): void {
-		this.gameMode = this.gameModeString == "Player vs AI" ? GameMode.SinglePlayer : GameMode.Multiplayer;
+		this.gameMode = this.gameModeString == "Player_vs_AI" ? GameMode.SinglePlayer : GameMode.Multiplayer;
 		this.master.setGameMode(this.gameMode);
 	}
 	increaseBoard(): void {

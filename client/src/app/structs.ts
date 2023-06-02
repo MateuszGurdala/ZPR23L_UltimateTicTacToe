@@ -29,8 +29,8 @@ export enum Sign {
 }
 
 export enum GameMode {
-	SinglePlayer = "Player vs AI",
-	Multiplayer = "Player vs Player",
+	SinglePlayer = "Player_vs_AI",
+	Multiplayer = "Player_vs_Player",
 }
 
 export enum GameStage {

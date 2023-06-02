@@ -39,10 +39,12 @@ export class GameHttpClient {
 
 		return of(response.isMoveValid);
 	}
-	async postCreateGame(mode: GameMode, sign: Sign, size: number): Promise<Observable<boolean>> {
+	async postCreateGame(mode: GameMode, sign: Sign, size: number): Promise<boolean> {
 		await new Promise((r) => setTimeout(r, 1000));
-		let response: CreateGameResponse = await firstValueFrom(
-			this.httpClient.get<CreateGameResponse>(this.url + "/CreateGame", {
+
+		return await firstValueFrom(
+			this.httpClient.get<boolean>(this.url + "/CreateGame", {
+				withCredentials: true,
 				params: {
 					gameMode: mode,
 					playerSign: sign,
@@ -50,8 +52,6 @@ export class GameHttpClient {
 				},
 			})
 		);
-
-		return of(response.isSuccess);
 	}
 	postPickSegment(segmentNumber: number): Observable<boolean> {
 		/* Deprecated */

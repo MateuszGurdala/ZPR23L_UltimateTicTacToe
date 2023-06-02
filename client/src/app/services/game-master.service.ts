@@ -88,11 +88,12 @@ export class GameMasterService {
 		return retVal;
 	}
 	async startNewSoloGame(): Promise<void> {
-		if (
-			await firstValueFrom(
-				await this.httpClient.postCreateGame(this.gVars.gameMode, this.gVars.playerSign, this.gVars.boardSize)
-			)
-		) {
+		let response = await this.httpClient.postCreateGame(
+			this.gVars.gameMode,
+			this.gVars.playerSign,
+			this.gVars.boardSize
+		);
+		if (response) {
 			this.router.navigate(["/Game"]);
 			await this.mainGameLoop();
 		}
@@ -179,32 +180,5 @@ export class GameMasterService {
 					break;
 			}
 		}
-	}
-
-	getRandomInt(): number {
-		return Math.floor(Math.random() * (9 - 1 + 1)) + 1;
-	}
-
-	async mockEnemyTurn(nextSegment: number) {
-		this.gameBoard.unlockSegment(nextSegment);
-		let enemyPlace: number = this.getRandomInt();
-		console.log("Got place: " + enemyPlace);
-
-		while (
-			(<GameBoardComponent>this.gameBoard.segments[nextSegment - 1]).segments[enemyPlace - 1].isOwned()
-		) {
-			enemyPlace = this.getRandomInt();
-			console.log("Got place: " + enemyPlace);
-		}
-		console.log("Final place: " + enemyPlace);
-
-		await this.sleep(500);
-
-		(<BoardSegmentComponent>(
-			(<GameBoardComponent>this.gameBoard.segments[nextSegment - 1]).segments[enemyPlace - 1]
-		)).forcePlaceEnemtSign();
-
-		this.gVars.currentSegment = enemyPlace;
-		this.gVars.gameStagePub = GameStage.PlayerTurn;
 	}
 }

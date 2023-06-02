@@ -16,7 +16,7 @@ export class GlobalVariablesService {
 	currentSegment: number | undefined = 5;
 	boardSize: number = 3;
 	playerSign: Sign = Sign.X;
-	gameMode: GameMode = GameMode.SinglePlayer;
+	gameMode: GameMode = GameMode.Multiplayer;
 
 	//TODO: Remove
 	gameStagePub: GameStage = GameStage.PlayerChooseSegment;
