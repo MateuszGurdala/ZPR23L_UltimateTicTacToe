@@ -14,7 +14,7 @@ private:
                                               "Player O Turn, choose segment",
                                               "Game is Finished",
                                               };
-    std::string currentGameStage = validStages[0];
+    std::string currentGameStage;
 public:
     void SetGameStage(const std::string& newGameStatus);
     std::string GetCurrentGameStage();

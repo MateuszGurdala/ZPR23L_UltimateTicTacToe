@@ -23,9 +23,6 @@ GameHandler::GameHandler(unsigned int boardSize, char hostSymbol,
 void GameHandler::startGame(unsigned int boardSize, const std::string &hostName,
                             char hostSymbol, bool isPlayerVsComputer,
                             const std::string &guestName) {
-  if (isPlayerVsComputer && !guestName.empty()) {
-    throw std::invalid_argument("Computer player cannot have a nickname.");
-  }
   if (hostName.empty()) {
     throw std::invalid_argument("Client must have a name.");
   }

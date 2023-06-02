@@ -80,6 +80,9 @@ HttpHandler::handleGETRequest(const std::shared_ptr<HttpRequest> &request) {
       std::array<Point, 2> move = {outerCoordinates, innerCoordinates};
       bool isValid = gameHandler->PerformMoveValidation(outerCoordinates,
                                                         innerCoordinates);
+      if(isValid){
+        gameHandler->PerformTurn(outerCoordinates, innerCoordinates);
+      }
       return HttpResponse::GETResponse(
           gameHandler->MoveAsJson(false, move, isValid));
     } else {
