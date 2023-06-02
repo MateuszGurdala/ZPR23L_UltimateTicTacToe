@@ -6,13 +6,10 @@ HttpResponse HttpHandler::handle(const std::shared_ptr<HttpRequest> &request) {
   switch (request->getMethod()) {
   case OPTIONS:
     return handleOPTIONSRequest();
-    break;
   case GET:
     return handleGETRequest(request);
-    break;
   default:
     return HttpResponse::ERRORResponse("400", "INVALID REQUEST");
-    break;
   }
 }
 
@@ -38,13 +35,13 @@ HttpHandler::handleGETRequest(const std::shared_ptr<HttpRequest> &request) {
         "Player X Turn",
         "Player O Turn",
         "Game is Finished",
+        "Player X Turn, choose segment",
+        "Player O Turn, choose segment",
         "Unknown",
     */
-    //    if (gameHandler) {
-    //      return HttpResponse::GETResponse(gameHandler->GameStateAsJson());
-    //    }
-    // TODO: Krystian
-    // return HttpResponse::GETResponse(R"("Unknown")"); // State must be inside
+        if (gameHandler) {
+          return HttpResponse::GETResponse(gameHandler->GameStateAsJson());
+        }
     return HttpResponse::ERRORResponse("501", "NOT IMPLEMENTED");
   }
   /* Server Status */
@@ -55,9 +52,8 @@ HttpHandler::handleGETRequest(const std::shared_ptr<HttpRequest> &request) {
   else if (endpoint == "/EndGame") {
     if (verifyPlayer(request)) {
       std::string player = extractCookieValue(request);
-      // TODO: Krystian
-      // return HttpResponse::GETResponse(R"(true)");
-      return HttpResponse::ERRORResponse("501", "NOT IMPLEMENTED");
+      gameHandler.reset();
+      return HttpResponse::GETResponse(R"(true)");
     } else {
       return HttpResponse::ERRORResponse("401", "UNAUTHORIZED");
     }
@@ -77,18 +73,6 @@ HttpHandler::handleGETRequest(const std::shared_ptr<HttpRequest> &request) {
                                                         innerCoordinates);
       return HttpResponse::GETResponse(
           gameHandler->MoveAsJson(false, move, isValid));
-    } else {
-      return HttpResponse::ERRORResponse("401", "UNAUTHORIZED");
-    }
-  }
-  /* Pick Segment */
-  else if (endpoint == "/PickSegment") {
-    if (verifyPlayer(request)) {
-      std::string player = extractCookieValue(request);
-      std::string segmentNumber = (request->queryParams)["segmentNumber"];
-      // TODO: Krystian
-      // return HttpResponse::GETResponse(R"(true)");
-      return HttpResponse::ERRORResponse("501", "NOT IMPLEMENTED");
     } else {
       return HttpResponse::ERRORResponse("401", "UNAUTHORIZED");
     }
