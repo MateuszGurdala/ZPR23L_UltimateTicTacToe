@@ -14,10 +14,10 @@ private:
                                               "Player O Turn, choose segment",
                                               "Game is Finished",
                                               };
-    std::string currentGameStatus = validStages[0];
+    std::string currentGameStage = validStages[0];
 public:
-    void SetGameStatus(const std::string& newGameStatus);
-    std::string GameStatusAsJson(bool isNested);
+    void SetGameStage(const std::string& newGameStatus);
+    std::string GetCurrentGameStage();
 };
 
 #endif //ULTIMATETICTACTOESERVER_GAMESTAGE_H
