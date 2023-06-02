@@ -106,6 +106,7 @@ public:
   std::string toString() const;
   // TODO: Documentation
   int setCookie(std::string &&cookie, std::string &&value);
+  int removeCookie(std::string &&cookie, std::string &&value);
 };
 
 #endif

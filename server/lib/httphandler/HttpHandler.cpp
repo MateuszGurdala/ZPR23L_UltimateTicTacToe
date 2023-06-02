@@ -52,8 +52,17 @@ HttpHandler::handleGETRequest(const std::shared_ptr<HttpRequest> &request) {
   else if (endpoint == "/EndGame") {
     if (verifyPlayer(request)) {
       std::string player = extractCookieValue(request);
+      auto response = HttpResponse::GETResponse(R"(true)");
+
       gameHandler.reset();
-      return HttpResponse::GETResponse(R"(true)");
+
+      if (player.compare("playerX")) {
+        response.removeCookie("player", "playerX");
+      } else if (player.compare("player)")) {
+        response.removeCookie("player", "playerO");
+      }
+
+      return response;
     } else {
       return HttpResponse::ERRORResponse("401", "UNAUTHORIZED");
     }
@@ -80,8 +89,9 @@ HttpHandler::handleGETRequest(const std::shared_ptr<HttpRequest> &request) {
   /* Create Game */
   else if (endpoint == "/CreateGame") {
     if (verifyPlayer(request)) {
-      return HttpResponse::GETResponse(gameHandler->CreateGameAsJson(false));
+      return HttpResponse::GETResponse(R"(false)");
     } else {
+      std::string playerType;
       std::string gameMode = (request->queryParams)["gameMode"];
       std::string playerSign = (request->queryParams)["playerSign"];
       std::string boardSizeQuery = (request->queryParams)["boardSize"];
@@ -91,14 +101,22 @@ HttpHandler::handleGETRequest(const std::shared_ptr<HttpRequest> &request) {
                                            "Invalid player "
                                            "figure while creating game.");
       }
-      if (gameMode == "Player") {
+      if (gameMode == "Player_vs_AI") {
         isPlayerVsComputer = true;
       }
       boardSize = std::stoi(boardSizeQuery);
       gameHandler = std::make_unique<GameHandler>(
           std::stoi(boardSizeQuery), playerSignAsChar, isPlayerVsComputer);
-      // return HttpResponse::GETResponse(gameHandler->CreateGameAsJson(true));
-      return HttpResponse::GETResponse(R"(true)");
+
+      // Assume game has been successfully created
+      auto response = HttpResponse::GETResponse(R"(true)");
+
+      if (playerSign == "X") {
+        response.setCookie("player", "playerX");
+      } else {
+        response.setCookie("player", "playerO");
+      }
+      return response;
     }
   }
   /* Invalid Endpoint */
@@ -127,9 +145,9 @@ std::string HttpHandler::extractCookieValue(
   std::string rawCookie;
   std::string cookie;
   std::string value;
+  bool cond;
 
   rawCookie = (*request->headers)["Cookie"];
-  std::cout << rawCookie << "\n";
 
   if (!rawCookie.empty() && (p = rawCookie.find('=')) != std::string::npos) {
     cookie = rawCookie.substr(0, p);
@@ -138,9 +156,19 @@ std::string HttpHandler::extractCookieValue(
     throw std::exception();
   }
 
-  if (cookie == "player" && std::find(std::begin(config::playerCookies),
-                                      std::end(config::playerCookies), value) !=
-                                std::end(config::playerCookies)) {
+  // Somehow this really doesn't want to work
+  // cond = std::find(std::begin(config::playerCookies),
+  //                  std::end(config::playerCookies),
+  //                  value) != std::end(config::playerCookies);
+
+  for (auto i = config::playerCookies->begin();
+       i != config::playerCookies->end(); ++i) {
+    if ((cond = ((*i) == *value.c_str()))) {
+      break;
+    }
+  }
+
+  if (cookie == "player" && cond) {
     return value;
   } else {
     throw std::exception();
@@ -160,8 +188,12 @@ HttpHandler::serverState(const std::shared_ptr<HttpRequest> &request) const {
 */
   std::string stateStr = "6";
   std::string playerCookie;
-  bool isGameOngoing = gameHandler.get() != nullptr;
+  bool isGameOngoing = gameHandler.get() != NULL;
   bool isPlayer = verifyPlayer(request);
+
+  std::cout << "isGameOngoing " << isGameOngoing << "\n";
+  std::cout << "isPlayer " << isPlayer << "\n";
+  std::cout << "isPlayerVsComputer " << isPlayerVsComputer << "\n";
 
   if (isGameOngoing && isPlayer) {
 
@@ -171,9 +203,9 @@ HttpHandler::serverState(const std::shared_ptr<HttpRequest> &request) const {
 
       playerCookie = extractCookieValue(request);
 
-      if (playerCookie == "playerX") {
+      if (playerCookie.compare("playerX")) {
         stateStr = "4";
-      } else if (playerCookie == "playerO") {
+      } else if (playerCookie.compare("playerO")) {
         stateStr = "5";
       }
     }

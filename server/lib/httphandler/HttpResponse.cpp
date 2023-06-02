@@ -104,3 +104,13 @@ int HttpResponse::setCookie(std::string &&cookie, std::string &&value) {
 
   return _headers.setCookie(keyValueStream.str());
 }
+
+int HttpResponse::removeCookie(std::string &&cookie, std::string &&value) {
+  std::stringstream keyValueStream;
+  keyValueStream << cookie;
+  keyValueStream << "=";
+  keyValueStream << value;
+  keyValueStream << "; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+
+  return _headers.setCookie(keyValueStream.str());
+}
