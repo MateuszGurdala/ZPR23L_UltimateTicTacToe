@@ -51,11 +51,6 @@ void GameHandler::startGame(unsigned int boardSize, const std::string &hostName,
   gameEngine = std::make_unique<GameEngine>(std::move(mainBoard));
 }
 
-// TODO
-void GameHandler::handleGameEnd() {
-  currentGameState->SetGameStatus("Finished");
-}
-
 bool GameHandler::PerformMoveValidation(Point boardCoordinates,
                                         Point innerCoordinates) {
   unsigned int boardSize = gameEngine->GetBoardSize();
@@ -80,11 +75,32 @@ void GameHandler::PerformTurn(Point boardCoordinates, Point innerCoordinates) {
   gameEngine->HandleMove(boardCoordinates, innerCoordinates, currentFigure);
   gameEngine->CheckForLocalWinner(boardCoordinates, innerCoordinates,
                                   currentFigure);
-  if (gameEngine->CheckForGlobalWinner(boardCoordinates)) {
-    handleGameEnd();
-  }
   isHostTurn = !isHostTurn;
+  updateGameStage(boardCoordinates, innerCoordinates);
   gameEngine->UpdateCurrentLegalMoves(innerCoordinates);
+}
+
+void GameHandler::updateGameStage(Point& outerBoardCoordinates, Point& innerCoordinates) {
+  if (gameEngine->CheckForGlobalWinner(outerBoardCoordinates)) {
+    currentGameState->SetGameStatus("Game is Finished");
+    return;
+  }
+  char currentSymbol;
+  if(isHostTurn){
+    currentSymbol = hostPlayer->GetSymbol();
+  }
+  else{
+    currentSymbol = secondPlayer->GetSymbol();
+  }
+  std::string symbolString(1, currentSymbol);
+  if(gameEngine->IsSegmentChoosen(innerCoordinates)){
+    currentGameState->SetGameStatus("Player" + symbolString + "Turn, choose segment");
+    return;
+  }
+  else{
+    currentGameState->SetGameStatus("Player" + symbolString + "Turn");
+    return;
+  }
 }
 
 std::string GameHandler::GameStateAsJson() {

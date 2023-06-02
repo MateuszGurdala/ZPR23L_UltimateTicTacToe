@@ -32,6 +32,7 @@ public:
     void RemovePointFromAllAvailableMoves(unsigned int innerBoardIndex, Point &pointOfInnerBoardToRemove);
 
     void UpdateCurrentLegalMoves(Point &innerBoardCoordinates);
+    bool IsSegmentChoosen(Point &innerBoardCoordinates);
 };
 
 #endif //ULTIMATETICTACTOESERVER_GAMEENGINE_H
