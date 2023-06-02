@@ -46,6 +46,7 @@ void GameHandler::startGame(unsigned int boardSize, const std::string &hostName,
   }
   auto mainBoard = std::make_unique<MainBoard>(boardSize);
   gameEngine = std::make_unique<GameEngine>(std::move(mainBoard));
+  currentGameState->SetGameStage("Player X Turn, choose segment");
 }
 
 bool GameHandler::PerformMoveValidation(Point boardCoordinates,
