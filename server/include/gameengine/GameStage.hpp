@@ -16,7 +16,6 @@ private:
                                               };
     std::string currentGameStatus = validStages[0];
 public:
-    std::string GetGameStatus();
     void SetGameStatus(const std::string& newGameStatus);
     std::string GameStatusAsJson(bool isNested);
 };

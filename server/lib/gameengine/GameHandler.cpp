@@ -279,4 +279,6 @@ std::string GameHandler::PickSegmentAsJson(bool isNested, Point &segment,
   return ss.str();
 }
 
-const GameStage &GameHandler::GetGameStage() { return *currentGameState; }
+std::string GameHandler::GetGameStageAsJson() {
+  return currentGameState->GameStatusAsJson(false);
+}

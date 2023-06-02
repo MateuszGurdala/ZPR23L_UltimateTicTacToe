@@ -39,9 +39,9 @@ HttpHandler::handleGETRequest(const std::shared_ptr<HttpRequest> &request) {
         "Player O Turn, choose segment",
         "Unknown",
     */
-        if (gameHandler) {
-          return HttpResponse::GETResponse(gameHandler->GameStateAsJson());
-        }
+    if (gameHandler) {
+      return HttpResponse::GETResponse(gameHandler->GetGameStageAsJson());
+    }
     return HttpResponse::ERRORResponse("501", "NOT IMPLEMENTED");
   }
   /* Server Status */
