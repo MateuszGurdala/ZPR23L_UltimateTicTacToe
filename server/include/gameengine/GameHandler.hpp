@@ -38,7 +38,7 @@ public:
     std::string PickSegmentAsJson(bool isNested, Point &segment, bool isValid);
     std::string WinnerBoardAsJson();
     std::string BoardStateAsJson();
-    std::string GetGameStageAsJson();
+    std::string GetGameStage();
 };
 
 #endif //ULTIMATETICTACTOESERVER_GAMEHANDLER_H

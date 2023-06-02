@@ -82,7 +82,7 @@ void GameHandler::PerformTurn(Point boardCoordinates, Point innerCoordinates) {
 
 void GameHandler::updateGameStage(Point& outerBoardCoordinates, Point& innerCoordinates) {
   if (gameEngine->CheckForGlobalWinner(outerBoardCoordinates)) {
-    currentGameState->SetGameStatus("Game is Finished");
+    currentGameState->SetGameStage("Game is Finished");
     return;
   }
   char currentSymbol;
@@ -94,11 +94,12 @@ void GameHandler::updateGameStage(Point& outerBoardCoordinates, Point& innerCoor
   }
   std::string symbolString(1, currentSymbol);
   if(gameEngine->IsSegmentChoosen(innerCoordinates)){
-    currentGameState->SetGameStatus("Player" + symbolString + "Turn, choose segment");
+    currentGameState->SetGameStage("Player" + symbolString +
+                                   "Turn, choose segment");
     return;
   }
   else{
-    currentGameState->SetGameStatus("Player" + symbolString + "Turn");
+    currentGameState->SetGameStage("Player" + symbolString + "Turn");
     return;
   }
 }
@@ -279,6 +280,6 @@ std::string GameHandler::PickSegmentAsJson(bool isNested, Point &segment,
   return ss.str();
 }
 
-std::string GameHandler::GetGameStageAsJson() {
-  return currentGameState->GameStatusAsJson(false);
+std::string GameHandler::GetGameStage() {
+  return currentGameState->GetCurrentGameStage();
 }

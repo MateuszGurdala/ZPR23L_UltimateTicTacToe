@@ -40,7 +40,7 @@ HttpHandler::handleGETRequest(const std::shared_ptr<HttpRequest> &request) {
         "Unknown",
     */
     if (gameHandler) {
-      return HttpResponse::GETResponse(gameHandler->GetGameStageAsJson());
+      return HttpResponse::GETResponse(gameHandler->GetGameStage());
     }
     return HttpResponse::ERRORResponse("501", "NOT IMPLEMENTED");
   }
