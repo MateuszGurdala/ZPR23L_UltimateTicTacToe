@@ -103,8 +103,13 @@ export class StartupPageComponent {
 		if ((await this.gVars.getGameState()) !== GameState.Waiting) {
 			this.toastr.error("No one is currently waiting for a second player to join.");
 		} else {
-			//TODO: Add logic for joining another player's game
-			this.router.navigate(["/Game"]);
+			let response = await this.master.tryJoinGame();
+			console.log(response);
+			if (response) {
+				console.log(response);
+				this.gVars.playerSign = response as Sign;
+				this.router.navigate(["/Game"]);
+			}
 		}
 		this.isProcessing = false;
 		return;

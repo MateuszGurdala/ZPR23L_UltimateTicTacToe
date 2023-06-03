@@ -1,5 +1,4 @@
 #include "../../include/http/HttpResponse.hpp"
-#include "../../src/config.hpp"
 
 HttpResponse::HttpResponse() {}
 HttpResponse::HttpResponse(std::string &body) { _body = body; }

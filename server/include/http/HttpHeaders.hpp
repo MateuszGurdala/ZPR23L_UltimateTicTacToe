@@ -10,189 +10,191 @@
 #include <vector>
 
 const std::map<std::string, std::string> globalHeaders = {
-	{"Server", config::serverName},
-	{"Content-Type", config::contentType},
-	{"Access-Control-Allow-Origin", config::allowOrigin},
-	{"Access-Control-Allow-Methods", config::allowMethods},
-	{"Allow", config::allowMethods},
-	{"Access-Control-Allow-Headers", config::allowHeaders},
-	{"Access-Control-Allow-Credentials", config::allowCredentials} };
+    {"Server", config::serverName},
+    {"Content-Type", config::contentType},
+    {"Access-Control-Allow-Methods", config::allowMethods},
+    {"Allow", config::allowMethods},
+    {"Access-Control-Allow-Headers", config::allowHeaders},
+    {"Access-Control-Allow-Credentials", config::allowCredentials}};
 
 /*  Class: HttpHeaders
-	Helper class used for parsing and accessing http headers, or for building
-	headers based on request requirements.
+        Helper class used for parsing and accessing http headers, or for
+   building headers based on request requirements.
 */
 class HttpHeaders {
 private:
-	const std::string _newLine = "\n";
-	const std::string _colonSpace = ": ";
+  const std::string _newLine = "\n";
+  const std::string _colonSpace = ": ";
 
-	std::map<std::string, std::string> _headers;
+  std::map<std::string, std::string> _headers;
 
 public:
-	/*  Constructor: HttpHeaders
+  /*  Constructor: HttpHeaders
 
-			Default constructor. Used to add headers to HttpResponse object.
+                  Default constructor. Used to add headers to HttpResponse
+     object.
 
-		  See Also:
+            See Also:
 
-			<HttpResponse>
-	  */
-	HttpHeaders();
-	/*  Constructor: HttpHeaders
+                  <HttpResponse>
+    */
+  HttpHeaders();
+  /*  Constructor: HttpHeaders
 
-		  Constructor that parses headers from string object. Used when generating
-		  HttpRequest object.
+            Constructor that parses headers from string object. Used when
+     generating HttpRequest object.
 
-		Parameters:
+          Parameters:
 
-		  headers - reference to std::string that contains raw headers. IS
-		  COMPLETELY DESTROYED AFTER PARSING.
+            headers - reference to std::string that contains raw headers. IS
+            COMPLETELY DESTROYED AFTER PARSING.
 
-		See Also:
+          See Also:
 
-		  <HttpRequest>
-  */
-	explicit HttpHeaders(std::string& headers);
-	/*  Function: addHeader
+            <HttpRequest>
+*/
+  explicit HttpHeaders(std::string &headers);
+  /*  Function: addHeader
 
-	  Adds key-value pair as header data to internal std::map structure.
+    Adds key-value pair as header data to internal std::map structure.
 
-	  Parameters:
+    Parameters:
 
-		key - Header name.
-		value - Header value.
+          key - Header name.
+          value - Header value.
 
-	  Returns:
+    Returns:
 
-		1 if header with same name was already added. Else 0.
-  */
-	int addHeader(std::string& key, const std::string& value);
-	/*  Function: addHeader
+          1 if header with same name was already added. Else 0.
+*/
+  int addHeader(std::string &key, const std::string &value);
+  /*  Function: addHeader
 
-		  Adds key-value pair as header data to internal std::map structure.
+            Adds key-value pair as header data to internal std::map structure.
 
-		Parameters:
+          Parameters:
 
-		  key - Header name.
-		  value - Header value.
+            key - Header name.
+            value - Header value.
 
-		Returns:
+          Returns:
 
-		  1 if header with same name was already added. Else 0.
-  */
-	int addHeader(std::string&& key, const std::string& value);
-	/*  Function: addHeader
+            1 if header with same name was already added. Else 0.
+*/
+  int addHeader(std::string &&key, const std::string &value);
+  /*  Function: addHeader
 
-		  Adds key-value pair as header data to internal std::map structure.
+            Adds key-value pair as header data to internal std::map structure.
 
-		Parameters:
+          Parameters:
 
-		  key - Header name.
-		  value - Header value.
+            key - Header name.
+            value - Header value.
 
-		Returns:
+          Returns:
 
-		  1 if header with same name was already added. Else 0.
-  */
-	int addHeader(std::string&& key, std::string&& value);
-	/*  Function: addDateHeader
+            1 if header with same name was already added. Else 0.
+*/
+  int addHeader(std::string &&key, std::string &&value);
+  /*  Function: addDateHeader
 
-		  Adds a header with the date and time the response was generated.
+            Adds a header with the date and time the response was generated.
 
-		Returns:
+          Returns:
 
-		  1 if header with same name was already added. Else 0.
-  */
-	int addDateHeader();
-	/*  Function: addAllowHeader
+            1 if header with same name was already added. Else 0.
+*/
+  int addDateHeader();
+  /*  Function: addAllowHeader
 
-		  Adds a header with data types that are accepted by the server.
+            Adds a header with data types that are accepted by the server.
 
-		Returns:
+          Returns:
 
-		  1 if header with same name was already added. Else 0.
-  */
-	int addAllowHeader();
-	/*  Function: addContentLengthHeader
+            1 if header with same name was already added. Else 0.
+*/
+  int addAllowHeader();
+  /*  Function: addContentLengthHeader
 
-		  Adds a header with content length.
+            Adds a header with content length.
 
-		Parameters:
+          Parameters:
 
-		  length - Length of response body.
+            length - Length of response body.
 
-		Returns:
+          Returns:
 
-		  1 if header with same name was already added. Else 0.
-  */
-	int addContentLengthHeader(int length);
-	/*  Function: closeConnection
+            1 if header with same name was already added. Else 0.
+*/
+  int addContentLengthHeader(int length);
+  /*  Function: closeConnection
 
-		  Adds a header that indicates that connection should be closed.
+            Adds a header that indicates that connection should be closed.
 
-		Returns:
+          Returns:
 
-		1 if header with same name was already added. Else 0.
-  */
-	int closeConnection();
-	/*  Function: addCORSHeaders
+          1 if header with same name was already added. Else 0.
+*/
+  int closeConnection();
+  /*  Function: addCORSHeaders
 
-		  Adds a header that indicates that connection should be closed.
+            Adds a header that indicates that connection should be closed.
 
-		Returns:
+          Returns:
 
-		  1 if header with same name was already added. Else 0.
-  */
-	int addCORSHeaders();
-	/*  Function: toString
+            1 if header with same name was already added. Else 0.
+*/
+  int addCORSHeaders();
+  /*  Function: toString
 
-		Returns:
+          Returns:
 
-		  All added headers as std::string formatted to be understood by web
-		  browsers.
-  */
-	std::string toString() const;
-	/*  Function: verbose
+            All added headers as std::string formatted to be understood by web
+            browsers.
+*/
+  std::string toString() const;
+  /*  Function: verbose
 
-		Returns:
+          Returns:
 
-		  Headers data as formatted std::string.
-  */
-	void verbose() const;
-	/*  Function: operator[]
+            Headers data as formatted std::string.
+*/
+  void verbose() const;
+  /*  Function: operator[]
 
-		  Operator overload used to more easily obtain header data by its name.
+            Operator overload used to more easily obtain header data by its
+     name.
 
-		Parameters:
+          Parameters:
 
-		  key - Header name.
+            key - Header name.
 
-		Returns:
+          Returns:
 
-		  Header data.
-  */
-	const std::string& operator[](const std::string& key) const;
-	/*  Function: operator[]
+            Header data.
+*/
+  const std::string &operator[](const std::string &key) const;
+  /*  Function: operator[]
 
-		  Operator overload used to more easily obtain header data by its name.
+            Operator overload used to more easily obtain header data by its
+     name.
 
-		Parameters:
+          Parameters:
 
-		  key - Header name.
+            key - Header name.
 
-		Returns:
+          Returns:
 
-		  Header data.
-  */
-	const std::string& operator[](const std::string&& key) const;
-	/*  Function: operator=
+            Header data.
+*/
+  const std::string &operator[](const std::string &&key) const;
+  /*  Function: operator=
 
-		  Copy operator.
-  */
-	HttpHeaders& operator=(const HttpHeaders& obj);
-	//TODO: Documentation
-	int setCookie(const std::string& keyValueCookie);
+            Copy operator.
+*/
+  HttpHeaders &operator=(const HttpHeaders &obj);
+  // TODO: Documentation
+  int setCookie(const std::string &keyValueCookie);
 };
 
 #endif

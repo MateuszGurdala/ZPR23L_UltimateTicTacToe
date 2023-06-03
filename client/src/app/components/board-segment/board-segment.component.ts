@@ -38,7 +38,10 @@ export class BoardSegmentComponent extends SegmentLogic implements AfterContentI
 			this.master.signalPlayerMove();
 		}
 		this.setIsActive(false);
-		//TODO: Send POST to server
+
+		if (this.parent.id !== undefined && this.id !== undefined) {
+			let isMoveValid = await this.master.makeMove(this.parent.id, this.id);
+		}
 	}
 
 	update(state: Segment): void {
@@ -50,10 +53,5 @@ export class BoardSegmentComponent extends SegmentLogic implements AfterContentI
 			super.unlockSegment(number);
 			this.pseudoHoverState = false;
 		}
-	}
-
-	//TODO: Remove
-	forcePlaceEnemtSign(): void {
-		this.ownerSign = this.gVars.enemySign;
 	}
 }

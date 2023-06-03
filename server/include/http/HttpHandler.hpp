@@ -69,7 +69,11 @@ private:
 
   // TODO: Documentation
   unsigned int boardSize;
-  bool isPlayerVsComputer;
+  bool isPlayerVsComputer = true;
+  bool isGuestConnected = false;
+  char hostSign;
+  char guestSign;
+
   std::unique_ptr<GameHandler> gameHandler;
   bool verifyPlayer(const std::shared_ptr<HttpRequest> &request) const;
   std::string

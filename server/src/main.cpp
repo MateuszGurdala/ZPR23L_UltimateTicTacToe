@@ -1,5 +1,4 @@
 ﻿#include "main.hpp"
-#include "config.hpp"
 
 int main() {
   using URequest = std::shared_ptr<HttpRequest>;
@@ -20,9 +19,8 @@ int main() {
   if (serverSocket.Init() != 0) {
     std::cout << "Socket intialization failed.\n";
     return 1;
-  }
-  else{
-      std::cout << "Socket intialization started.\n";
+  } else {
+    std::cout << "Socket intialization started.\n";
   }
   do {
 

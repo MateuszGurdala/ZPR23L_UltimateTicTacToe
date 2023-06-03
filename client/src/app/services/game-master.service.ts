@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { GameHttpClient } from "./game-http-client.service";
 import { GameBoardComponent } from "../components/game-board/game-board.component";
 import { GameMode, GameStage, GameStageResponse, GameState, Segment, Sign } from "../structs";
-import { firstValueFrom } from "rxjs";
+import { first, firstValueFrom } from "rxjs";
 import { Router } from "@angular/router";
 import { SettingsBarComponent } from "../components/settings-bar/settings-bar.component";
 import { GlobalVariablesService } from "./global-variables.service";
@@ -97,6 +97,9 @@ export class GameMasterService {
 			this.router.navigate(["/Game"]);
 			await this.mainGameLoop();
 		}
+	}
+	async tryJoinGame(): Promise<boolean | Sign> {
+		return await firstValueFrom(this.httpClient.getJoinGame());
 	}
 	async endGame(): Promise<void> {
 		await firstValueFrom(await this.httpClient.getEndGame());

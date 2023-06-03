@@ -78,26 +78,25 @@ void GameHandler::PerformTurn(Point boardCoordinates, Point innerCoordinates) {
   gameEngine->UpdateCurrentLegalMoves(innerCoordinates);
 }
 
-void GameHandler::updateGameStage(Point& outerBoardCoordinates, Point& innerCoordinates) {
+void GameHandler::updateGameStage(Point &outerBoardCoordinates,
+                                  Point &innerCoordinates) {
   if (gameEngine->CheckForGlobalWinner(outerBoardCoordinates)) {
     currentGameState->SetGameStage("Game is Finished");
     return;
   }
   char currentSymbol;
-  if(isHostTurn){
+  if (isHostTurn) {
     currentSymbol = hostPlayer->GetSymbol();
-  }
-  else{
+  } else {
     currentSymbol = secondPlayer->GetSymbol();
   }
   std::string symbolString(1, currentSymbol);
-  if(gameEngine->IsSegmentChoosen(innerCoordinates)){
-    currentGameState->SetGameStage("Player" + symbolString +
-                                   "Turn, choose segment");
+  if (gameEngine->IsSegmentChoosen(innerCoordinates)) {
+    currentGameState->SetGameStage("Player " + symbolString +
+                                   " Turn, choose segment");
     return;
-  }
-  else{
-    currentGameState->SetGameStage("Player" + symbolString + "Turn");
+  } else {
+    currentGameState->SetGameStage("Player " + symbolString + " Turn");
     return;
   }
 }

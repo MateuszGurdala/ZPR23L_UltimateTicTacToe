@@ -13,13 +13,12 @@ import {
 	MoveResponse,
 	Sign,
 } from "../structs";
-import { GlobalVariablesService } from "./global-variables.service";
 
 @Injectable({
 	providedIn: "root",
 })
 export class GameHttpClient {
-	private url: string = "http://localhost:1337";
+	private url: string = "http://192.168.1.146:1337";
 
 	constructor(private httpClient: HttpClient) {}
 
@@ -30,7 +29,7 @@ export class GameHttpClient {
 	//#region POST
 	async postMakeMove(boardId: number, segmentId: number): Promise<Observable<boolean>> {
 		let response: MoveResponse = await firstValueFrom(
-			this.httpClient.get<MoveResponse>(this.url + "MakeMove", {
+			this.httpClient.get<MoveResponse>(this.url + "/MakeMove", {
 				withCredentials: true,
 				params: {
 					boardId: boardId,
@@ -89,6 +88,9 @@ export class GameHttpClient {
 			this.httpClient.get<EndGameResponse>(this.url + "/EndGame", { withCredentials: true })
 		);
 		return of(true);
+	}
+	getJoinGame(): Observable<boolean | Sign> {
+		return this.httpClient.get<any>(this.url + "/JoinGame", { withCredentials: true });
 	}
 	//#endregion
 }

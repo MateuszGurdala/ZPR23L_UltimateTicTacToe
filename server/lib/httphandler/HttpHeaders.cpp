@@ -1,5 +1,7 @@
 #include "../../include/http/HttpHeaders.hpp"
 
+extern std::string allowOrigin;
+
 HttpHeaders::HttpHeaders() {}
 
 HttpHeaders::HttpHeaders(std::string &headers) {
@@ -86,7 +88,7 @@ int HttpHeaders::addCORSHeaders() {
   std::string headers = "Access-Control-Allow-Headers";
   std::string credentails = "Access-Control-Allow-Credentials";
 
-  addHeader(origin, globalHeaders.at(origin));
+  addHeader(origin, allowOrigin);
   addHeader(methods, globalHeaders.at(methods));
   addHeader(headers, globalHeaders.at(headers));
   addHeader(credentails, globalHeaders.at(credentails));
@@ -98,9 +100,9 @@ const std::string &HttpHeaders::operator[](const std::string &key) const {
   return _headers.at(key);
 }
 
-const std::string& HttpHeaders::operator[](const std::string&& key) const {
-    // TODO: Add error handling for missing values for a key
-    return _headers.at(key);
+const std::string &HttpHeaders::operator[](const std::string &&key) const {
+  // TODO: Add error handling for missing values for a key
+  return _headers.at(key);
 }
 
 HttpHeaders &HttpHeaders::operator=(const HttpHeaders &obj) {
@@ -110,6 +112,6 @@ HttpHeaders &HttpHeaders::operator=(const HttpHeaders &obj) {
   return *this;
 }
 
-int HttpHeaders::setCookie(const std::string& keyValueCookie) {
-    return addHeader("Set-Cookie", keyValueCookie);
+int HttpHeaders::setCookie(const std::string &keyValueCookie) {
+  return addHeader("Set-Cookie", keyValueCookie);
 }
