@@ -7,7 +7,7 @@ import { GameHttpClient } from "./game-http-client.service";
 	providedIn: "root",
 })
 export class GlobalVariablesService {
-	private gameStage: GameStage = GameStage.Unknown;
+	gameStage: GameStage = GameStage.Unknown;
 	private gameState: GameState = GameState.Unknown;
 	isGameOngoing: boolean;
 	isProcessing: boolean;
@@ -19,7 +19,6 @@ export class GlobalVariablesService {
 	gameMode: GameMode = GameMode.Multiplayer;
 
 	//TODO: Remove
-	gameStagePub: GameStage = GameStage.PlayerChooseSegment;
 	enemySign: Sign = Sign.O;
 
 	constructor(private readonly httpClient: GameHttpClient) {}
@@ -64,14 +63,10 @@ export class GlobalVariablesService {
 	}
 	async getGameStage(): Promise<GameStage> {
 		this.gameStage = this.parseResponseGameStage(await this.httpClient.getGameStage());
-		this.gameStagePub = this.gameStage;
-		console.log(this.gameStagePub);
 		return this.gameStage;
 	}
 
 	parseResponseGameStage(response: GameStageResponse): GameStage {
-		console.log(response);
-		console.log(response[7]);
 		switch (response) {
 			case GameStageResponse.Unknown:
 				return GameStage.Unknown;

@@ -11,7 +11,7 @@ export class SegmentLogic implements AfterContentInit {
 
 	id: number | undefined = undefined;
 	isActive: boolean;
-	ownerSign: "X" | "O" | undefined = undefined;
+	ownerSign: "X" | "O" | " " = " ";
 
 	ngAfterContentInit(): void {
 		this.id = this.setId;
@@ -22,7 +22,7 @@ export class SegmentLogic implements AfterContentInit {
 	}
 
 	isOwned(): boolean {
-		return this.ownerSign !== undefined;
+		return this.ownerSign !== " ";
 	}
 
 	unlockSegment(number: number): void {

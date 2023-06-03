@@ -149,21 +149,15 @@ export class GameMasterService {
 			console.log("Running loop iteration.");
 			switch (await this.gVars.getGameStage()) {
 				case GameStage.PlayerTurn:
-					this.setIsProcessing(false);
-					this.gameBoard.setIsActive(false);
-					// await this.updateBoard();
-					if (this.gVars.currentSegment !== undefined) {
-						this.gameBoard.unlockSegment(this.gVars.currentSegment);
-					}
-					await this.waitForPlayerMove();
-					//TODO: Something more should be added here?
+					await this.playerTurn();
 					break;
 				case GameStage.PlayerChooseSegment:
 					this.setIsProcessing(false);
-					// await this.updateBoard();
+					await this.updateBoard();
 					this.gameBoard.unlockSegmentChoosing();
 					await this.waitForPlayerChooseSegment();
-					this.gVars.gameStagePub = GameStage.PlayerTurn;
+					this.gVars.gameStage = GameStage.PlayerTurn;
+					await this.playerTurn();
 					break;
 				case GameStage.EnemyTurn:
 				case GameStage.EnemyChooseSegment:
@@ -180,5 +174,16 @@ export class GameMasterService {
 					break;
 			}
 		}
+	}
+
+	private async playerTurn(): Promise<void> {
+		this.setIsProcessing(false);
+		this.gameBoard.setIsActive(false);
+		await this.updateBoard();
+		if (this.gVars.currentSegment !== undefined) {
+			this.gameBoard.unlockSegment(this.gVars.currentSegment);
+		}
+		await this.waitForPlayerMove();
+		//TODO: Something more should be added here?
 	}
 }
