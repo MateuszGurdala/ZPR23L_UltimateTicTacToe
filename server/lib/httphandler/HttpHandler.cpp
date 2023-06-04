@@ -83,9 +83,9 @@ HttpHandler::handleGETRequest(const std::shared_ptr<HttpRequest> &request) {
       unsigned int segmentIdIndex = std::stoul(segmentId);
 
       Point outerCoordinates =
-          BoardIndexConverter::IndexToPoint(segmentIdIndex, boardSize);
-      Point innerCoordinates =
           BoardIndexConverter::IndexToPoint(boardIdIndex, boardSize);
+      Point innerCoordinates =
+          BoardIndexConverter::IndexToPoint(segmentIdIndex, boardSize);
       std::array<Point, 2> move = {outerCoordinates, innerCoordinates};
 
       bool isValid = gameHandler->PerformMoveValidation(outerCoordinates,
@@ -143,6 +143,7 @@ HttpHandler::handleGETRequest(const std::shared_ptr<HttpRequest> &request) {
     if (verifyPlayer(request) || gameHandler.get() == NULL) {
     } else if (gameHandler.get() != NULL && isPlayerVsComputer) {
     } else if (gameHandler.get() != NULL && !isPlayerVsComputer) {
+      std::cout << "isGuestConnected " << isGuestConnected << "\n";
       if (isGuestConnected) {
       } else {
         isGuestConnected = true;
@@ -239,9 +240,9 @@ HttpHandler::serverState(const std::shared_ptr<HttpRequest> &request) const {
 
       playerCookie = extractCookieValue(request);
 
-      if (playerCookie.compare("playerX")) {
+      if (playerCookie.at(6) == 'X') {
         stateStr = "4";
-      } else if (playerCookie.compare("playerO")) {
+      } else if (playerCookie.at(6) == 'O') {
         stateStr = "5";
       }
     }

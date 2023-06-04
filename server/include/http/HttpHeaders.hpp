@@ -25,6 +25,7 @@ class HttpHeaders {
 private:
   const std::string _newLine = "\n";
   const std::string _colonSpace = ": ";
+  const std::string _errorMsg = "";
 
   std::map<std::string, std::string> _headers;
 

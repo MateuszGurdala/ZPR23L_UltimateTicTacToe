@@ -17,8 +17,8 @@ export class GameMasterService {
 	settingsBoard: SettingsBarComponent;
 
 	//Const/Vars
-	readonly enemyTimeout: number = 500;
-	readonly playerTimeout: number = 500;
+	readonly enemyTimeout: number = 1000;
+	readonly playerTimeout: number = 1000;
 	readonly initTimeout: number = 100;
 
 	constructor(
@@ -136,7 +136,7 @@ export class GameMasterService {
 
 	//#region CoreGameMethods
 	async makeMove(boardId: number, segmentId: number): Promise<void> {
-		let result = await firstValueFrom(await this.httpClient.postMakeMove(boardId, segmentId));
+		let result = await firstValueFrom(await this.httpClient.postMakeMove(boardId - 1, segmentId - 1));
 	}
 	async updateBoard(): Promise<void> {
 		let result = await firstValueFrom(this.httpClient.getBoardState());

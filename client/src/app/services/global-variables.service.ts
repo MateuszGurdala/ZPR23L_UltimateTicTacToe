@@ -7,15 +7,15 @@ import { GameHttpClient } from "./game-http-client.service";
 	providedIn: "root",
 })
 export class GlobalVariablesService {
-	gameStage: GameStage = GameStage.Unknown;
 	private gameState: GameState = GameState.Unknown;
+	gameStage: GameStage = GameStage.Unknown;
 	isGameOngoing: boolean;
 	isProcessing: boolean;
 	playerMadeMove: boolean;
 	playerChoseSegment: boolean;
-	currentSegment: number | undefined = 5;
+	currentSegment: number | undefined;
 	boardSize: number = 3;
-	playerSign: Sign = Sign.X; //TODO: Set the player sign when joining a game that has been already created
+	playerSign: Sign = Sign.X;
 	gameMode: GameMode = GameMode.Multiplayer;
 
 	//TODO: Remove
@@ -54,8 +54,16 @@ export class GlobalVariablesService {
 		this.gameState = await firstValueFrom(await this.httpClient.getGameState());
 		switch (this.gameState) {
 			case GameState.PlayerSolo:
+				this.isGameOngoing = true;
+				break;
 			case GameState.PlayerX:
+				this.playerSign = Sign.X;
+				this.enemySign = Sign.O;
+				this.isGameOngoing = true;
+				break;
 			case GameState.PlayerO:
+				this.playerSign = Sign.O;
+				this.enemySign = Sign.X;
 				this.isGameOngoing = true;
 				break;
 		}
