@@ -81,6 +81,10 @@ void GameHandler::PerformTurn(Point boardCoordinates, Point innerCoordinates) {
                                   currentFigure);
   isHostTurn = !isHostTurn;
   updateGameStage(boardCoordinates, innerCoordinates);
+  if(currentGameState->GetCurrentGameStage() == "Game is Finished")
+  {
+    return;
+  }
   gameEngine->UpdateCurrentLegalMoves(innerCoordinates);
   if (isSecondPlayerComputer && !isHostTurn) {
     std::array<Point, 2> simulatedCoordinates =

@@ -35,6 +35,7 @@ std::array<Point, 2> MoveSimulator::PerformRandomMove(
   Point outerPoint = BoardIndexConverter::IndexToPoint(outerIndex, boardSize);
 
   std::array<Point, 2> result = {outerPoint, chosenPoint};
+  std::this_thread::sleep_for(std::chrono::seconds(1));
   return result;
 }
 
