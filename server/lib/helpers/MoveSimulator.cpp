@@ -13,11 +13,19 @@ std::array<Point, 2> MoveSimulator::SimulateMove(GameEngine *pEngine) {
 
 std::array<Point, 2> MoveSimulator::PerformRandomMove(
     std::vector<std::vector<Point>>& movesToChooseFrom,
-                                                      unsigned int boardSize) {
+                                                      unsigned int boardSize, int chosenSegment) {
   std::random_device rd;
   std::mt19937 gen(rd());
-  std::uniform_int_distribution<> outerDist(0, movesToChooseFrom.size() - 1);
-  unsigned int outerIndex = outerDist(gen);
+  unsigned int outerIndex;
+  if(chosenSegment < 0)
+  {
+    std::uniform_int_distribution<> outerDist(0, movesToChooseFrom.size() - 1);
+    outerIndex = outerDist(gen);
+  }
+  else
+  {
+    outerIndex = chosenSegment;
+  }
 
   std::vector<Point> const& chosenVector = movesToChooseFrom[outerIndex];
   std::uniform_int_distribution<> innerDist(0, chosenVector.size() - 1);

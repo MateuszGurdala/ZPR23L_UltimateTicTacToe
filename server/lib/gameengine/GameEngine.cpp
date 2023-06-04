@@ -34,13 +34,13 @@ std::vector<std::vector<Point>> GameEngine::initializeAvailableInnerBoardMoves()
 bool GameEngine::IsSegmentChoosen(Point& innerBoardCoordinates){
     if(mainBoard->GetWinnerBoardCell(innerBoardCoordinates) != ' ')
     {
-        return true;
+        return false;
     }
-    return false;
+    return true;
 }
 std::array<Point, 2> GameEngine::HandleComputerMove(){
     //return MoveSimulator::SimulateMove(this); TODO
-    return MoveSimulator::PerformRandomMove(currentLegalMoves, GetBoardSize());
+    return MoveSimulator::PerformRandomMove(currentLegalMoves, GetBoardSize(), currentSegment);
 }
 
 
@@ -48,6 +48,7 @@ void GameEngine::UpdateCurrentLegalMoves(Point& innerBoardCoordinates)
 {
     currentLegalMoves.clear();
     unsigned int boardSize = GetBoardSize();
+    currentLegalMoves.resize(boardSize*boardSize);
     if(!IsSegmentChoosen(innerBoardCoordinates))
     {
         currentSegment = -1;

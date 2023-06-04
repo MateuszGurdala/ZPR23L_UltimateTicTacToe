@@ -10,7 +10,7 @@ public:
   static std::array<Point, 2> SimulateMove(GameEngine *pEngine);
   static std::array<Point, 2> PerformRandomMove
       (std::vector<std::vector<Point>>& movesToChooseFrom,
-                                         unsigned int boardSize);
+                                         unsigned int boardSize, int chosenSegment);
 
 };
 

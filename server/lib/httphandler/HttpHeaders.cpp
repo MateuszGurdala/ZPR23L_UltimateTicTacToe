@@ -96,19 +96,11 @@ int HttpHeaders::addCORSHeaders() {
 }
 
 const std::string &HttpHeaders::operator[](const std::string &key) const {
-  try {
     return _headers.at(key);
-  } catch (std::exception &e) {
-    return _errorMsg;
-  }
 }
 
 const std::string &HttpHeaders::operator[](const std::string &&key) const {
-  try {
     return _headers.at(key);
-  } catch (std::exception &e) {
-    return _errorMsg;
-  }
 }
 
 HttpHeaders &HttpHeaders::operator=(const HttpHeaders &obj) {
