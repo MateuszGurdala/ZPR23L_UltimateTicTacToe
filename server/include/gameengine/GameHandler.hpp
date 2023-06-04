@@ -40,6 +40,7 @@ public:
     std::string BoardStateAsJson();
     std::string GetGameStage();
     void performComputerTurn();
+    int GetSegmentIndex();
 };
 
 #endif //ULTIMATETICTACTOESERVER_GAMEHANDLER_H

@@ -66,6 +66,10 @@ bool GameHandler::PerformMoveValidation(Point boardCoordinates,
       });
   return isPointValid;
 }
+int GameHandler::GetSegmentIndex(){
+  return gameEngine->GetCurrentSegment();
+}
+
 
 void GameHandler::PerformTurn(Point boardCoordinates, Point innerCoordinates) {
   char currentFigure;

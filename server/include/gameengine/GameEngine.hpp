@@ -10,18 +10,16 @@
 class GameEngine {
 private:
     std::unique_ptr<MainBoard> mainBoard;
-    std::unique_ptr<Point> currentSegment;
+    int currentSegment;
     std::vector<std::vector<Point>> allAvailableBoardMoves;
     std::vector<std::vector<Point>> currentLegalMoves;
     std::vector<Point> initializeAvailableSingleBoardMoves();
     std::vector<std::vector<Point>> initializeAvailableInnerBoardMoves();
     static bool areAllValuesTheSame(const std::vector<char>& values);
-    void removePointFromOuterAvailableMoves(Point& pointToRemove);
 
 public:
     GameEngine(std::unique_ptr<MainBoard> mainBoard);
     unsigned int GetBoardSize();
-    std::vector<Point>& GetAvailableOuterBoardMoves();
     std::vector<std::vector<Point>>& GetAvailableInnerBoardMoves();
     bool CheckForLocalWinner(Point& mainBoardCoordinates, Point& innerBoardCellCoordinates, char figure);
     bool CheckForGlobalWinner(Point& changedWinnerBoardCellCoordinates);
@@ -34,6 +32,7 @@ public:
     void UpdateCurrentLegalMoves(Point &innerBoardCoordinates);
     bool IsSegmentChoosen(Point &innerBoardCoordinates);
     std::array<Point, 2> HandleComputerMove();
+    int GetCurrentSegment();
 };
 
 #endif //ULTIMATETICTACTOESERVER_GAMEENGINE_H

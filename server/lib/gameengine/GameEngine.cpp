@@ -4,7 +4,7 @@
 #include "../../include/helpers/MoveSimulator.hpp"
 #include <algorithm>
 #include <memory>
-#include <sstream>
+
 
 GameEngine::GameEngine(std::unique_ptr<MainBoard> mainBoard) : mainBoard(std::move(mainBoard)) {
     allAvailableBoardMoves = initializeAvailableInnerBoardMoves();
@@ -50,7 +50,7 @@ void GameEngine::UpdateCurrentLegalMoves(Point& innerBoardCoordinates)
     unsigned int boardSize = GetBoardSize();
     if(!IsSegmentChoosen(innerBoardCoordinates))
     {
-        currentSegment = nullptr;
+        currentSegment = -1;
         for (unsigned int i = 0; i < allAvailableBoardMoves.size(); i++) {
             for (const auto& point : allAvailableBoardMoves[i]) {
               currentLegalMoves[i].emplace_back(point);
@@ -58,7 +58,7 @@ void GameEngine::UpdateCurrentLegalMoves(Point& innerBoardCoordinates)
         }
         return;
     }
-    currentSegment.reset(&innerBoardCoordinates);
+    currentSegment = BoardIndexConverter::PointToIndex(innerBoardCoordinates, boardSize);
     unsigned int outerBoardIndex = BoardIndexConverter::PointToIndex(innerBoardCoordinates,boardSize);
     currentLegalMoves[outerBoardIndex] = allAvailableBoardMoves[outerBoardIndex];
 }
@@ -143,6 +143,10 @@ std::vector<std::vector<Point>> &GameEngine::GetAvailableInnerBoardMoves() {
 unsigned int GameEngine::GetBoardSize() {
     return mainBoard->GetBoardSize();
 }
+int GameEngine::GetCurrentSegment() {
+    return currentSegment;
+}
+
 
 std::string GameEngine::GetWinnerBoardAsJson(bool isNested){
     return mainBoard->WinnerBoardToJson(isNested);
