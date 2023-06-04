@@ -47,8 +47,9 @@ void GameHandler::startGame(unsigned int boardSize, const std::string &hostName,
   auto mainBoard = std::make_unique<MainBoard>(boardSize);
   gameEngine = std::make_unique<GameEngine>(std::move(mainBoard));
   currentGameState->SetGameStage("Player X Turn, choose segment");
-  if(isSecondPlayerComputer && !isHostTurn){
-    std::array<Point, 2> simulatedCoordinates = gameEngine->HandleComputerMove();
+  if (isSecondPlayerComputer && !isHostTurn) {
+    std::array<Point, 2> simulatedCoordinates =
+        gameEngine->HandleComputerMove();
     PerformTurn(simulatedCoordinates[0], simulatedCoordinates[1]);
   }
 }
@@ -66,10 +67,7 @@ bool GameHandler::PerformMoveValidation(Point boardCoordinates,
       });
   return isPointValid;
 }
-int GameHandler::GetSegmentIndex(){
-  return gameEngine->GetCurrentSegment();
-}
-
+int GameHandler::GetSegmentIndex() { return gameEngine->GetCurrentSegment(); }
 
 void GameHandler::PerformTurn(Point boardCoordinates, Point innerCoordinates) {
   char currentFigure;
@@ -84,8 +82,9 @@ void GameHandler::PerformTurn(Point boardCoordinates, Point innerCoordinates) {
   isHostTurn = !isHostTurn;
   updateGameStage(boardCoordinates, innerCoordinates);
   gameEngine->UpdateCurrentLegalMoves(innerCoordinates);
-  if(isSecondPlayerComputer && !isHostTurn){
-    std::array<Point, 2> simulatedCoordinates = gameEngine->HandleComputerMove();
+  if (isSecondPlayerComputer && !isHostTurn) {
+    std::array<Point, 2> simulatedCoordinates =
+        gameEngine->HandleComputerMove();
     PerformTurn(simulatedCoordinates[0], simulatedCoordinates[1]);
   }
 }
@@ -103,7 +102,7 @@ void GameHandler::updateGameStage(Point &outerBoardCoordinates,
     currentSymbol = secondPlayer->GetSymbol();
   }
   std::string symbolString(1, currentSymbol);
-  if (gameEngine->IsSegmentChoosen(innerCoordinates)) {
+  if (!gameEngine->IsSegmentChoosen(innerCoordinates)) {
     currentGameState->SetGameStage("Player " + symbolString +
                                    " Turn, choose segment");
     return;

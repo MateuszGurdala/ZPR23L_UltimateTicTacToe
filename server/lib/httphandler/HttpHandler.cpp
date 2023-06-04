@@ -60,6 +60,7 @@ HttpHandler::handleGETRequest(const std::shared_ptr<HttpRequest> &request) {
       auto response = HttpResponse::GETResponse(R"(true)");
 
       gameHandler.reset();
+      isGuestConnected = false;
 
       if (player.compare("playerX")) {
         response.removeCookie("player", "playerX");

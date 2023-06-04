@@ -4,7 +4,7 @@ HttpRequest::HttpRequest(std::string &&request) {
   parseRequestType(request);
   parseBody(request);
 
-  headers = std::make_unique<HttpHeaders>(HttpHeaders(request));
+  headers = std::make_unique<HttpHeaders>(request);
 
   if (config::verbose) {
     verboseRequest();
