@@ -96,11 +96,17 @@ int HttpHeaders::addCORSHeaders() {
 }
 
 const std::string &HttpHeaders::operator[](const std::string &key) const {
+  if (_headers.count(key)) {
     return _headers.at(key);
+  }
+  return _nullstring;
 }
 
 const std::string &HttpHeaders::operator[](const std::string &&key) const {
+  if (_headers.count(key)) {
     return _headers.at(key);
+  }
+  return _nullstring;
 }
 
 HttpHeaders &HttpHeaders::operator=(const HttpHeaders &obj) {

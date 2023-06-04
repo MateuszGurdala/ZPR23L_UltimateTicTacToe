@@ -152,7 +152,6 @@ HttpHandler::handleGETRequest(const std::shared_ptr<HttpRequest> &request) {
     if (verifyPlayer(request) || gameHandler.get() == NULL) {
     } else if (gameHandler.get() != NULL && isPlayerVsComputer) {
     } else if (gameHandler.get() != NULL && !isPlayerVsComputer) {
-      std::cout << "isGuestConnected " << isGuestConnected << "\n";
       if (isGuestConnected) {
       } else {
         isGuestConnected = true;
@@ -168,6 +167,11 @@ HttpHandler::handleGETRequest(const std::shared_ptr<HttpRequest> &request) {
       }
     }
     return falseResponse;
+  }
+  /* Current Segment */
+  else if (endpoint == "/CurrentSegment") {
+    auto segment = gameHandler->GetSegmentIndex();
+    return HttpResponse::GETResponse(std::to_string(segment));
   }
   /* Invalid Endpoint */
   else {

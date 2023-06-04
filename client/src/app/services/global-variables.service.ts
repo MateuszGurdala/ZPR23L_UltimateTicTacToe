@@ -74,6 +74,14 @@ export class GlobalVariablesService {
 		return this.gameStage;
 	}
 
+	async getCurrentSegment(): Promise<number> {
+		if (this.currentSegment === undefined) {
+			this.currentSegment = await firstValueFrom(this.httpClient.getCurrentSegment());
+			this.currentSegment += 1;
+		}
+		return this.currentSegment;
+	}
+
 	parseResponseGameStage(response: GameStageResponse): GameStage {
 		switch (response) {
 			case GameStageResponse.Unknown:

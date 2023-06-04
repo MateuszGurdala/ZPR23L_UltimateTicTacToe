@@ -172,6 +172,7 @@ export class GameMasterService {
 					this.setIsProcessing(false);
 					this.gameBoard.setIsActive(false);
 					this.gVars.isGameOngoing = false;
+					this.gVars.currentSegment = undefined;
 					break;
 				default:
 					break;
@@ -183,6 +184,7 @@ export class GameMasterService {
 		this.setIsProcessing(false);
 		this.gameBoard.setIsActive(false);
 		await this.updateBoard();
+		await this.gVars.getCurrentSegment();
 		if (this.gVars.currentSegment !== undefined) {
 			this.gameBoard.unlockSegment(this.gVars.currentSegment);
 		}

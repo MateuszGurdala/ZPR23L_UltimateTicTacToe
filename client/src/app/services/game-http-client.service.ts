@@ -15,8 +15,8 @@ import {
 	providedIn: "root",
 })
 export class GameHttpClient {
-	// private url: string = "http://192.168.1.146:12345/backend";
-	private url: string = "http://localhost:1337/";
+	private url: string = "http://192.168.1.146:12345/backend";
+	// private url: string = "http://localhost:1337/";
 
 	constructor(private httpClient: HttpClient) {}
 
@@ -89,6 +89,9 @@ export class GameHttpClient {
 	}
 	getJoinGame(): Observable<boolean | Sign> {
 		return this.httpClient.get<any>(this.url + "JoinGame", { withCredentials: true });
+	}
+	getCurrentSegment(): Observable<number> {
+		return this.httpClient.get<any>(this.url + "CurrentSegment", { withCredentials: true });
 	}
 	//#endregion
 }
