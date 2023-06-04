@@ -36,12 +36,12 @@ export class BoardSegmentComponent extends SegmentLogic implements AfterContentI
 		if (this.isActive) {
 			this.ownerSign = this.gVars.playerSign;
 			this.master.signalPlayerMove();
+
+			if (this.parent.id !== undefined && this.id !== undefined) {
+				let isMoveValid = await this.master.makeMove(this.parent.id, this.id);
+			}
 		}
 		this.setIsActive(false);
-
-		if (this.parent.id !== undefined && this.id !== undefined) {
-			let isMoveValid = await this.master.makeMove(this.parent.id, this.id);
-		}
 	}
 
 	update(state: Segment): void {

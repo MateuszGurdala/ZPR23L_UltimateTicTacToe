@@ -4,13 +4,13 @@ export interface GameBoard {
 
 export interface DaughterBoard {
 	id: number;
-	winner: "X" | "O";
+	winner: "X" | "O" | " ";
 	segments: Segment[];
 }
 
 export interface Segment {
 	id: number;
-	winner: "X" | "O";
+	winner: "X" | "O" | " ";
 }
 
 export enum GameState {

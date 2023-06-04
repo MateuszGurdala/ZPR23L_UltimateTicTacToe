@@ -51,6 +51,15 @@ export class GameBoardComponent extends SegmentLogic implements AfterContentInit
 			if (segmentComponent !== undefined) {
 				segmentComponent.update(segment);
 			}
+
+			if (
+				segmentComponent !== undefined &&
+				(segmentComponent as any).boardClass !== undefined &&
+				(segmentComponent as any).boardClass === "Daughterboard"
+			) {
+				segmentComponent.ownerSign = (segment as DaughterBoard).winner;
+			}
+			console.log(segmentComponent);
 		});
 	}
 
