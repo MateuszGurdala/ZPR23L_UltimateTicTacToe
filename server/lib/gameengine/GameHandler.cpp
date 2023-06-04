@@ -76,6 +76,10 @@ void GameHandler::PerformTurn(Point boardCoordinates, Point innerCoordinates) {
   isHostTurn = !isHostTurn;
   updateGameStage(boardCoordinates, innerCoordinates);
   gameEngine->UpdateCurrentLegalMoves(innerCoordinates);
+  if(isSecondPlayerComputer && !isHostTurn){
+    std::array<Point, 2> simulatedCoordinates = gameEngine->HandleComputerMove();
+    PerformTurn(simulatedCoordinates[0], simulatedCoordinates[1]);
+  }
 }
 
 void GameHandler::updateGameStage(Point &outerBoardCoordinates,

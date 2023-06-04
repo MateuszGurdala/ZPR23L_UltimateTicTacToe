@@ -8,5 +8,5 @@ add_library(GameHandler ${HANDLERSRC})
 add_library(GameStage ${STAGESRC})
 
 #Link libraries
-target_link_libraries(GameHandler Player GameEngine HumanPlayer ComputerPlayer GameStage)
+target_link_libraries(GameHandler Player GameEngine HumanPlayer ComputerPlayer GameStage MoveSimulator)
 target_link_libraries(GameEngine MainBoard)

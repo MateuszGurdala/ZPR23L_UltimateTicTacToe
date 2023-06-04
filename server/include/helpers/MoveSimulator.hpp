@@ -7,7 +7,11 @@
 
 class MoveSimulator {
 public:
-  static std::array<Point, 2> SimulateMove();
+  static std::array<Point, 2> SimulateMove(GameEngine *pEngine);
+  static std::array<Point, 2> PerformRandomMove
+      (std::vector<std::vector<Point>>& movesToChooseFrom,
+                                         unsigned int boardSize);
+
 };
 
 #endif // ULTIMATETICTACTOESERVER_MOVESIMULATOR_H

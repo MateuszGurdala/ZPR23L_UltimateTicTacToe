@@ -1,12 +1,12 @@
 
-#include <memory>
-#include <sstream>
-#include <algorithm>
 #include "../../include/gameengine/GameEngine.hpp"
 #include "../../include/helpers/BoardIndexConverter.hpp"
+#include "../../include/helpers/MoveSimulator.hpp"
+#include <algorithm>
+#include <memory>
+#include <sstream>
 
 GameEngine::GameEngine(std::unique_ptr<MainBoard> mainBoard) : mainBoard(std::move(mainBoard)) {
-    availableOuterBoardMoves = initializeAvailableSingleBoardMoves();
     allAvailableBoardMoves = initializeAvailableInnerBoardMoves();
 }
 
@@ -38,22 +38,29 @@ bool GameEngine::IsSegmentChoosen(Point& innerBoardCoordinates){
     }
     return false;
 }
+std::array<Point, 2> GameEngine::HandleComputerMove(){
+    //return MoveSimulator::SimulateMove(this); TODO
+    return MoveSimulator::PerformRandomMove(currentLegalMoves, GetBoardSize());
+}
+
 
 void GameEngine::UpdateCurrentLegalMoves(Point& innerBoardCoordinates)
 {
-    std::vector<Point>().swap(currentLegalMoves);
+    currentLegalMoves.clear();
     unsigned int boardSize = GetBoardSize();
-    if(IsSegmentChoosen(innerBoardCoordinates))
+    if(!IsSegmentChoosen(innerBoardCoordinates))
     {
-        for (const auto& moves : allAvailableBoardMoves) {
-            for (const auto& point : moves) {
-                currentLegalMoves.emplace_back(point);
+        currentSegment = nullptr;
+        for (unsigned int i = 0; i < allAvailableBoardMoves.size(); i++) {
+            for (const auto& point : allAvailableBoardMoves[i]) {
+              currentLegalMoves[i].emplace_back(point);
             }
         }
         return;
     }
+    currentSegment.reset(&innerBoardCoordinates);
     unsigned int outerBoardIndex = BoardIndexConverter::PointToIndex(innerBoardCoordinates,boardSize);
-    currentLegalMoves = allAvailableBoardMoves[outerBoardIndex];
+    currentLegalMoves[outerBoardIndex] = allAvailableBoardMoves[outerBoardIndex];
 }
 
 void GameEngine::HandleMove(Point& boardCoordinates, Point& innerCoordinates, char figure) {
@@ -70,13 +77,11 @@ bool GameEngine::CheckForLocalWinner(Point& mainBoardCoordinates, Point& innerBo
     if(areAllValuesTheSame(figuresInPattern))
     {
         mainBoard->AddWinnerOfInnerBoard(mainBoardCoordinates, figure);
-        removePointFromOuterAvailableMoves(mainBoardCoordinates);
         return true;
     }
     figuresInPattern = innerBoard.GetVerticalValues(innerBoardCellCoordinates);
     if(areAllValuesTheSame(figuresInPattern))
     {
-        removePointFromOuterAvailableMoves(mainBoardCoordinates);
         mainBoard->AddWinnerOfInnerBoard(mainBoardCoordinates, figure);
         return true;
     }
@@ -84,14 +89,12 @@ bool GameEngine::CheckForLocalWinner(Point& mainBoardCoordinates, Point& innerBo
     if(figuresInPattern.size() ==  mainBoard->GetBoardSize() && areAllValuesTheSame(figuresInPattern))
     {
         mainBoard->AddWinnerOfInnerBoard(mainBoardCoordinates, figure);
-        removePointFromOuterAvailableMoves(mainBoardCoordinates);
         return true;
     }
     figuresInPattern = innerBoard.GetRightDiagonalValues(innerBoardCellCoordinates);
     if(figuresInPattern.size() ==  mainBoard->GetBoardSize() && areAllValuesTheSame(figuresInPattern))
     {
         mainBoard->AddWinnerOfInnerBoard(mainBoardCoordinates, figure);
-        removePointFromOuterAvailableMoves(mainBoardCoordinates);
         return true;
     }
     return false;
@@ -133,10 +136,6 @@ bool GameEngine::areAllValuesTheSame(const std::vector<char>& values) {
     return !containsWhitespace;
 }
 
-std::vector<Point> &GameEngine::GetAvailableOuterBoardMoves() {
-    return availableOuterBoardMoves;
-}
-
 std::vector<std::vector<Point>> &GameEngine::GetAvailableInnerBoardMoves() {
     return allAvailableBoardMoves;
 }
@@ -147,15 +146,6 @@ unsigned int GameEngine::GetBoardSize() {
 
 std::string GameEngine::GetWinnerBoardAsJson(bool isNested){
     return mainBoard->WinnerBoardToJson(isNested);
-}
-
-void GameEngine::removePointFromOuterAvailableMoves(Point &pointToRemove) {
-    unsigned int x = pointToRemove.x;
-    unsigned int y = pointToRemove.y;
-    availableOuterBoardMoves.erase(std::remove_if(availableOuterBoardMoves.begin(), availableOuterBoardMoves.end(),
-                                        [x, y](const Point& point) {
-                                            return (point.x == x && point.y == y);
-                                        }), availableOuterBoardMoves.end());
 }
 
 void GameEngine::RemovePointFromAllAvailableMoves(unsigned int innerBoardIndex, Point &pointOfInnerBoardToRemove) {

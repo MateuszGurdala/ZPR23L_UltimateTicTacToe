@@ -10,9 +10,9 @@
 class GameEngine {
 private:
     std::unique_ptr<MainBoard> mainBoard;
-    std::vector<Point> availableOuterBoardMoves;
+    std::unique_ptr<Point> currentSegment;
     std::vector<std::vector<Point>> allAvailableBoardMoves;
-    std::vector<Point> currentLegalMoves;
+    std::vector<std::vector<Point>> currentLegalMoves;
     std::vector<Point> initializeAvailableSingleBoardMoves();
     std::vector<std::vector<Point>> initializeAvailableInnerBoardMoves();
     static bool areAllValuesTheSame(const std::vector<char>& values);
@@ -33,6 +33,7 @@ public:
 
     void UpdateCurrentLegalMoves(Point &innerBoardCoordinates);
     bool IsSegmentChoosen(Point &innerBoardCoordinates);
+    std::array<Point, 2> HandleComputerMove();
 };
 
 #endif //ULTIMATETICTACTOESERVER_GAMEENGINE_H
