@@ -128,12 +128,21 @@ HttpHandler::handleGETRequest(const std::shared_ptr<HttpRequest> &request) {
       if (playerSign == "X") {
         hostSign = 'X';
         guestSign = 'O';
-        response.setCookie("player", "playerX");
+        if (!isPlayerVsComputer) {
+          response.setCookie("player", "playerX");
+        }
       } else {
         hostSign = 'O';
         guestSign = 'X';
-        response.setCookie("player", "playerO");
+        if (!isPlayerVsComputer) {
+          response.setCookie("player", "playerO");
+        }
       }
+
+      if (isPlayerVsComputer) {
+        response.setCookie("player", "playerSolo");
+      }
+
       return response;
     }
   }
