@@ -59,7 +59,6 @@ export class GameBoardComponent extends SegmentLogic implements AfterContentInit
 			) {
 				segmentComponent.ownerSign = (segment as DaughterBoard).winner;
 			}
-			console.log(segmentComponent);
 		});
 	}
 

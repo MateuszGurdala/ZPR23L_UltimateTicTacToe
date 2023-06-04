@@ -167,7 +167,6 @@ export class GameMasterService {
 					this.gameBoard.setIsActive(false);
 					this.setIsProcessing(true);
 					await this.sleep(this.enemyTimeout);
-					this.gVars.currentSegment = undefined;
 					break;
 				case GameStage.Finished:
 					this.setIsProcessing(false);
@@ -177,6 +176,7 @@ export class GameMasterService {
 				default:
 					break;
 			}
+			this.gVars.currentSegment = undefined;
 		}
 	}
 

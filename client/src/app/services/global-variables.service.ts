@@ -75,6 +75,7 @@ export class GlobalVariablesService {
 	}
 
 	async getCurrentSegment(): Promise<number> {
+		console.log(this.currentSegment);
 		if (this.currentSegment === undefined) {
 			this.currentSegment = await firstValueFrom(this.httpClient.getCurrentSegment());
 			this.currentSegment += 1;
