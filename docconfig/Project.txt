@@ -71,23 +71,23 @@ Copyright: Mateusz Gurdała && Krystian Grela
 # Source Code
 # ------------------------------------------------------------------------
 
-Source Folder: ..\server\include\http
+Source Folder: ../server/include/http
    Name: Http
 
-Source Folder 3: ..\server\include\socket
+Source Folder 2: ../server/include/socket
    Name: Socket
 
-Source Folder 2: ..\client\src\app
+Source Folder 3: ../client/src/app
    Name: Client
 
-Source Folder 6: ..\server\include\entities
-   Name: Socket
+Source Folder 4: ../server/include/entities
+   Name: Entites
 
-Source Folder 4: ..\server\include\gameengine
-   Name: Socket
+Source Folder 5: ../server/include/gameengine
+   Name: GameEngine
 
-Source Folder 5: ..\server\include\helpers
-   Name: Socket
+Source Folder 6: ../server/include/helpers
+   Name: Helpers
 
 
 # This is where you tell Natural Docs which folders it should scan for source
@@ -165,7 +165,7 @@ Source Folder 5: ..\server\include\helpers
 # Generated Documentation
 # ------------------------------------------------------------------------
 
-HTML Output Folder: ..\docs
+HTML Output Folder: ../docs
 
 
 # This is where you tell Natural Docs what kind of documentation you want
