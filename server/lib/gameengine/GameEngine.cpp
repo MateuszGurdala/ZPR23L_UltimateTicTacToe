@@ -8,6 +8,8 @@
 
 GameEngine::GameEngine(std::unique_ptr<MainBoard> mainBoard) : mainBoard(std::move(mainBoard)) {
     allAvailableBoardMoves = initializeAvailableInnerBoardMoves();
+    currentLegalMoves = allAvailableBoardMoves;
+    currentSegment = -1;
 }
 
 std::vector<Point> GameEngine::initializeAvailableSingleBoardMoves() {
@@ -39,7 +41,6 @@ bool GameEngine::IsSegmentChoosen(Point& innerBoardCoordinates){
     return true;
 }
 std::array<Point, 2> GameEngine::HandleComputerMove(){
-    //return MoveSimulator::SimulateMove(this); TODO
     return MoveSimulator::PerformRandomMove(currentLegalMoves, GetBoardSize(), currentSegment);
 }
 
