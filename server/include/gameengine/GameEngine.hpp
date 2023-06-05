@@ -4,8 +4,10 @@
 #include "../entities/MainBoard.hpp"
 
 /*  Class: GameEngine
-    Class responsible for checking and handling logic of the game. It inludes MainBoard,
-    lists all available moves, checks if game has the winner.
+    Class responsible for checking and handling logic of the game. It includes MainBoard,
+    lists all available moves, checks if game has the winner. Keeps the value
+    of current played segment. Checks and sets valid game moves for whole game
+    and for current turn.
  */
 class GameEngine {
 private:
