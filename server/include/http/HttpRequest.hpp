@@ -72,20 +72,24 @@ private:
         Prints parsed request to the standard output.
     */
   void verboseRequest() const;
-  //TODO: Documentation
+  /*  Function: extractQueryParameters
+
+        Parses query params and pushes them as param-value pairs into
+     queryParams map;
+    */
   void extractQueryParameters();
 
 public:
   UHeaders headers;
   std::map<std::string, std::string> queryParams;
-      /*  Constructor: HttpRequest
+  /*  Constructor: HttpRequest
 
-        Parses body from json format.
+    Parses body from json format.
 
-      Parameters:
+  Parameters:
 
-        request - Raw request data as std::string.
-    */
+    request - Raw request data as std::string.
+*/
   explicit HttpRequest(std::string &&request);
   /*  Function: getEndpoint
 

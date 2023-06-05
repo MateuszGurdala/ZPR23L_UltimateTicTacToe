@@ -104,8 +104,23 @@ public:
             browsers.
     */
   std::string toString() const;
-  // TODO: Documentation
+  /*  Function: setCookie
+
+          Adds cookie with given value to response object.
+
+          Returns:
+
+            0 if cookie was added, otherwise 1.
+    */
   int setCookie(std::string &&cookie, std::string &&value);
+  /*  Function: removeCookie
+
+          Removes given cookie-name and cookie-value pair from response headers.
+
+          Returns:
+
+            0 if cookie was removed, otherwise 1.
+    */
   int removeCookie(std::string &&cookie, std::string &&value);
 };
 

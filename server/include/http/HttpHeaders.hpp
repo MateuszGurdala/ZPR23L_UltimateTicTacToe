@@ -194,7 +194,18 @@ public:
             Copy operator.
 */
   HttpHeaders &operator=(const HttpHeaders &obj);
-  // TODO: Documentation
+  /*  Function: setCookie
+
+          Sets name-value pair as cookie header.
+
+          Parameters:
+
+            keyValueCookie - cookie name-value pair as cookie_name=cookie_value.
+
+          Returns:
+
+            0 if cookie is successfully set, otherwise 1.
+*/
   int setCookie(const std::string &keyValueCookie);
 };
 
