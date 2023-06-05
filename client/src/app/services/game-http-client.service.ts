@@ -15,8 +15,8 @@ import {
 	providedIn: "root",
 })
 export class GameHttpClient {
-	private url: string = "http://192.168.1.146:12345/backend";
-	// private url: string = "http://localhost:1337/";
+	// private url: string = "http://{reverse_proxy_ip}:12345/backend";
+	private url: string = "http://localhost:1337/";
 
 	constructor(private httpClient: HttpClient) {}
 
