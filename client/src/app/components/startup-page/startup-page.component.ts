@@ -4,6 +4,7 @@ import { Router } from "@angular/router";
 import { GameMode, GameState, Sign } from "../../structs";
 import { ToastrService } from "ngx-toastr";
 import { GlobalVariablesService } from "../../services/global-variables.service";
+
 @Component({
 	selector: "startup-page",
 	templateUrl: "./startup-page.component.html",
@@ -15,13 +16,13 @@ export class StartupPageComponent {
 	preferredSign: Sign = this.gVars.playerSign;
 	boardSize: number = this.gVars.boardSize;
 	gameMode: GameMode = this.gVars.gameMode;
-	gameModeString: String = "Player_vs_Player";
+	gameModeString: String = "Player_vs_AI";
 
-	serverURL: string = "localhost:1337";
 	isProcessing: boolean = false;
 	xIsChosen: boolean = true;
 	displayWelcome: boolean = true;
 
+	//#region CoreComponentMethods
 	constructor(
 		private readonly master: GameMasterService,
 		private readonly router: Router,
@@ -30,6 +31,7 @@ export class StartupPageComponent {
 	) {
 		this.xIsChosen = this.preferredSign === Sign.X;
 	}
+	//#endregion
 
 	//#region  Utils
 	returnClick(): void {
@@ -37,18 +39,6 @@ export class StartupPageComponent {
 	}
 	optionsClick(): void {
 		this.displayWelcome = false;
-	}
-	async checkServerStatus(): Promise<boolean> {
-		let serverStatus = await this.master.checkServerIsAlive(this.serverURL);
-
-		if (!serverStatus) {
-			this.toastr.error(
-				"Server is not working or provided url is invalid.",
-				"Could not connect to game server."
-			);
-		}
-
-		return serverStatus;
 	}
 	//#endregion
 
@@ -80,6 +70,7 @@ export class StartupPageComponent {
 	}
 	//#endregion
 
+	//#region GameUtils
 	async tryStartGame(): Promise<void> {
 		let errorString: any;
 
@@ -91,7 +82,6 @@ export class StartupPageComponent {
 
 		this.isProcessing = false;
 	}
-
 	async tryJoinGame(): Promise<void> {
 		this.isProcessing = true;
 
@@ -99,9 +89,7 @@ export class StartupPageComponent {
 			this.toastr.error("No one is currently waiting for a second player to join.");
 		} else {
 			let response = await this.master.tryJoinGame();
-			console.log(response);
 			if (response) {
-				console.log(response);
 				this.gVars.playerSign = response as Sign;
 				this.router.navigate(["/Game"]);
 			}
@@ -109,4 +97,5 @@ export class StartupPageComponent {
 		this.isProcessing = false;
 		return;
 	}
+	//#endregion
 }

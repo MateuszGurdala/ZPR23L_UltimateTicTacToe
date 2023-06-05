@@ -18,7 +18,7 @@
         </div>
         <div class="game-stage-container">
             <h3>Current Stage:</h3>
-            <h3>{{gVars.gameStage}}</h3>
+            <h4 class="current-stage">{{gVars.gameStage}}</h4>
             <div class="loader-container">
                 <div class="lds-ellipsis" [ngClass]="{'hide': !gVars.isProcessing}">
                     <div></div>
@@ -34,10 +34,10 @@
             </span>
         </div>
     </div>
-    <span (click)="extend()" *ngIf="!isExtended" class="material-symbols-outlined extend-button ">
+    <span colorReact (click)="extend()" *ngIf="!isExtended" class="material-symbols-outlined extend-button ">
         arrow_forward_ios
     </span>
-    <span (click)="extend()" *ngIf="isExtended" class="material-symbols-outlined extend-button ">
+    <span colorReact (click)="extend()" *ngIf="isExtended" class="material-symbols-outlined extend-button ">
         arrow_back_ios
     </span>
 </div>

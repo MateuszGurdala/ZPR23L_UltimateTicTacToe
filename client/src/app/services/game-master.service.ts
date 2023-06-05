@@ -13,13 +13,14 @@ import { BoardSegmentComponent } from "../components/board-segment/board-segment
 })
 export class GameMasterService {
 	//Refs
-	gameBoard: GameBoardComponent;
-	settingsBoard: SettingsBarComponent;
+	private gameBoard: GameBoardComponent;
+	private settingsBoard: SettingsBarComponent;
 
 	//Const/Vars
-	readonly enemyTimeout: number = 1000;
-	readonly playerTimeout: number = 1000;
-	readonly initTimeout: number = 100;
+	private readonly enemyTimeout: number = 1000;
+	private readonly playerTimeout: number = 1000;
+	private readonly standardTimeout: number = 1000;
+	private readonly initTimeout: number = 100;
 
 	constructor(
 		private readonly httpClient: GameHttpClient,
@@ -56,13 +57,11 @@ export class GameMasterService {
 	sleep(ms: number): Promise<void> {
 		return new Promise((resolve) => setTimeout(resolve, ms));
 	}
-	async waitForGameInit(): Promise<void> {
-		if (this.gameBoard === undefined || this.settingsBoard === undefined) {
-			console.log("Waiting for init.");
-			await this.sleep(this.playerTimeout);
-			await this.waitForGameInit();
+	async waitFor(condition: Function, timeout: number = this.standardTimeout) {
+		if (condition()) {
+			await this.sleep(timeout);
+			await this.waitFor(condition, timeout);
 		}
-		console.log("Game initialized.");
 		return;
 	}
 	//#endregion
@@ -72,7 +71,6 @@ export class GameMasterService {
 		let retVal: any;
 		switch (await this.gVars.getGameState()) {
 			case GameState.Ready:
-				//TODO: Start game based on an chosen enemy
 				await this.startNewSoloGame();
 				break;
 			case GameState.Ongoing:
@@ -106,25 +104,7 @@ export class GameMasterService {
 		await this.gVars.getGameState();
 		this.gVars.isGameOngoing = false;
 		this.router.navigate(["/Start"]);
-		window.location.reload(); //TODO: Temporary solution?
-	}
-	async waitForPlayerMove(): Promise<void> {
-		if (!this.gVars.playerMadeMove) {
-			console.log("Waiting for player to make move.");
-			await this.sleep(this.playerTimeout);
-			await this.waitForPlayerMove();
-		}
-		this.gVars.playerMadeMove = false;
-		return;
-	}
-	async waitForPlayerChooseSegment(): Promise<void> {
-		if (!this.gVars.playerChoseSegment) {
-			console.log("Waiting for player to choose segment.");
-			await this.sleep(this.playerTimeout);
-			await this.waitForPlayerChooseSegment();
-		}
-		this.gVars.playerChoseSegment = false;
-		return;
+		window.location.reload();
 	}
 	signalPlayerMove(): void {
 		this.gVars.playerMadeMove = true;
@@ -136,7 +116,7 @@ export class GameMasterService {
 
 	//#region CoreGameMethods
 	async makeMove(boardId: number, segmentId: number): Promise<void> {
-		let result = await firstValueFrom(await this.httpClient.postMakeMove(boardId - 1, segmentId - 1));
+		await firstValueFrom(await this.httpClient.postMakeMove(boardId - 1, segmentId - 1));
 	}
 	async updateBoard(): Promise<void> {
 		let result = await firstValueFrom(this.httpClient.getBoardState());
@@ -145,44 +125,6 @@ export class GameMasterService {
 			this.settingsBoard.updateLookup(segment.id, segment.winner);
 		});
 	}
-	//#endregion
-
-	async mainGameLoop(): Promise<void> {
-		await this.waitForGameInit();
-		console.log("Starting game main loop.");
-		while (this.gVars.isGameOngoing) {
-			this.setIsProcessing(true);
-			console.log("Running loop iteration.");
-			switch (await this.gVars.getGameStage()) {
-				case GameStage.PlayerTurn:
-					await this.playerTurn();
-					break;
-				case GameStage.PlayerChooseSegment:
-					this.setIsProcessing(false);
-					await this.updateBoard();
-					this.gameBoard.unlockSegmentChoosing();
-					await this.waitForPlayerChooseSegment();
-					this.gVars.gameStage = GameStage.PlayerTurn;
-					await this.playerTurn();
-					break;
-				case GameStage.EnemyTurn:
-				case GameStage.EnemyChooseSegment:
-					this.gameBoard.setIsActive(false);
-					this.setIsProcessing(true);
-					await this.sleep(this.enemyTimeout);
-					break;
-				case GameStage.Finished:
-					this.setIsProcessing(false);
-					this.gameBoard.setIsActive(false);
-					this.gVars.isGameOngoing = false;
-					break;
-				default:
-					break;
-			}
-			this.gVars.currentSegment = undefined;
-		}
-	}
-
 	private async playerTurn(): Promise<void> {
 		this.setIsProcessing(false);
 		this.gameBoard.setIsActive(false);
@@ -191,7 +133,57 @@ export class GameMasterService {
 		if (this.gVars.currentSegment !== undefined) {
 			this.gameBoard.unlockSegment(this.gVars.currentSegment);
 		}
-		await this.waitForPlayerMove();
-		//TODO: Something more should be added here?
+		await this.waitFor(() => {
+			return !this.gVars.playerMadeMove;
+		}, this.playerTimeout);
+		this.gVars.playerMadeMove = false;
 	}
+	private async playerChooseSegment(): Promise<void> {
+		this.setIsProcessing(false);
+		await this.updateBoard();
+		this.gameBoard.unlockSegmentChoosing();
+		await this.waitFor(() => {
+			return !this.gVars.playerChoseSegment;
+		}, this.playerTimeout);
+		this.gVars.playerChoseSegment = false;
+		this.gVars.gameStage = GameStage.PlayerTurn;
+		await this.playerTurn();
+	}
+	private async waitForEnemy(): Promise<void> {
+		this.gameBoard.setIsActive(false);
+		this.setIsProcessing(true);
+		await this.sleep(this.enemyTimeout);
+	}
+	private async finishGame(): Promise<void> {
+		this.setIsProcessing(false);
+		this.gameBoard.setIsActive(false);
+		this.gVars.isGameOngoing = false;
+	}
+	async mainGameLoop(): Promise<void> {
+		await this.waitFor(() => {
+			return this.gameBoard === undefined || this.settingsBoard === undefined;
+		}, this.initTimeout);
+		while (this.gVars.isGameOngoing) {
+			this.setIsProcessing(true);
+			switch (await this.gVars.getGameStage()) {
+				case GameStage.PlayerTurn:
+					await this.playerTurn();
+					break;
+				case GameStage.PlayerChooseSegment:
+					await this.playerChooseSegment();
+					break;
+				case GameStage.EnemyTurn:
+				case GameStage.EnemyChooseSegment:
+					await this.waitForEnemy();
+					break;
+				case GameStage.Finished:
+					await this.finishGame();
+					break;
+				default:
+					break;
+			}
+			this.gVars.currentSegment = undefined;
+		}
+	}
+	//#endregion
 }

@@ -26,6 +26,7 @@ export class SegmentLogic implements AfterContentInit {
 	}
 
 	unlockSegment(number: number): void {
+		// Number parameter is required for the method to be overridable
 		if (!this.isOwned()) {
 			this.setIsActive(true);
 		}

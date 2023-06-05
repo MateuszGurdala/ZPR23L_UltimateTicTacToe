@@ -4,7 +4,6 @@ import { GameBoardComponent } from "../game-board/game-board.component";
 import { GameMasterService } from "src/app/services/game-master.service";
 import { Segment } from "src/app/structs";
 import { GlobalVariablesService } from "../../services/global-variables.service";
-import { GameStage } from "../../structs";
 
 @Component({
 	selector: "board-segment",
@@ -14,6 +13,7 @@ import { GameStage } from "../../structs";
 export class BoardSegmentComponent extends SegmentLogic implements AfterContentInit {
 	pseudoHoverState: boolean = false;
 
+	//#region CoreComponentMethods
 	constructor(
 		@Host() parent: GameBoardComponent,
 		private readonly master: GameMasterService,
@@ -22,32 +22,27 @@ export class BoardSegmentComponent extends SegmentLogic implements AfterContentI
 		super();
 		this.parent = parent;
 	}
-
 	override ngAfterContentInit(): void {
 		this.id = this.setId;
 		this.parent.subscribe(this);
 	}
+	//#endregion
 
 	async onClick() {
-		if (!this.gVars.isPlayerTurn()) {
+		if (!this.gVars.isPlayerTurn() || !this.isActive) {
 			return;
 		}
 
-		if (this.isActive) {
+		if (this.parent.id !== undefined && this.id !== undefined) {
+			await this.master.makeMove(this.parent.id, this.id);
 			this.ownerSign = this.gVars.playerSign;
 			this.master.signalPlayerMove();
-
-			if (this.parent.id !== undefined && this.id !== undefined) {
-				let isMoveValid = await this.master.makeMove(this.parent.id, this.id);
-			}
+			this.setIsActive(false);
 		}
-		this.setIsActive(false);
 	}
-
 	update(state: Segment): void {
 		this.ownerSign = state.winner;
 	}
-
 	override unlockSegment(number: number): void {
 		if (!this.isOwned()) {
 			super.unlockSegment(number);

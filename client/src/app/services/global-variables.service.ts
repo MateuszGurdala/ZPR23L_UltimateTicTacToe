@@ -16,10 +16,7 @@ export class GlobalVariablesService {
 	currentSegment: number | undefined;
 	boardSize: number = 3;
 	playerSign: Sign = Sign.X;
-	gameMode: GameMode = GameMode.Multiplayer;
-
-	//TODO: Remove
-	enemySign: Sign = Sign.O;
+	gameMode: GameMode = GameMode.SinglePlayer;
 
 	constructor(private readonly httpClient: GameHttpClient) {}
 
@@ -58,12 +55,10 @@ export class GlobalVariablesService {
 				break;
 			case GameState.PlayerX:
 				this.playerSign = Sign.X;
-				this.enemySign = Sign.O;
 				this.isGameOngoing = true;
 				break;
 			case GameState.PlayerO:
 				this.playerSign = Sign.O;
-				this.enemySign = Sign.X;
 				this.isGameOngoing = true;
 				break;
 		}
@@ -75,7 +70,6 @@ export class GlobalVariablesService {
 	}
 
 	async getCurrentSegment(): Promise<number> {
-		console.log(this.currentSegment);
 		if (this.currentSegment === undefined) {
 			this.currentSegment = await firstValueFrom(this.httpClient.getCurrentSegment());
 			this.currentSegment += 1;

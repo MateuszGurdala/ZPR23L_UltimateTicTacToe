@@ -57,6 +57,11 @@
     font-size: 5vmin;
 }
 
+.current-stage {
+    font-size: 4vmin;
+    text-align: center;
+}
+
 .hide {
     display: none;
 }

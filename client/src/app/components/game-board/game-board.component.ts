@@ -4,7 +4,6 @@ import { DaughterBoard, GameBoard } from "src/app/structs";
 import { BoardSegmentComponent } from "../board-segment/board-segment.component";
 import { GameMasterService } from "src/app/services/game-master.service";
 import { GlobalVariablesService } from "../../services/global-variables.service";
-import { GameStage } from "../../structs";
 
 @Component({
 	selector: "game-board",
@@ -20,10 +19,10 @@ export class GameBoardComponent extends SegmentLogic implements AfterContentInit
 	segments: Array<GameBoardComponent | BoardSegmentComponent>;
 	segmentChoosing: boolean = false;
 
+	//#region CoreComponentMethods
 	constructor(private readonly master: GameMasterService, private readonly gVars: GlobalVariablesService) {
 		super();
 	}
-
 	override ngAfterContentInit(): void {
 		this.id = this.setId;
 		this.childrenCount = Array.from({ length: this.size * this.size }, (x, i) => ++i);
@@ -40,11 +39,41 @@ export class GameBoardComponent extends SegmentLogic implements AfterContentInit
 			this.parent.subscribe(this);
 		}
 	}
+	//#endregion
 
+	//#region Utils
+	isMotherBoard(): boolean {
+		return this.boardClass === "Motherboard";
+	}
+	isDaughterBoard(): boolean {
+		return this.boardClass === "Daughterboard";
+	}
+	onEnter(): void {
+		if (this.isDaughterBoard() && this.gVars.playerChooseSegment()) {
+			this.segments.forEach((segment) => {
+				(<BoardSegmentComponent>segment).pseudoHoverState = true;
+			});
+		}
+	}
+	onLeave(): void {
+		if (this.isDaughterBoard() && this.gVars.playerChooseSegment()) {
+			this.segments.forEach((segment) => {
+				(<BoardSegmentComponent>segment).pseudoHoverState = false;
+			});
+		}
+	}
+	onDaughterboardClick(): void {
+		if (this.gVars.playerChooseSegment() && !this.isOwned()) {
+			this.gVars.currentSegment = this.id;
+			this.master.signalPlayerChoseSegment();
+		}
+	}
 	subscribe(board: GameBoardComponent | BoardSegmentComponent): void {
 		this.segments.push(board);
 	}
+	//#endregion
 
+	//#region State Modifiers
 	update(state: GameBoard | DaughterBoard): void {
 		state.segments.forEach((segment: any) => {
 			let segmentComponent = this.segments.at(segment.id);
@@ -61,21 +90,11 @@ export class GameBoardComponent extends SegmentLogic implements AfterContentInit
 			}
 		});
 	}
-
-	isMotherBoard(): boolean {
-		return this.boardClass === "Motherboard";
-	}
-
-	isDaughterBoard(): boolean {
-		return this.boardClass === "Daughterboard";
-	}
-
 	override setIsActive(value: boolean): void {
 		this.segments.forEach((segment: GameBoardComponent | BoardSegmentComponent) => {
 			segment.setIsActive(value);
 		});
 	}
-
 	override unlockSegment(number: number): void {
 		switch (this.boardClass) {
 			case "Motherboard":
@@ -90,7 +109,6 @@ export class GameBoardComponent extends SegmentLogic implements AfterContentInit
 				break;
 		}
 	}
-
 	unlockSegmentChoosing(): void {
 		if (this.isMotherBoard()) {
 			this.segments.forEach((segment) => {
@@ -98,28 +116,5 @@ export class GameBoardComponent extends SegmentLogic implements AfterContentInit
 			});
 		}
 	}
-
-	onEnter(): void {
-		if (this.isDaughterBoard() && this.gVars.playerChooseSegment()) {
-			this.segments.forEach((segment) => {
-				(<BoardSegmentComponent>segment).pseudoHoverState = true;
-			});
-		}
-	}
-	onLeave(): void {
-		if (this.isDaughterBoard() && this.gVars.playerChooseSegment()) {
-			this.segments.forEach((segment) => {
-				(<BoardSegmentComponent>segment).pseudoHoverState = false;
-			});
-		}
-	}
-
-	onDaughterboardClick(): void {
-		if (this.gVars.playerChooseSegment()) {
-			if (!this.isOwned()) {
-				this.gVars.currentSegment = this.id;
-				this.master.signalPlayerChoseSegment();
-			}
-		}
-	}
+	//#endregion
 }

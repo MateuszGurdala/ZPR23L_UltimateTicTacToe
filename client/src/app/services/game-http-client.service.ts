@@ -82,7 +82,7 @@ export class GameHttpClient {
 		)) as GameStageResponse;
 	}
 	async getEndGame(): Promise<Observable<boolean>> {
-		let response: EndGameResponse = await firstValueFrom(
+		await firstValueFrom(
 			this.httpClient.get<EndGameResponse>(this.url + "EndGame", { withCredentials: true })
 		);
 		return of(true);
