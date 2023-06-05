@@ -39,7 +39,6 @@ public:
     std::string WinnerBoardAsJson();
     std::string BoardStateAsJson();
     std::string GetGameStage();
-    void performComputerTurn();
     int GetSegmentIndex();
 };
 

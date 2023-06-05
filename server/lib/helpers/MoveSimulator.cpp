@@ -12,8 +12,19 @@ std::array<Point, 2> MoveSimulator::PerformRandomMove(
   std::mt19937 gen(rd());
   unsigned int outerIndex;
   if (chosenSegment < 0) {
-    std::uniform_int_distribution<> outerDist(0, movesToChooseFrom.size() - 1);
-    outerIndex = outerDist(gen);
+    std::vector<unsigned int> validIndices;
+    for (unsigned int i = 0; i < movesToChooseFrom.size(); ++i) {
+      if (!movesToChooseFrom[i].empty()) {
+        validIndices.push_back(i);
+      }
+    }
+
+    if (validIndices.empty()) {
+      throw std::runtime_error("No valid moves available.");
+    }
+
+    std::uniform_int_distribution<> outerDist(0, validIndices.size() - 1);
+    outerIndex = validIndices[outerDist(gen)];
   } else {
     outerIndex = chosenSegment;
   }

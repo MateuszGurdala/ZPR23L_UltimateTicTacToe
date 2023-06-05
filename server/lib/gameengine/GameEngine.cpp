@@ -34,7 +34,10 @@ std::vector<std::vector<Point>> GameEngine::initializeAvailableInnerBoardMoves()
     return availableMoves;
 }
 bool GameEngine::IsSegmentChoosen(Point& innerBoardCoordinates){
-    if(mainBoard->GetWinnerBoardCell(innerBoardCoordinates) != ' ')
+    unsigned int boardSize = GetBoardSize();
+    currentSegment = BoardIndexConverter::PointToIndex(innerBoardCoordinates, boardSize);
+    if(mainBoard->GetWinnerBoardCell(innerBoardCoordinates) != ' ' ||
+        allAvailableBoardMoves[currentSegment].empty())
     {
         return false;
     }
@@ -101,6 +104,24 @@ bool GameEngine::CheckForLocalWinner(Point& mainBoardCoordinates, Point& innerBo
     }
     return false;
 }
+bool GameEngine::CheckIfAnyMovesLeft(){
+    unsigned int boardSize = GetBoardSize();
+    for(unsigned int i=0; i < allAvailableBoardMoves.size(); i++){
+        if(!allAvailableBoardMoves[i].empty())
+        {
+            return true;
+        }
+        Point boardIndex = BoardIndexConverter::IndexToPoint(i, boardSize);
+        if(mainBoard->GetWinnerBoardCell(boardIndex) == ' ')
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+
 bool GameEngine::CheckForGlobalWinner(Point& changedWinnerBoardCellCoordinates) {
     auto figuresInPattern = mainBoard->GetWinnerBoard().GetHorizontalValues(changedWinnerBoardCellCoordinates);
     if(areAllValuesTheSame(figuresInPattern))

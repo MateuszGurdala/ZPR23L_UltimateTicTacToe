@@ -66,10 +66,6 @@ char InnerBoard::GetCell(Point coordinates) {
     return playBoard[coordinates.x][coordinates.y];
 }
 
-const std::vector<std::vector<char>>& InnerBoard::GetPlayBoard() const {
-    return playBoard;
-}
-
 std::vector<char> InnerBoard::GetLeftDiagonalValues(Point& chosenCoordinates) const {
     std::vector<char> diagonalSymbols;
     unsigned int tempX = chosenCoordinates.x;
@@ -88,19 +84,20 @@ std::vector<char> InnerBoard::GetLeftDiagonalValues(Point& chosenCoordinates) co
     return diagonalSymbols;
 }
 
-std::vector<char> InnerBoard::GetRightDiagonalValues(Point &chosenCoordinates) const {
+std::vector<char> InnerBoard::GetRightDiagonalValues(Point& chosenCoordinates) const {
     std::vector<char> diagonalSymbols;
     int tempX = (int)chosenCoordinates.x;
     int tempY = (int)chosenCoordinates.y;
 
-    while (tempX < (int)boardSize-1 && tempY < (int)boardSize-1) {
+    while (tempX < (int)boardSize - 1 && tempY > 0) {
         ++tempX;
-        ++tempY;
+        --tempY;
     }
-    while (tempX >= 0 && tempY >= 0) {
+
+    while (tempX >= 0 && tempY < (int)boardSize) {
         diagonalSymbols.emplace_back(playBoard[tempX][tempY]);
         --tempX;
-        --tempY;
+        ++tempY;
     }
 
     return diagonalSymbols;

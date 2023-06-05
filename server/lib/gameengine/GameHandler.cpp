@@ -95,7 +95,8 @@ void GameHandler::PerformTurn(Point boardCoordinates, Point innerCoordinates) {
 
 void GameHandler::updateGameStage(Point &outerBoardCoordinates,
                                   Point &innerCoordinates) {
-  if (gameEngine->CheckForGlobalWinner(outerBoardCoordinates)) {
+  if (gameEngine->CheckForGlobalWinner(outerBoardCoordinates) ||
+      !gameEngine->CheckIfAnyMovesLeft()) {
     currentGameState->SetGameStage("Game is Finished");
     return;
   }

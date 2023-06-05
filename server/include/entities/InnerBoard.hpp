@@ -24,7 +24,6 @@ public:
     Constructor which takes size of board as parameter. Creates empty board 2 dimensional array
  */
 InnerBoard(unsigned int boardSize);
-const std::vector<std::vector<char>>& GetPlayBoard() const;
 /*  Function: ToJson
     Converts board to json format which is used in communication with the client.
     Parameters:

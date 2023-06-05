@@ -33,6 +33,7 @@ public:
     bool IsSegmentChoosen(Point &innerBoardCoordinates);
     std::array<Point, 2> HandleComputerMove();
     int GetCurrentSegment();
+    bool CheckIfAnyMovesLeft();
 };
 
 #endif //ULTIMATETICTACTOESERVER_GAMEENGINE_H
