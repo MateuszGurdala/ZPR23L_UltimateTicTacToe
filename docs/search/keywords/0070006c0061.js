@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("pla",["Function","Class"],[["PlaceFigure",,[["InnerBoard",,,,0,"File6:InnerBoard.hpp:InnerBoard.PlaceFigure","CClass:InnerBoard:PlaceFigure"]]],["Player",,[[,,,,1,"File6:Player.hpp:Player","CClass:Player"]]]]);

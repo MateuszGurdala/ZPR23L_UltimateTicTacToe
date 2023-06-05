@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("inn",["Class"],[["InnerBoard",,[[,,,,0,"File6:InnerBoard.hpp:InnerBoard","CClass:InnerBoard"]]]]);

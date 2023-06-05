@@ -1,1 +1,0 @@
-﻿NDFramePage.OnPageTitleLoaded("CClass:BoardBase","BoardBase");NDSummary.OnSummaryLoaded("CClass:BoardBase",[["C/C++","C"]],[["Classes","Class"]],[[93,0,0,"BoardBase"]]);

@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("ope",["Function"],[["operator",,[["HttpHeaders",,,,0,"File:HttpHeaders.hpp:HttpHeaders.operator","CClass:HttpHeaders:operator"]]],["operator=",,[["HttpHeaders",,,,0,"File:HttpHeaders.hpp:HttpHeaders.operator=","CClass:HttpHeaders:operator="]]]]);

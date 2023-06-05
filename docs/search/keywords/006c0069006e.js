@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("lin",["Class"],[["LinuxServerSocket",,[[,,,,0,"File3:LinuxServerSocket.hpp:LinuxServerSocket","CClass:LinuxServerSocket"]]]]);

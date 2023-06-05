@@ -1,1 +1,0 @@
-﻿NDFramePage.OnPageTitleLoaded("CClass:InnerBoard","InnerBoard");NDSummary.OnSummaryLoaded("CClass:InnerBoard",[["C/C++","C"]],[["Classes","Class"],["Functions","Function"],["Groups","Group"]],[[81,0,0,"InnerBoard"],[82,0,2,"Functions","Functions"],[83,0,1,"ToJson","ToJson"],[84,0,1,"InnerBoard","InnerBoard"],[85,0,1,"ToJson","ToJson(2)"],[86,0,1,"PlaceFigure","PlaceFigure"]]);

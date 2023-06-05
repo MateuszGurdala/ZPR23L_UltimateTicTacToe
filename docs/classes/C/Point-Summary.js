@@ -1,1 +1,0 @@
-﻿NDFramePage.OnPageTitleLoaded("CClass:Point","Point");NDSummary.OnSummaryLoaded("CClass:Point",[["C/C++","C"]],[["Structs","Struct"]],[[92,0,0,"Point"]]);
