@@ -78,28 +78,34 @@ void GameEngine::HandleMove(Point& boardCoordinates, Point& innerCoordinates, ch
 
 bool GameEngine::CheckForLocalWinner(Point& mainBoardCoordinates, Point& innerBoardCellCoordinates, char figure) {
     auto& innerBoard = mainBoard->GetInnerBoard(mainBoardCoordinates);
+    unsigned int boardSize = GetBoardSize();
+    unsigned int mainBoardIndex = BoardIndexConverter::PointToIndex(mainBoardCoordinates, boardSize);
     auto figuresInPattern = innerBoard.GetHorizontalValues(innerBoardCellCoordinates);
     if(areAllValuesTheSame(figuresInPattern))
     {
         mainBoard->AddWinnerOfInnerBoard(mainBoardCoordinates, figure);
+        allAvailableBoardMoves[mainBoardIndex].clear();
         return true;
     }
     figuresInPattern = innerBoard.GetVerticalValues(innerBoardCellCoordinates);
     if(areAllValuesTheSame(figuresInPattern))
     {
         mainBoard->AddWinnerOfInnerBoard(mainBoardCoordinates, figure);
+        allAvailableBoardMoves[mainBoardIndex].clear();
         return true;
     }
     figuresInPattern = innerBoard.GetLeftDiagonalValues(innerBoardCellCoordinates);
     if(figuresInPattern.size() ==  mainBoard->GetBoardSize() && areAllValuesTheSame(figuresInPattern))
     {
         mainBoard->AddWinnerOfInnerBoard(mainBoardCoordinates, figure);
+        allAvailableBoardMoves[mainBoardIndex].clear();
         return true;
     }
     figuresInPattern = innerBoard.GetRightDiagonalValues(innerBoardCellCoordinates);
     if(figuresInPattern.size() ==  mainBoard->GetBoardSize() && areAllValuesTheSame(figuresInPattern))
     {
         mainBoard->AddWinnerOfInnerBoard(mainBoardCoordinates, figure);
+        allAvailableBoardMoves[mainBoardIndex].clear();
         return true;
     }
     return false;
