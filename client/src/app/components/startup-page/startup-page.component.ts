@@ -38,11 +38,6 @@ export class StartupPageComponent {
 	optionsClick(): void {
 		this.displayWelcome = false;
 	}
-	onInputChange(): void {
-		if (this.serverURL === "") {
-			this.serverURL = "localhost:1337";
-		}
-	}
 	async checkServerStatus(): Promise<boolean> {
 		let serverStatus = await this.master.checkServerIsAlive(this.serverURL);
 

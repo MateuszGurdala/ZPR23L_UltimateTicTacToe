@@ -22,16 +22,17 @@
 }
 
 .settings-bar {
-    width: 25vw;
+    width: 30vw;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10vmin;
+    gap: 5vmin;
 }
 
 .game-header {
     color: var(--grey);
     font-size: 5.4vmin;
+    margin-bottom: 2vmin;
 }
 
 .game-settings-container {
@@ -72,5 +73,28 @@
 }
 
 .loader-container {
-    height: 8vmin;
+    height: 3vmin;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 4vmin;
+}
+
+.board-lookup {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+}
+
+.segment-lookup {
+    font-weight: 700;
+    font-size: 4vmin;
+    border-style: solid;
+    border-width: 2px;
+    width: 7vmin;
+    height: 6vmin;
+    padding-top: 1vmin;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }

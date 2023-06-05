@@ -31,9 +31,6 @@
         </span>
         <!-- OptionsPage -->
         <div class="settings-page">
-            <h4 class="setting-label">Server IP</h4>
-            <input #serverInput name="server" type="text" [(ngModel)]="serverURL" class="server-url"
-                (input)="onInputChange()" (focusout)="onInputChange()" />
             <h4 class="setting-label">Preferred Sign</h4>
             <div class="signs-container">
                 <h1 [ngClass]="{'selected': xIsChosen}" (click)="selectSign($event)">X</h1>

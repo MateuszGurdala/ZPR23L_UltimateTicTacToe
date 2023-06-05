@@ -57,7 +57,7 @@ export class GameMasterService {
 		return new Promise((resolve) => setTimeout(resolve, ms));
 	}
 	async waitForGameInit(): Promise<void> {
-		if (this.gameBoard === undefined) {
+		if (this.gameBoard === undefined || this.settingsBoard === undefined) {
 			console.log("Waiting for init.");
 			await this.sleep(this.playerTimeout);
 			await this.waitForGameInit();
@@ -141,6 +141,9 @@ export class GameMasterService {
 	async updateBoard(): Promise<void> {
 		let result = await firstValueFrom(this.httpClient.getBoardState());
 		this.gameBoard.update(result);
+		result.segments.forEach((segment) => {
+			this.settingsBoard.updateLookup(segment.id, segment.winner);
+		});
 	}
 	//#endregion
 

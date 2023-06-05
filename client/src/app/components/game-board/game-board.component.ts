@@ -116,8 +116,10 @@ export class GameBoardComponent extends SegmentLogic implements AfterContentInit
 
 	onDaughterboardClick(): void {
 		if (this.gVars.playerChooseSegment()) {
-			this.gVars.currentSegment = this.id;
-			this.master.signalPlayerChoseSegment();
+			if (!this.isOwned()) {
+				this.gVars.currentSegment = this.id;
+				this.master.signalPlayerChoseSegment();
+			}
 		}
 	}
 }
