@@ -25,6 +25,7 @@ set(BOARDINDEXCONVERTER "${INCLUDE}/helpers/BoardIndexConverter.hpp" "${LIB}/hel
 
 # TESTS
 set(HTTPHEADERSTESTS "http/HttpHeadersTest.cpp" ${HTTPHEADERS})
+set(HTTPREQUEST "http/HttpRequestTest.cpp" ${HTTPREQUEST})
 set(ENGINETESTS "engine/GameEngineTests.cpp" ${GAMEENGINE})
 set(HANDLERTESTS "engine/GameHandlerTests.cpp" ${GAMEHANDLER})
 set(INNERBOARDTESTS "entities/InnerBoardTests.cpp" ${INNERBOARD} ${BOARDBASE})
@@ -35,5 +36,6 @@ set(HELPERTESTS "helpers/HelperTests.cpp" ${BOARDINDEXCONVERTER})
 
 add_executable(UltimateTicTacToeServerGameTest 
                 ${HTTPHEADERSTESTS}
+                ${HTTPREQUEST}
                 )
 target_link_libraries(UltimateTicTacToeServerGameTest PRIVATE Catch2::Catch2WithMain)
