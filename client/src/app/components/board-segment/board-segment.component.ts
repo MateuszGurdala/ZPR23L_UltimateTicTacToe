@@ -12,6 +12,7 @@ import { GlobalVariablesService } from "../../services/global-variables.service"
 })
 export class BoardSegmentComponent extends SegmentLogic implements AfterContentInit {
 	pseudoHoverState: boolean = false;
+	signSize: number;
 
 	//#region CoreComponentMethods
 	constructor(
@@ -25,6 +26,7 @@ export class BoardSegmentComponent extends SegmentLogic implements AfterContentI
 	override ngAfterContentInit(): void {
 		this.id = this.setId;
 		this.parent.subscribe(this);
+		this.signSize = this.gVars.baseSignSize / this.gVars.boardSize;
 	}
 	//#endregion
 

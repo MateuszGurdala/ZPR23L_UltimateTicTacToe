@@ -7,6 +7,7 @@ import { GameHttpClient } from "./game-http-client.service";
 	providedIn: "root",
 })
 export class GlobalVariablesService {
+	readonly baseSignSize: number = 9;
 	private gameState: GameState = GameState.Unknown;
 	gameStage: GameStage = GameStage.Unknown;
 	isGameOngoing: boolean;

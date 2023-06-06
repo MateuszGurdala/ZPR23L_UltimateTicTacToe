@@ -17,6 +17,7 @@ import { FormsModule } from "@angular/forms";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { ToastrModule } from "ngx-toastr";
 import { GlobalVariablesService } from "./services/global-variables.service";
+import { SetSignSize } from "./directives/set-sign-size.directive";
 
 @NgModule({
 	declarations: [
@@ -28,6 +29,7 @@ import { GlobalVariablesService } from "./services/global-variables.service";
 		StartupPageComponent,
 		GamePageComponent,
 		HoverReactDirective,
+		SetSignSize,
 	],
 	imports: [
 		BrowserModule,
