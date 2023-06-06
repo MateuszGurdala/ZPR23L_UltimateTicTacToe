@@ -9,7 +9,7 @@
 */
 class BoardIndexConverter {
 public:
-  /*  Function: PointToIndex
+  /*  Function: pointToIndex
 
   Converts Point on cartesian board (x,y) to index.
 
@@ -26,7 +26,7 @@ public:
 
     <Point>
 */
-  static int PointToIndex(Point &point, unsigned int &boardSize);
+  static int pointToIndex(Point &point, unsigned int &boardSize);
 
   /*  Function: handleGETRequest
 
@@ -46,7 +46,7 @@ public:
 
     <Point>
 */
-  static Point IndexToPoint(unsigned int &index, unsigned int &boardSize);
+  static Point indexToPoint(unsigned int &index, unsigned int &boardSize);
 };
 
 #endif // ULTIMATETICTACTOESERVER_BOARDINDEXCONVERTER_HPP

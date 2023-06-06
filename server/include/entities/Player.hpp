@@ -21,8 +21,8 @@ protected:
 public:
   virtual ~Player() = default;
   Player(char symbol);
-  std::string GetName() const;
-  char GetSymbol() const;
+  std::string getName() const;
+  char getSymbol() const;
 };
 
 #endif // ULTIMATETICTACTOESERVER_PLAYER_HPP

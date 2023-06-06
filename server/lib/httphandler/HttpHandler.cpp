@@ -143,7 +143,7 @@ HttpHandler::serverState(const std::shared_ptr<HttpRequest> &request) const {
 
 HttpResponse HttpHandler::boardStateEndpoint() const {
   if (gameHandler) {
-    return HttpResponse::GETResponse(gameHandler->BoardStateAsJson());
+    return HttpResponse::GETResponse(gameHandler->boardStateAsJson());
   }
   return HttpResponse::ERRORResponse("400", "Game not yet created");
 }
@@ -155,7 +155,7 @@ HttpResponse HttpHandler::serverStateEndpoint(
 
 HttpResponse HttpHandler::gameStageEndpoint() const {
   if (gameHandler) {
-    return HttpResponse::GETResponse(gameHandler->GetGameStage());
+    return HttpResponse::GETResponse(gameHandler->getGameStage());
   }
   return HttpResponse::ERRORResponse("501", "NOT IMPLEMENTED");
 }
@@ -192,18 +192,18 @@ HttpHandler::makeMoveEndpoint(const std::shared_ptr<HttpRequest> &request) {
     unsigned int segmentIdIndex = std::stoul(segmentId);
 
     Point outerCoordinates =
-        BoardIndexConverter::IndexToPoint(boardIdIndex, boardSize);
+        BoardIndexConverter::indexToPoint(boardIdIndex, boardSize);
     Point innerCoordinates =
-        BoardIndexConverter::IndexToPoint(segmentIdIndex, boardSize);
+        BoardIndexConverter::indexToPoint(segmentIdIndex, boardSize);
     std::array<Point, 2> move = {outerCoordinates, innerCoordinates};
 
     bool isValid =
-        gameHandler->PerformMoveValidation(outerCoordinates, innerCoordinates);
+        gameHandler->performMoveValidation(outerCoordinates, innerCoordinates);
     if (isValid) {
-      gameHandler->PerformTurn(outerCoordinates, innerCoordinates);
+      gameHandler->performTurn(outerCoordinates, innerCoordinates);
     }
     return HttpResponse::GETResponse(
-        gameHandler->MoveAsJson(false, move, isValid));
+        gameHandler->moveAsJson(false, move, isValid));
   } else {
     return HttpResponse::ERRORResponse("401", "UNAUTHORIZED");
   }
@@ -280,7 +280,7 @@ HttpHandler::joinGameEndpoint(const std::shared_ptr<HttpRequest> &request) {
 }
 
 HttpResponse HttpHandler::currentSegmentEndpoint() const {
-  auto segment = gameHandler->GetSegmentIndex();
+  auto segment = gameHandler->getSegmentIndex();
   return HttpResponse::GETResponse(std::to_string(segment));
 }
 

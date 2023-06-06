@@ -7,13 +7,13 @@ TEST_CASE("Game stage should use only valid stages and throw if invalid") {
 
   SECTION("Valid game stage should be accepted") {
     std::string validGameStage = "Player X Turn";
-    REQUIRE_NOTHROW(gameStage->SetGameStage(validGameStage));
-    REQUIRE(gameStage->GetCurrentGameStage() == validGameStage);
+    REQUIRE_NOTHROW(gameStage->setGameStage(validGameStage));
+    REQUIRE(gameStage->getCurrentGameStage() == validGameStage);
   }
 
   SECTION("Invalid game stage should throw an exception") {
     std::string invalidStage = "Player Mati Turn";
-    REQUIRE_THROWS_AS(gameStage->SetGameStage(invalidStage),
+    REQUIRE_THROWS_AS(gameStage->setGameStage(invalidStage),
                       std::invalid_argument);
   }
 }

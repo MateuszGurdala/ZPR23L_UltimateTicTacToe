@@ -9,8 +9,8 @@ TEST_CASE("Check if game engine and all available moves are correctly "
       std::make_unique<GameEngine>(std::move(mainBoard));
 
 
-  REQUIRE(gameEngine->GetAvailableInnerBoardMoves().size() == boardSize * boardSize);
-  for (const auto& moves : gameEngine->GetAvailableInnerBoardMoves()) {
+  REQUIRE(gameEngine->getAvailableInnerBoardMoves().size() == boardSize * boardSize);
+  for (const auto& moves : gameEngine->getAvailableInnerBoardMoves()) {
     REQUIRE(moves.size() == boardSize * boardSize);
   }
 }

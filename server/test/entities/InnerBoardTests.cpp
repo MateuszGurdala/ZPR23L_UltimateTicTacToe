@@ -9,11 +9,11 @@ TEST_CASE("InnerBoard is created and contains only whitespaces after"
   std::unique_ptr<InnerBoard> innerBoard =
       std::make_unique<InnerBoard>(boardSize);
 
-  REQUIRE(innerBoard->GetBoardSize() == boardSize);
+  REQUIRE(innerBoard->getBoardSize() == boardSize);
 
   for (unsigned int i = 0; i < boardSize; i++) {
     for (unsigned int j = 0; j < boardSize; j++) {
-      REQUIRE(innerBoard->GetCell(Point(i, j)) == ' ');
+      REQUIRE(innerBoard->getCell(Point(i, j)) == ' ');
     }
   }
 }
@@ -25,13 +25,13 @@ TEST_CASE("InnerBoard is serialized into json.") {
 
   Point coordinatesA(0, 0);
   char figureA = 'X';
-  innerBoard.PlaceFigure(coordinatesA, figureA);
+  innerBoard.placeFigure(coordinatesA, figureA);
 
   Point coordinatesB(1, 1);
   char figureB = 'O';
-  innerBoard.PlaceFigure(coordinatesB, figureB);
+  innerBoard.placeFigure(coordinatesB, figureB);
 
-  std::string json = innerBoard.ToJson(false);
+  std::string json = innerBoard.toJson(false);
 
   std::string expectedJson = R"({
         "segments":[
@@ -55,27 +55,27 @@ TEST_CASE("InnerBoard is serialized into json.") {
   REQUIRE(json == expectedJson);
 }
 
-TEST_CASE("PlaceFigure throws invalid_argument for already filled cell") {
+TEST_CASE("placeFigure throws invalid_argument for already filled cell") {
   unsigned int boardSize = 3;
   InnerBoard innerBoard(boardSize);
 
   Point coordinates(0, 0);
   char figure = 'X';
-  innerBoard.PlaceFigure(coordinates, figure);
+  innerBoard.placeFigure(coordinates, figure);
 
-  REQUIRE_THROWS_AS(innerBoard.PlaceFigure(coordinates, figure),
+  REQUIRE_THROWS_AS(innerBoard.placeFigure(coordinates, figure),
                     std::invalid_argument);
-  REQUIRE_THROWS_WITH(innerBoard.PlaceFigure(coordinates, figure),
+  REQUIRE_THROWS_WITH(innerBoard.placeFigure(coordinates, figure),
                       "given given cell is already filled");
 }
 
-TEST_CASE("PlaceFigure places the figure correctly on the board") {
+TEST_CASE("placeFigure places the figure correctly on the board") {
   unsigned int boardSize = 3;
   InnerBoard innerBoard(boardSize);
 
   Point coordinates(0, 0);
   char figure = 'X';
-  innerBoard.PlaceFigure(coordinates, figure);
+  innerBoard.placeFigure(coordinates, figure);
 
-  REQUIRE(innerBoard.GetCell(coordinates) == figure);
+  REQUIRE(innerBoard.getCell(coordinates) == figure);
 }

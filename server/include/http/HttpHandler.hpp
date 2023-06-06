@@ -109,7 +109,7 @@ private:
     See Also:
 
       <HttpRequest>
-      <BoardStateAsJson>
+      <boardStateAsJson>
 */
   HttpResponse boardStateEndpoint() const;
   /*  Function: serverStateEndpoint
@@ -148,7 +148,7 @@ private:
 
       <HttpRequest>
       <GameHandler>
-      <GetSegmentIndex>
+      <getSegmentIndex>
 */
   HttpResponse currentSegmentEndpoint() const;
   /*  Function: boardSizeEndpoint
@@ -190,8 +190,8 @@ private:
 
       <HttpRequest>
       <GameHandler>
-      <PerformTurn>
-      <MoveAsJson>
+      <performTurn>
+      <moveAsJson>
 */
   HttpResponse makeMoveEndpoint(const std::shared_ptr<HttpRequest> &request);
   /*  Function: createGameEndpoint

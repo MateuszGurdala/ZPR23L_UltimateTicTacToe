@@ -7,11 +7,11 @@ TEST_CASE("MainBoard constructor initializes mainPlayBoard and winnerBoard "
   std::unique_ptr<MainBoard> mainBoard = std::make_unique<MainBoard>(boardSize);
 
   SECTION("mainPlayBoard is initialized correctly with correct sizes") {
-    REQUIRE(mainBoard->GetBoardSize() == boardSize);
+    REQUIRE(mainBoard->getBoardSize() == boardSize);
 
     for (unsigned int i = 0; i < boardSize; i++) {
       for (unsigned int j = 0; j < boardSize; j++) {
-        REQUIRE(mainBoard->GetInnerBoard(Point(i, j)).GetBoardSize() ==
+        REQUIRE(mainBoard->getInnerBoard(Point(i, j)).getBoardSize() ==
                 boardSize);
       }
     }
@@ -21,7 +21,7 @@ TEST_CASE("MainBoard constructor initializes mainPlayBoard and winnerBoard "
 
     for (unsigned int i = 0; i < boardSize; i++) {
       for (unsigned int j = 0; j < boardSize; j++) {
-        REQUIRE(mainBoard->GetWinnerBoardCell(Point(i, j)) == ' ');
+        REQUIRE(mainBoard->getWinnerBoardCell(Point(i, j)) == ' ');
       }
     }
   }

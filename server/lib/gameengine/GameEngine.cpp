@@ -13,7 +13,7 @@ GameEngine::GameEngine(std::unique_ptr<MainBoard> mainBoard)
 }
 
 std::vector<Point> GameEngine::initializeAvailableSingleBoardMoves() {
-  unsigned int boardSize = GetBoardSize();
+  unsigned int boardSize = getBoardSize();
   std::vector<Point> availableMoves;
   availableMoves.reserve(boardSize * boardSize);
   for (unsigned int x = 0; x < boardSize; x++) {
@@ -26,7 +26,7 @@ std::vector<Point> GameEngine::initializeAvailableSingleBoardMoves() {
 
 std::vector<std::vector<Point>>
 GameEngine::initializeAvailableInnerBoardMoves() {
-  unsigned int boardSize = GetBoardSize();
+  unsigned int boardSize = getBoardSize();
   std::vector<std::vector<Point>> availableMoves;
   availableMoves.reserve(boardSize * boardSize);
   for (unsigned int n = 0; n < boardSize * boardSize; n++) {
@@ -35,26 +35,26 @@ GameEngine::initializeAvailableInnerBoardMoves() {
   return availableMoves;
 }
 
-bool GameEngine::IsSegmentChoosen(Point &innerBoardCoordinates) {
-  unsigned int boardSize = GetBoardSize();
+bool GameEngine::isSegmentChosen(Point &innerBoardCoordinates) {
+  unsigned int boardSize = getBoardSize();
   currentSegment =
-      BoardIndexConverter::PointToIndex(innerBoardCoordinates, boardSize);
-  if (mainBoard->GetWinnerBoardCell(innerBoardCoordinates) != ' ' ||
+      BoardIndexConverter::pointToIndex(innerBoardCoordinates, boardSize);
+  if (mainBoard->getWinnerBoardCell(innerBoardCoordinates) != ' ' ||
       allAvailableBoardMoves[currentSegment].empty()) {
     return false;
   }
   return true;
 }
-std::array<Point, 2> GameEngine::HandleComputerMove() {
-  return MoveSimulator::PerformRandomMove(currentLegalMoves, GetBoardSize(),
+std::array<Point, 2> GameEngine::handleComputerMove() {
+  return MoveSimulator::performRandomMove(currentLegalMoves, getBoardSize(),
                                           currentSegment);
 }
 
-void GameEngine::UpdateCurrentLegalMoves(Point &innerBoardCoordinates) {
+void GameEngine::updateCurrentLegalMoves(Point &innerBoardCoordinates) {
   currentLegalMoves.clear();
-  unsigned int boardSize = GetBoardSize();
+  unsigned int boardSize = getBoardSize();
   currentLegalMoves.resize(boardSize * boardSize);
-  if (!IsSegmentChoosen(innerBoardCoordinates)) {
+  if (!isSegmentChosen(innerBoardCoordinates)) {
     currentSegment = -1;
     for (unsigned int i = 0; i < allAvailableBoardMoves.size(); i++) {
       for (const auto &point : allAvailableBoardMoves[i]) {
@@ -64,67 +64,67 @@ void GameEngine::UpdateCurrentLegalMoves(Point &innerBoardCoordinates) {
     return;
   }
   currentSegment =
-      BoardIndexConverter::PointToIndex(innerBoardCoordinates, boardSize);
+      BoardIndexConverter::pointToIndex(innerBoardCoordinates, boardSize);
   unsigned int outerBoardIndex =
-      BoardIndexConverter::PointToIndex(innerBoardCoordinates, boardSize);
+      BoardIndexConverter::pointToIndex(innerBoardCoordinates, boardSize);
   currentLegalMoves[outerBoardIndex] = allAvailableBoardMoves[outerBoardIndex];
 }
 
-void GameEngine::HandleMove(Point &boardCoordinates, Point &innerCoordinates,
+void GameEngine::handleMove(Point &boardCoordinates, Point &innerCoordinates,
                             char figure) {
-  mainBoard->MakeMove(boardCoordinates, innerCoordinates, figure);
-  unsigned int boardSize = GetBoardSize();
+  mainBoard->makeMove(boardCoordinates, innerCoordinates, figure);
+  unsigned int boardSize = getBoardSize();
   unsigned int innerBoardIndex =
-      BoardIndexConverter::PointToIndex(boardCoordinates, boardSize);
-  RemovePointFromAllAvailableMoves(innerBoardIndex, innerCoordinates);
+      BoardIndexConverter::pointToIndex(boardCoordinates, boardSize);
+  removePointFromAllAvailableMoves(innerBoardIndex, innerCoordinates);
 }
 
-bool GameEngine::CheckForLocalWinner(Point &mainBoardCoordinates,
+bool GameEngine::checkForLocalWinner(Point &mainBoardCoordinates,
                                      Point &innerBoardCellCoordinates,
                                      char figure) {
-  auto &innerBoard = mainBoard->GetInnerBoard(mainBoardCoordinates);
-  unsigned int boardSize = GetBoardSize();
+  auto &innerBoard = mainBoard->getInnerBoard(mainBoardCoordinates);
+  unsigned int boardSize = getBoardSize();
   unsigned int mainBoardIndex =
-      BoardIndexConverter::PointToIndex(mainBoardCoordinates, boardSize);
+      BoardIndexConverter::pointToIndex(mainBoardCoordinates, boardSize);
   auto figuresInPattern =
-      innerBoard.GetHorizontalValues(innerBoardCellCoordinates);
+      innerBoard.getHorizontalValues(innerBoardCellCoordinates);
   if (areAllValuesTheSame(figuresInPattern)) {
-    mainBoard->AddWinnerOfInnerBoard(mainBoardCoordinates, figure);
+    mainBoard->addWinnerOfInnerBoard(mainBoardCoordinates, figure);
     allAvailableBoardMoves[mainBoardIndex].clear();
     return true;
   }
-  figuresInPattern = innerBoard.GetVerticalValues(innerBoardCellCoordinates);
+  figuresInPattern = innerBoard.getVerticalValues(innerBoardCellCoordinates);
   if (areAllValuesTheSame(figuresInPattern)) {
-    mainBoard->AddWinnerOfInnerBoard(mainBoardCoordinates, figure);
+    mainBoard->addWinnerOfInnerBoard(mainBoardCoordinates, figure);
     allAvailableBoardMoves[mainBoardIndex].clear();
     return true;
   }
   figuresInPattern =
-      innerBoard.GetLeftDiagonalValues(innerBoardCellCoordinates);
-  if (figuresInPattern.size() == mainBoard->GetBoardSize() &&
+      innerBoard.getLeftDiagonalValues(innerBoardCellCoordinates);
+  if (figuresInPattern.size() == mainBoard->getBoardSize() &&
       areAllValuesTheSame(figuresInPattern)) {
-    mainBoard->AddWinnerOfInnerBoard(mainBoardCoordinates, figure);
+    mainBoard->addWinnerOfInnerBoard(mainBoardCoordinates, figure);
     allAvailableBoardMoves[mainBoardIndex].clear();
     return true;
   }
   figuresInPattern =
-      innerBoard.GetRightDiagonalValues(innerBoardCellCoordinates);
-  if (figuresInPattern.size() == mainBoard->GetBoardSize() &&
+      innerBoard.getRightDiagonalValues(innerBoardCellCoordinates);
+  if (figuresInPattern.size() == mainBoard->getBoardSize() &&
       areAllValuesTheSame(figuresInPattern)) {
-    mainBoard->AddWinnerOfInnerBoard(mainBoardCoordinates, figure);
+    mainBoard->addWinnerOfInnerBoard(mainBoardCoordinates, figure);
     allAvailableBoardMoves[mainBoardIndex].clear();
     return true;
   }
   return false;
 }
-bool GameEngine::CheckIfAnyMovesLeft() {
-  unsigned int boardSize = GetBoardSize();
+bool GameEngine::checkIfAnyMovesLeft() {
+  unsigned int boardSize = getBoardSize();
   for (unsigned int i = 0; i < allAvailableBoardMoves.size(); i++) {
     if (!allAvailableBoardMoves[i].empty()) {
       return true;
     }
-    Point boardIndex = BoardIndexConverter::IndexToPoint(i, boardSize);
-    if (mainBoard->GetWinnerBoardCell(boardIndex) == ' ') {
+    Point boardIndex = BoardIndexConverter::indexToPoint(i, boardSize);
+    if (mainBoard->getWinnerBoardCell(boardIndex) == ' ') {
       return true;
     }
   }
@@ -132,27 +132,27 @@ bool GameEngine::CheckIfAnyMovesLeft() {
   return false;
 }
 
-bool GameEngine::CheckForGlobalWinner(
+bool GameEngine::checkForGlobalWinner(
     Point &changedWinnerBoardCellCoordinates) {
-  auto figuresInPattern = mainBoard->GetWinnerBoard().GetHorizontalValues(
+  auto figuresInPattern = mainBoard->getWinnerBoard().getHorizontalValues(
       changedWinnerBoardCellCoordinates);
   if (areAllValuesTheSame(figuresInPattern)) {
     return true;
   }
-  figuresInPattern = mainBoard->GetWinnerBoard().GetVerticalValues(
+  figuresInPattern = mainBoard->getWinnerBoard().getVerticalValues(
       changedWinnerBoardCellCoordinates);
   if (areAllValuesTheSame(figuresInPattern)) {
     return true;
   }
-  figuresInPattern = mainBoard->GetWinnerBoard().GetLeftDiagonalValues(
+  figuresInPattern = mainBoard->getWinnerBoard().getLeftDiagonalValues(
       changedWinnerBoardCellCoordinates);
-  if (figuresInPattern.size() == mainBoard->GetBoardSize() &&
+  if (figuresInPattern.size() == mainBoard->getBoardSize() &&
       areAllValuesTheSame(figuresInPattern)) {
     return true;
   }
-  figuresInPattern = mainBoard->GetWinnerBoard().GetRightDiagonalValues(
+  figuresInPattern = mainBoard->getWinnerBoard().getRightDiagonalValues(
       changedWinnerBoardCellCoordinates);
-  if (figuresInPattern.size() == mainBoard->GetBoardSize() &&
+  if (figuresInPattern.size() == mainBoard->getBoardSize() &&
       areAllValuesTheSame(figuresInPattern)) {
     return true;
   }
@@ -173,18 +173,18 @@ bool GameEngine::areAllValuesTheSame(const std::vector<char> &values) {
   return !containsWhitespace;
 }
 
-std::vector<std::vector<Point>> &GameEngine::GetAvailableInnerBoardMoves() {
+std::vector<std::vector<Point>> &GameEngine::getAvailableInnerBoardMoves() {
   return allAvailableBoardMoves;
 }
 
-unsigned int GameEngine::GetBoardSize() { return mainBoard->GetBoardSize(); }
-int GameEngine::GetCurrentSegment() const { return currentSegment; }
+unsigned int GameEngine::getBoardSize() { return mainBoard->getBoardSize(); }
+int GameEngine::getCurrentSegment() const { return currentSegment; }
 
-std::string GameEngine::GetWinnerBoardAsJson(bool isNested) {
-  return mainBoard->WinnerBoardToJson(isNested);
+std::string GameEngine::getWinnerBoardAsJson(bool isNested) {
+  return mainBoard->winnerBoardToJson(isNested);
 }
 
-void GameEngine::RemovePointFromAllAvailableMoves(
+void GameEngine::removePointFromAllAvailableMoves(
     unsigned int innerBoardIndex, Point &pointOfInnerBoardToRemove) {
   auto &innerBoard = allAvailableBoardMoves[innerBoardIndex];
   unsigned int x = pointOfInnerBoardToRemove.x;
@@ -196,6 +196,6 @@ void GameEngine::RemovePointFromAllAvailableMoves(
                    innerBoard.end());
 }
 
-std::string GameEngine::GetBoardAsJson(bool isNested) {
-  return mainBoard->ToJson(isNested);
+std::string GameEngine::getBoardAsJson(bool isNested) {
+  return mainBoard->toJson(isNested);
 }

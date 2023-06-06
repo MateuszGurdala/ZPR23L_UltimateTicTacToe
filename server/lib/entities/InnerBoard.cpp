@@ -20,16 +20,16 @@ void InnerBoard::FillBoard() {
   }
 }
 
-void InnerBoard::PlaceFigure(Point &coordinates, char &figure) {
-  VerifyFigure(figure);
-  VerifyCoordinates(coordinates);
+void InnerBoard::placeFigure(Point &coordinates, char &figure) {
+  verifyFigure(figure);
+  verifyCoordinates(coordinates);
   if (playBoard[coordinates.x][coordinates.y] != ' ') {
     throw std::invalid_argument("given given cell is already filled");
   }
   playBoard[coordinates.x][coordinates.y] = figure;
 }
 
-std::string InnerBoard::ToJson(bool isNested) {
+std::string InnerBoard::toJson(bool isNested) {
   std::stringstream ss;
   if (!isNested) {
     ss << "{";
@@ -38,7 +38,7 @@ std::string InnerBoard::ToJson(bool isNested) {
   for (unsigned int boardRow = 0; boardRow < boardSize; boardRow++) {
     for (unsigned int boardColumn = 0; boardColumn < boardSize; boardColumn++) {
       auto currentPoint = Point(boardRow, boardColumn);
-      int id = BoardIndexConverter::PointToIndex(currentPoint, boardSize);
+      int id = BoardIndexConverter::pointToIndex(currentPoint, boardSize);
       ss << "{";
       ss << R"("id": ")" << id << R"(",)";
       ss << R"("winner": )";
@@ -59,12 +59,12 @@ std::string InnerBoard::ToJson(bool isNested) {
   return ss.str();
 }
 
-char InnerBoard::GetCell(Point coordinates) {
+char InnerBoard::getCell(Point coordinates) {
   return playBoard[coordinates.x][coordinates.y];
 }
 
 std::vector<char>
-InnerBoard::GetLeftDiagonalValues(Point &chosenCoordinates) const {
+InnerBoard::getLeftDiagonalValues(Point &chosenCoordinates) const {
   std::vector<char> diagonalSymbols;
   unsigned int tempX = chosenCoordinates.x;
   unsigned int tempY = chosenCoordinates.y;
@@ -83,7 +83,7 @@ InnerBoard::GetLeftDiagonalValues(Point &chosenCoordinates) const {
 }
 
 std::vector<char>
-InnerBoard::GetRightDiagonalValues(Point &chosenCoordinates) const {
+InnerBoard::getRightDiagonalValues(Point &chosenCoordinates) const {
   std::vector<char> diagonalSymbols;
   int tempX = (int)chosenCoordinates.x;
   int tempY = (int)chosenCoordinates.y;
@@ -103,7 +103,7 @@ InnerBoard::GetRightDiagonalValues(Point &chosenCoordinates) const {
 }
 
 std::vector<char>
-InnerBoard::GetHorizontalValues(Point &chosenCoordinates) const {
+InnerBoard::getHorizontalValues(Point &chosenCoordinates) const {
   std::vector<char> horizontalSymbols;
   for (unsigned int rowRightIndex = chosenCoordinates.x;
        rowRightIndex < boardSize; rowRightIndex++) {
@@ -119,7 +119,7 @@ InnerBoard::GetHorizontalValues(Point &chosenCoordinates) const {
 }
 
 std::vector<char>
-InnerBoard::GetVerticalValues(Point &chosenCoordinates) const {
+InnerBoard::getVerticalValues(Point &chosenCoordinates) const {
   std::vector<char> verticalSymbols;
   for (unsigned int columnUpIndex = chosenCoordinates.y;
        columnUpIndex < boardSize; columnUpIndex++) {
