@@ -85,7 +85,6 @@ HttpResponse HttpResponse::ERRORResponse(std::string &&errorCode,
   stream << " ";
   stream << errorMessage;
 
-  // response._statusLine = "HTTP/1.1 400 BAD REQUEST";
   response._statusLine = stream.str();
 
   response._headers.addDateHeader();
