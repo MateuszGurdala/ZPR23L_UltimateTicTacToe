@@ -2,16 +2,17 @@
 
 #include "../../include/entities/InnerBoard.hpp"
 
-TEST_CASE("InnerBoard is created") {
+TEST_CASE("InnerBoard is created and contains only whitespaces after"
+          "initialization") {
 
     unsigned int boardSize = 10;
-    InnerBoard innerBoard(boardSize);
+    std::unique_ptr<InnerBoard> innerBoard = std::make_unique<InnerBoard>(boardSize);
 
-    REQUIRE(innerBoard.GetBoardSize() == boardSize);
+    REQUIRE(innerBoard->GetBoardSize() == boardSize);
 
     for (unsigned int i = 0; i < boardSize; i++) {
         for (unsigned int j = 0; j < boardSize; j++) {
-            REQUIRE(innerBoard.GetCell(Point(i,j)) == ' ');
+            REQUIRE(innerBoard->GetCell(Point(i,j)) == ' ');
         }
     }
 }

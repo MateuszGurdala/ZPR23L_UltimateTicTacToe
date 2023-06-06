@@ -4,18 +4,19 @@
 
 TEST_CASE("Computer Player is constructed") {
     char symbol = 'X';
-    ComputerPlayer player(symbol);
+    std::unique_ptr<ComputerPlayer> player = std::make_unique<ComputerPlayer>(symbol);
 
-    REQUIRE(player.GetSymbol() == symbol);
+    REQUIRE(player->GetSymbol() == symbol);
 }
 
 TEST_CASE("Human Player is constructed with correct symbol and name") {
     char symbol = 'X';
     std::string name = "Adam";
-    HumanPlayer player(symbol, name);
+    std::unique_ptr<HumanPlayer>
+        player = std::make_unique<HumanPlayer>(symbol, name);
 
-    REQUIRE(player.GetSymbol() == symbol);
-    REQUIRE(player.GetName() == name);
+    REQUIRE(player->GetSymbol() == symbol);
+    REQUIRE(player->GetName() == name);
 
 }
 
