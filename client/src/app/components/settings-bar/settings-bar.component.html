@@ -5,16 +5,8 @@
             <h4>Player Sign: {{gVars.playerSign}}</h4>
             <h4>Game Mode: {{gVars.gameMode}}</h4>
         </div>
-        <div class="board-lookup">
-            <div #s1 class="segment-lookup"></div>
-            <div #s2 class="segment-lookup"></div>
-            <div #s3 class="segment-lookup"></div>
-            <div #s4 class="segment-lookup"></div>
-            <div #s5 class="segment-lookup"></div>
-            <div #s6 class="segment-lookup"></div>
-            <div #s7 class="segment-lookup"></div>
-            <div #s8 class="segment-lookup"></div>
-            <div #s9 class="segment-lookup"></div>
+        <div #boardLookup class="board-lookup" [createBoard]="boardSize">
+            <div *ngFor="let i of childrenCount;" #segmentLookup class="segment-lookup"></div>
         </div>
         <div class="game-stage-container">
             <h3>Current Stage:</h3>
