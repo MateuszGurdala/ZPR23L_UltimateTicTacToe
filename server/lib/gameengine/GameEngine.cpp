@@ -34,6 +34,7 @@ GameEngine::initializeAvailableInnerBoardMoves() {
   }
   return availableMoves;
 }
+
 bool GameEngine::IsSegmentChoosen(Point &innerBoardCoordinates) {
   unsigned int boardSize = GetBoardSize();
   currentSegment =
@@ -177,7 +178,7 @@ std::vector<std::vector<Point>> &GameEngine::GetAvailableInnerBoardMoves() {
 }
 
 unsigned int GameEngine::GetBoardSize() { return mainBoard->GetBoardSize(); }
-int GameEngine::GetCurrentSegment() { return currentSegment; }
+int GameEngine::GetCurrentSegment() const { return currentSegment; }
 
 std::string GameEngine::GetWinnerBoardAsJson(bool isNested) {
   return mainBoard->WinnerBoardToJson(isNested);

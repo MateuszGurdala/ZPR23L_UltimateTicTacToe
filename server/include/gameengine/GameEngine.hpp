@@ -104,7 +104,7 @@ Removes point from the all available moves 2d vector.
    the value of -1, otherwise it is the index of the segment interpreted
    by the client
   */
-  int GetCurrentSegment();
+  int GetCurrentSegment() const;
   /*  Function: CheckIfAnyMovesLeft
     Verify if there are any valid moves left. If not, the game should not
     be continued. Checks if available moves where inner board was not won
