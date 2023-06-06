@@ -9,16 +9,15 @@ GameHandler::GameHandler(std::unique_ptr<HumanPlayer> hostPlayer,
                          std::unique_ptr<GameEngine> gameEngine,
                          bool isPlayerVsComputer)
     : hostPlayer(std::move(hostPlayer)), secondPlayer(std::move(secondPlayer)),
-      gameEngine(std::move(gameEngine)), isSecondPlayerComputer(isPlayerVsComputer) {
+      gameEngine(std::move(gameEngine)),
+      isSecondPlayerComputer(isPlayerVsComputer) {
   currentGameState = std::make_unique<GameStage>();
   currentGameState->SetGameStage("Player X Turn, choose segment");
   if (isSecondPlayerComputer && !isHostTurn) {
     std::array<Point, 2> simulatedCoordinates =
         this->gameEngine->HandleComputerMove();
-    PerformTurn(simulatedCoordinates[0],
-                simulatedCoordinates[1]);
+    PerformTurn(simulatedCoordinates[0], simulatedCoordinates[1]);
   }
-
 }
 
 GameHandler::GameHandler(unsigned int boardSize, char hostSymbol,
@@ -59,8 +58,7 @@ void GameHandler::startGame(unsigned int boardSize, const std::string &hostName,
   if (isSecondPlayerComputer && !isHostTurn) {
     std::array<Point, 2> simulatedCoordinates =
         gameEngine->HandleComputerMove();
-    PerformTurn(simulatedCoordinates[0],
-                simulatedCoordinates[1]);
+    PerformTurn(simulatedCoordinates[0], simulatedCoordinates[1]);
   }
 }
 
@@ -69,8 +67,7 @@ bool GameHandler::PerformMoveValidation(Point boardCoordinates,
   unsigned int boardSize = gameEngine->GetBoardSize();
   unsigned int winnerBoardIndex =
       BoardIndexConverter::PointToIndex(boardCoordinates, boardSize);
-  auto const availableMoves =
-      gameEngine->GetAvailableInnerBoardMoves();
+  auto const availableMoves = gameEngine->GetAvailableInnerBoardMoves();
   bool isPointValid = std::any_of(
       availableMoves[winnerBoardIndex].begin(),
       availableMoves[winnerBoardIndex].end(), [&](const Point &point) {
@@ -92,8 +89,7 @@ void GameHandler::PerformTurn(Point boardCoordinates, Point innerCoordinates) {
                                   currentFigure);
   isHostTurn = !isHostTurn;
   updateGameStage(boardCoordinates, innerCoordinates);
-  if(currentGameState->GetCurrentGameStage() == "Game is Finished")
-  {
+  if (currentGameState->GetCurrentGameStage() == "Game is Finished") {
     return;
   }
   gameEngine->UpdateCurrentLegalMoves(innerCoordinates);

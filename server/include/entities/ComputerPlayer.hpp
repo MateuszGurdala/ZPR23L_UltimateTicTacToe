@@ -3,11 +3,11 @@
 #ifndef ULTIMATETICTACTOESERVER_COMPUTERPLAYER_HPP
 #define ULTIMATETICTACTOESERVER_COMPUTERPLAYER_HPP
 
-#include <array>
-#include "Player.hpp"
 #include "BoardBase.hpp"
-#include <vector>
+#include "Player.hpp"
+#include <array>
 #include <random>
+#include <vector>
 
 /*  Class: ComputerPlayer
     Class of a player handled by computer.
@@ -19,11 +19,11 @@
 class ComputerPlayer : public Player {
 private:
 public:
-    /*  Constructor: ComputerPlayer
-        Constructor which takes symbol which computer
-        player will use during game.
-    */
-    ComputerPlayer(char symbol);
+  /*  Constructor: ComputerPlayer
+      Constructor which takes symbol which computer
+      player will use during game.
+  */
+  ComputerPlayer(char symbol);
 };
 
-#endif //ULTIMATETICTACTOESERVER_COMPUTERPLAYER_HPP
+#endif // ULTIMATETICTACTOESERVER_COMPUTERPLAYER_HPP

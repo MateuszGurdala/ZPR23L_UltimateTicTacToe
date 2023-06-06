@@ -15,13 +15,14 @@ std::string defaultGetResponse = "HTTP/1.1 200 OK\n"
                                  "Connection: closed\n"
                                  "Content-Length: 0\n";
 
-std::string defaultGetBodyResponse = "HTTP/1.1 200 OK\n"
-                                 "Access-Control-Allow-Credentials: true\n"
-                                 "Access-Control-Allow-Headers: Content-Type\n"
-                                 "Access-Control-Allow-Methods: GET\n"
-                                 "Access-Control-Allow-Origin: *\n"
-                                 "Allow: GET\n"
-                                 "Connection: closed\n";
+std::string defaultGetBodyResponse =
+    "HTTP/1.1 200 OK\n"
+    "Access-Control-Allow-Credentials: true\n"
+    "Access-Control-Allow-Headers: Content-Type\n"
+    "Access-Control-Allow-Methods: GET\n"
+    "Access-Control-Allow-Origin: *\n"
+    "Allow: GET\n"
+    "Connection: closed\n";
 
 std::string getDateTime() {
   auto now = std::chrono::system_clock::now();
@@ -54,7 +55,7 @@ TEST_CASE("Default OPTIONS response is as expected.") {
 }
 
 TEST_CASE("Response with options is as expected.") {
-    std::string body = "SomeBody";
+  std::string body = "SomeBody";
   auto object = HttpResponse::GETResponse(body);
 
   std::stringstream ss;

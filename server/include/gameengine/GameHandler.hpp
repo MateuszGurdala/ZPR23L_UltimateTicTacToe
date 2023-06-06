@@ -18,67 +18,69 @@
  */
 class GameHandler {
 private:
+  std::unique_ptr<HumanPlayer> hostPlayer;
+  std::unique_ptr<Player> secondPlayer;
+  std::unique_ptr<GameEngine> gameEngine;
+  bool isHostTurn = false;
+  bool isSecondPlayerComputer;
+  std::unique_ptr<GameStage> currentGameState;
+  /*  Function: startGame
+  Function that initializes elements of the handler like, game engine, players.
+   If the game is against computer and the computer has the first move,
+   it calls the PerformTurn on first simulated move.
+    */
+  void startGame(unsigned int boardSize, const std::string &hostName,
+                 char hostSymbol, bool isPlayerVsComputer = true,
+                 const std::string &guestName = "");
+  /*  Function: updateGameStage
+Helper method used inside PerformTurn method, used to determine what
+   should be next stage of the game.
+  boardCoordinates - Point (x,y) coordinates of the chosen inner board
+  innerCoordinates - Point (x,y) chosen cell inside inner board
+        */
+  void updateGameStage(Point &outerBoardCoordinates, Point &innerCoordinates);
 
-    std::unique_ptr<HumanPlayer> hostPlayer;
-    std::unique_ptr<Player> secondPlayer;
-    std::unique_ptr<GameEngine> gameEngine;
-    bool isHostTurn = false;
-    bool isSecondPlayerComputer;
-    std::unique_ptr<GameStage> currentGameState;
-    /*  Function: startGame
-    Function that initializes elements of the handler like, game engine, players.
-     If the game is against computer and the computer has the first move,
-     it calls the PerformTurn on first simulated move.
-      */
-    void startGame(unsigned int boardSize, const std::string& hostName, char hostSymbol, bool isPlayerVsComputer = true, const std::string& guestName = "");
-    /*  Function: updateGameStage
-  Helper method used inside PerformTurn method, used to determine what
-     should be next stage of the game.
-    boardCoordinates - Point (x,y) coordinates of the chosen inner board
-    innerCoordinates - Point (x,y) chosen cell inside inner board
-          */
-    void updateGameStage(Point& outerBoardCoordinates, Point& innerCoordinates);
 public:
-    /*  Function: PerformMoveValidation
-  Checks if move performed by player was valid. Returns true if move was valid.
-    Parameters:
-      boardCoordinates - Point (x,y) coordinates of the chosen inner board
-      innerCoordinates - Point (x,y) chosen cell inside inner board
-            */
-    bool PerformMoveValidation(Point boardCoordinates, Point innerCoordinates);
-    /*  Function: PerformTurn
-    Performs turn based on the provided coordinates. Handles the move,
-     changes the turn, updates status of the game and calls game engine
-     logic. Executes again with simulated coordinated if game is against computer
-
+  /*  Function: PerformMoveValidation
+Checks if move performed by player was valid. Returns true if move was valid.
   Parameters:
     boardCoordinates - Point (x,y) coordinates of the chosen inner board
     innerCoordinates - Point (x,y) chosen cell inside inner board
           */
-    void PerformTurn(Point boardCoordinates, Point innerCoordinates);
-    GameHandler(std::unique_ptr<HumanPlayer> hostPlayer,
-                std::unique_ptr<Player> secondPlayer,
-                std::unique_ptr<GameEngine> gameEngine, bool isPlayerVsComputer);
-    /*  Constructor: GameHandler
-    The main constructor of Game Handler expects that
-     the size of board, symbol of the host and boolean if the game is against computer
-     will be provided in order to call the startGame method. Alternative constructor
-     expects that objects used in game handler are already created
-    */
-    GameHandler(unsigned int boardSize,
-                char hostSymbol, bool isPlayerVsComputer, const std::string &hostName = "Host",
-                const std::string &guestName = "Guest");
+  bool PerformMoveValidation(Point boardCoordinates, Point innerCoordinates);
+  /*  Function: PerformTurn
+  Performs turn based on the provided coordinates. Handles the move,
+   changes the turn, updates status of the game and calls game engine
+   logic. Executes again with simulated coordinated if game is against computer
 
+Parameters:
+  boardCoordinates - Point (x,y) coordinates of the chosen inner board
+  innerCoordinates - Point (x,y) chosen cell inside inner board
+        */
+  void PerformTurn(Point boardCoordinates, Point innerCoordinates);
+  GameHandler(std::unique_ptr<HumanPlayer> hostPlayer,
+              std::unique_ptr<Player> secondPlayer,
+              std::unique_ptr<GameEngine> gameEngine, bool isPlayerVsComputer);
+  /*  Constructor: GameHandler
+  The main constructor of Game Handler expects that
+   the size of board, symbol of the host and boolean if the game is against
+  computer will be provided in order to call the startGame method. Alternative
+  constructor expects that objects used in game handler are already created
+  */
+  GameHandler(unsigned int boardSize, char hostSymbol, bool isPlayerVsComputer,
+              const std::string &hostName = "Host",
+              const std::string &guestName = "Guest");
 
-    std::string GameStateAsJson();
-    std::string EndGameAsJson(bool isPlayerSurrender);
-    std::string CreateGameAsJson(bool isSuccess);
-    std::string MoveAsJson(bool isNested, std::array<Point, 2> move, bool isValid);
-    std::string PickSegmentAsJson(bool isNested, Point &segment, bool isValid);
-    std::string WinnerBoardAsJson();
-    std::string BoardStateAsJson();
-    std::string GetGameStage();
-    int GetSegmentIndex();
+  std::string GameStateAsJson();
+  std::string EndGameAsJson(bool isPlayerSurrender);
+  std::string CreateGameAsJson(bool isSuccess);
+  std::string MoveAsJson(bool isNested, std::array<Point, 2> move,
+                         bool isValid);
+  std::string PickSegmentAsJson(bool isNested, Point &segment, bool isValid);
+  std::string WinnerBoardAsJson();
+  std::string BoardStateAsJson();
+  std::string GetGameStage();
+  int GetSegmentIndex();
 };
 
-#endif //ULTIMATETICTACTOESERVER_GAMEHANDLER_H
+#endif // ULTIMATETICTACTOESERVER_GAMEHANDLER_H

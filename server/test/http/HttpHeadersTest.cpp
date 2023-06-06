@@ -84,11 +84,10 @@ TEST_CASE("CORS headers work.") {
 
   object.addCORSHeaders();
 
-  std::string expected =
-      "Access-Control-Allow-Credentials: true\n"
-      "Access-Control-Allow-Headers: Content-Type\n"
-      "Access-Control-Allow-Methods: GET\n"
-      "Access-Control-Allow-Origin: *\n";
+  std::string expected = "Access-Control-Allow-Credentials: true\n"
+                         "Access-Control-Allow-Headers: Content-Type\n"
+                         "Access-Control-Allow-Methods: GET\n"
+                         "Access-Control-Allow-Origin: *\n";
 
   REQUIRE(object.toString() == expected);
 }

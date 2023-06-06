@@ -3,52 +3,50 @@
 
 #include "../entities/BoardBase.hpp"
 
-
 /*  Class: BoardIndexConverter
-    Helper class used for converting (x,y) coordinates used by server to one index
-    which is supported by client
+    Helper class used for converting (x,y) coordinates used by server to one
+   index which is supported by client
 */
 class BoardIndexConverter {
 public:
+  /*  Function: PointToIndex
 
-    /*  Function: PointToIndex
+  Converts Point on cartesian board (x,y) to index.
 
-    Converts Point on cartesian board (x,y) to index.
+  Parameters:
 
-    Parameters:
+    point - struct containing positive integer coordinates x and y.
+    boardSize - size of tic-tac-toe board.
 
-      point - struct containing positive integer coordinates x and y.
-      boardSize - size of tic-tac-toe board.
+   Returns:
 
-     Returns:
+    Index of client's game board.
 
-      Index of client's game board.
+  See Also:
 
-    See Also:
-
-      <Point>
+    <Point>
 */
-    static int PointToIndex(Point& point, unsigned int& boardSize);
+  static int PointToIndex(Point &point, unsigned int &boardSize);
 
-    /*  Function: handleGETRequest
+  /*  Function: handleGETRequest
 
-    Converts index to Point on cartesian board (x,y) .
+  Converts index to Point on cartesian board (x,y) .
 
-    Parameters:
+  Parameters:
 
-      index - Index of board cell. Index starts at 0.
-      boardSize - size of tic-tac toe-board.
+    index - Index of board cell. Index starts at 0.
+    boardSize - size of tic-tac toe-board.
 
-    Returns:
+  Returns:
 
-      Struct containing positive integer coordinates x and y which is
-      compatible with server
+    Struct containing positive integer coordinates x and y which is
+    compatible with server
 
-    See Also:
+  See Also:
 
-      <Point>
+    <Point>
 */
-    static Point IndexToPoint(unsigned int& index, unsigned int& boardSize);
+  static Point IndexToPoint(unsigned int &index, unsigned int &boardSize);
 };
 
-#endif //ULTIMATETICTACTOESERVER_BOARDINDEXCONVERTER_HPP
+#endif // ULTIMATETICTACTOESERVER_BOARDINDEXCONVERTER_HPP

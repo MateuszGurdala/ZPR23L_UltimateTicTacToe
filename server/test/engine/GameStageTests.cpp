@@ -1,6 +1,6 @@
 #include "../../include/gameengine/GameStage.hpp"
-#include <memory>
 #include <catch2/catch_test_macros.hpp>
+#include <memory>
 
 TEST_CASE("Game stage should use only valid stages and throw if invalid") {
   std::unique_ptr<GameStage> gameStage = std::make_unique<GameStage>();
@@ -13,6 +13,7 @@ TEST_CASE("Game stage should use only valid stages and throw if invalid") {
 
   SECTION("Invalid game stage should throw an exception") {
     std::string invalidStage = "Player Mati Turn";
-    REQUIRE_THROWS_AS(gameStage->SetGameStage(invalidStage), std::invalid_argument);
+    REQUIRE_THROWS_AS(gameStage->SetGameStage(invalidStage),
+                      std::invalid_argument);
   }
 }

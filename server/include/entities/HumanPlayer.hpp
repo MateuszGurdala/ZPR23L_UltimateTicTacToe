@@ -12,11 +12,11 @@
 class HumanPlayer : public Player {
 private:
 public:
-    /*  Constructor: ComputerPlayer
-    Constructor which takes symbol which player will use during game
-     and his nickname.
-    */
-    HumanPlayer(char symbol,std::string name);
+  /*  Constructor: ComputerPlayer
+  Constructor which takes symbol which player will use during game
+   and his nickname.
+  */
+  HumanPlayer(char symbol, std::string name);
 };
 
-#endif //ULTIMATETICTACTOESERVER_HUMANPLAYER_HPP
+#endif // ULTIMATETICTACTOESERVER_HUMANPLAYER_HPP

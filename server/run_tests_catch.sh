@@ -6,8 +6,7 @@ cd ./build
 
 echo "Building CMAKE solution"
 cmake ../
-# cmake --build . --target TESTS
 cmake --build .
 
 cd ./test
-./TESTS
+./UltimateTicTacToeServerGameTest

@@ -5,7 +5,6 @@
 #include "../gameengine/GameHandler.hpp"
 #include <array>
 
-
 /*  Class: MoveSimulator
     Static class responsible for simulating and choosing move of the
     computer player
@@ -19,9 +18,9 @@ public:
       Parameters:
 
       movesToChooseFrom - 2d vector of points, first vector indicates segment of
-      main board (index) and the second vector the available moves inside segment.
-        boardSize - size of tic-tac-toe board.
-        chosenSegment - currently played segment (inner board)
+      main board (index) and the second vector the available moves inside
+  segment. boardSize - size of tic-tac-toe board. chosenSegment - currently
+  played segment (inner board)
 
       Returns:
 
@@ -32,10 +31,9 @@ public:
 
       <Point>
           */
-  static std::array<Point, 2> PerformRandomMove
-      (std::vector<std::vector<Point>>& movesToChooseFrom,
-                                         unsigned int boardSize, int chosenSegment);
-
+  static std::array<Point, 2>
+  PerformRandomMove(std::vector<std::vector<Point>> &movesToChooseFrom,
+                    unsigned int boardSize, int chosenSegment);
 };
 
 #endif // ULTIMATETICTACTOESERVER_MOVESIMULATOR_H
