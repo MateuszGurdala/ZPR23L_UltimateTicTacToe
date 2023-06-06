@@ -39,6 +39,8 @@ HttpHandler::handleGETRequest(const std::shared_ptr<HttpRequest> &request) {
     return joinGameEndpoint(request);
   } else if (endpoint == "/CurrentSegment") {
     return currentSegmentEndpoint();
+  } else if (endpoint == "/BoardSize") {
+    return boardSizeEndpoint();
   }
   /* Invalid Endpoint */
   else {
@@ -280,4 +282,8 @@ HttpHandler::joinGameEndpoint(const std::shared_ptr<HttpRequest> &request) {
 HttpResponse HttpHandler::currentSegmentEndpoint() const {
   auto segment = gameHandler->GetSegmentIndex();
   return HttpResponse::GETResponse(std::to_string(segment));
+}
+
+HttpResponse HttpHandler::boardSizeEndpoint() const {
+  return HttpResponse::GETResponse(std::to_string(boardSize));
 }

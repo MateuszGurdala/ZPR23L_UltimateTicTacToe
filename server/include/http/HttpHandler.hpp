@@ -151,6 +151,17 @@ private:
       <GetSegmentIndex>
 */
   HttpResponse currentSegmentEndpoint() const;
+  /*  Function: boardSizeEndpoint
+
+    Returns:
+
+      Size of current game board.
+
+    See Also:
+
+      <HttpRequest>
+*/
+  HttpResponse boardSizeEndpoint() const;
   /*  Function: endGameEndpoint
 
     Ends game on behalf on sender. Removes player cookie.
