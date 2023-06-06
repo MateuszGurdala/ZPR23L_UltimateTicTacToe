@@ -45,6 +45,7 @@ export class GlobalVariablesService {
 			case GameState.PlayerSolo:
 			case GameState.PlayerX:
 			case GameState.PlayerO:
+				await this.updateBoardSize();
 				return true;
 		}
 	}
@@ -77,7 +78,6 @@ export class GlobalVariablesService {
 		}
 		return this.currentSegment;
 	}
-
 	parseResponseGameStage(response: GameStageResponse): GameStage {
 		switch (response) {
 			case GameStageResponse.Unknown:
@@ -91,5 +91,9 @@ export class GlobalVariablesService {
 			case GameStageResponse.PlayerOSegment:
 				return response[7] == this.playerSign ? GameStage.PlayerChooseSegment : GameStage.EnemyChooseSegment;
 		}
+	}
+	async updateBoardSize(): Promise<void> {
+		this.boardSize = await firstValueFrom(this.httpClient.getBoardSize());
+		this.boardSize = this.boardSize === -1 ? 3 : this.boardSize;
 	}
 }

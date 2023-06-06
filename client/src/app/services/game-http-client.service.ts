@@ -91,7 +91,10 @@ export class GameHttpClient {
 		return this.httpClient.get<any>(this.url + "JoinGame", { withCredentials: true });
 	}
 	getCurrentSegment(): Observable<number> {
-		return this.httpClient.get<any>(this.url + "CurrentSegment", { withCredentials: true });
+		return this.httpClient.get<number>(this.url + "CurrentSegment", { withCredentials: true });
+	}
+	getBoardSize(): Observable<number> {
+		return this.httpClient.get<number>(this.url + "BoardSize");
 	}
 	//#endregion
 }

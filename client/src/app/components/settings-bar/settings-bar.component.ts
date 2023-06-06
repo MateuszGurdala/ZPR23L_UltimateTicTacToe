@@ -19,7 +19,6 @@ export class SettingsBarComponent implements AfterViewInit {
 	}
 	ngAfterViewInit(): void {
 		this.childrenCount = Array.from({ length: this.boardSize * this.boardSize }, (x, i) => ++i);
-		console.log(this.segmentsLookup);
 	}
 	//#endregion
 

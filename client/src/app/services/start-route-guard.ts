@@ -15,6 +15,7 @@ export const StartRouteGuard: CanActivateFn = async (
 		router.navigate(["/Start"]);
 		return false;
 	} else {
+		await gVars.updateBoardSize();
 		master.mainGameLoop();
 		return true;
 	}
