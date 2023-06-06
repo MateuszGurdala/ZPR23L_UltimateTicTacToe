@@ -7,7 +7,7 @@ TEST_CASE("Computer Player is constructed") {
   std::unique_ptr<ComputerPlayer> player =
       std::make_unique<ComputerPlayer>(symbol);
 
-  REQUIRE(player->GetSymbol() == symbol);
+  REQUIRE(player->getSymbol() == symbol);
 }
 
 TEST_CASE("Human Player is constructed with correct symbol and name") {
@@ -16,16 +16,16 @@ TEST_CASE("Human Player is constructed with correct symbol and name") {
   std::unique_ptr<HumanPlayer> player =
       std::make_unique<HumanPlayer>(symbol, name);
 
-  REQUIRE(player->GetSymbol() == symbol);
-  REQUIRE(player->GetName() == name);
+  REQUIRE(player->getSymbol() == symbol);
+  REQUIRE(player->getName() == name);
 }
 
-TEST_CASE("GetName returns the correct name for computer player") {
+TEST_CASE("getName returns the correct name for computer player") {
   char symbol = 'X';
   std::string correctName = "Computer";
   ComputerPlayer player(symbol);
 
-  REQUIRE(player.GetName() == correctName);
+  REQUIRE(player.getName() == correctName);
 }
 
 TEST_CASE("HumanPlayer name should not exceed 20 characters and contain only "

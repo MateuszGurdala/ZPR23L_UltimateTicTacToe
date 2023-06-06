@@ -11,7 +11,7 @@
 */
 class MoveSimulator {
 public:
-  /*  Function: PerformRandomMove
+  /*  Function: performRandomMove
 
   Performs random move from available moves using heuristics.
 
@@ -32,7 +32,7 @@ public:
       <Point>
           */
   static std::array<Point, 2>
-  PerformRandomMove(std::vector<std::vector<Point>> &movesToChooseFrom,
+  performRandomMove(std::vector<std::vector<Point>> &movesToChooseFrom,
                     unsigned int boardSize, int chosenSegment);
 };
 

@@ -13,8 +13,8 @@ TEST_CASE("GameHandler constructor works and game starts correctly"
   std::unique_ptr<GameHandler> gameHandler = std::make_unique<GameHandler>(
       boardSize, hostSymbol, isPlayerVsComputer, hostName, guestName);
 
-  REQUIRE(gameHandler->GetGameStage() == "Player X Turn, choose segment");
-  REQUIRE(gameHandler->GetSegmentIndex() == -1);
+  REQUIRE(gameHandler->getGameStage() == "Player X Turn, choose segment");
+  REQUIRE(gameHandler->getSegmentIndex() == -1);
 }
 TEST_CASE(
     "Verify if Game is against computer and computer starts, current symbol"
@@ -26,8 +26,8 @@ TEST_CASE(
 
   std::unique_ptr<GameHandler> gameHandler = std::make_unique<GameHandler>(
       boardSize, hostSymbol, isPlayerVsComputer, hostName);
-  REQUIRE(gameHandler->GetGameStage() == "Player O Turn");
-  REQUIRE(gameHandler->GetSegmentIndex() != -1);
+  REQUIRE(gameHandler->getGameStage() == "Player O Turn");
+  REQUIRE(gameHandler->getSegmentIndex() != -1);
 }
 
 TEST_CASE("After move is made in game versus second human player"
@@ -45,15 +45,15 @@ TEST_CASE("After move is made in game versus second human player"
   Point invalidInnerBoardPoint = Point(-1, -1);
   SECTION("Move validation if performed") {
     bool isValidMove =
-        gameHandler->PerformMoveValidation(outerBoardPoint, innerBoardPoint);
+        gameHandler->performMoveValidation(outerBoardPoint, innerBoardPoint);
     REQUIRE(isValidMove == true);
   }
   SECTION("Move validation if performed. Case with negative coordinates") {
-    bool isValidMove = gameHandler->PerformMoveValidation(
+    bool isValidMove = gameHandler->performMoveValidation(
         outerBoardPoint, invalidInnerBoardPoint);
     REQUIRE(isValidMove == false);
   }
-  gameHandler->PerformTurn(outerBoardPoint, innerBoardPoint);
-  REQUIRE(gameHandler->GetGameStage() == "Player O Turn");
-  REQUIRE(gameHandler->GetSegmentIndex() == 0);
+  gameHandler->performTurn(outerBoardPoint, innerBoardPoint);
+  REQUIRE(gameHandler->getGameStage() == "Player O Turn");
+  REQUIRE(gameHandler->getSegmentIndex() == 0);
 }

@@ -25,14 +25,14 @@ private:
   std::string currentGameStage;
 
 public:
-  /*  Function: SetGameStage
+  /*  Function: setGameStage
       Sets new game stage and checks if it is a valid game stage.
    */
-  void SetGameStage(const std::string &newGameStatus);
-  /*  Function: GetCurrentGameStage
+  void setGameStage(const std::string &newGameStatus);
+  /*  Function: getCurrentGameStage
       Getter for current game stage
    */
-  std::string GetCurrentGameStage();
+  std::string getCurrentGameStage();
 };
 
 #endif // ULTIMATETICTACTOESERVER_GAMESTAGE_H

@@ -1,8 +1,8 @@
 
 #include "../../include/entities/Player.hpp"
 
-std::string Player::GetName() const { return name; }
+std::string Player::getName() const { return name; }
 
-char Player::GetSymbol() const { return symbol; }
+char Player::getSymbol() const { return symbol; }
 
 Player::Player(char symbol) : symbol(symbol) {}

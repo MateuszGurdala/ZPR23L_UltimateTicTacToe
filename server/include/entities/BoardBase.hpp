@@ -40,8 +40,8 @@ public:
   BoardBase(unsigned int boardSize);
   virtual ~BoardBase() = default;
 
-  unsigned int GetBoardSize() const;
-  /*  Function: VerifyCoordinates
+  unsigned int getBoardSize() const;
+  /*  Function: verifyCoordinates
   checks if coordinates of point are valid in terms of placing it on the board
    (being inside the bounds)
 
@@ -50,16 +50,16 @@ public:
           See also:
       <Point>
           */
-  void VerifyCoordinates(Point point) const;
-  /*  Function: VerifyFigure
+  void verifyCoordinates(Point point) const;
+  /*  Function: verifyFigure
   checks if figure is allowed to be placed in the board. Currently,
    we accept only 'X' and 'O' as valid figures.
 
   Parameters:
       figure - figure to be placed inside the board
           */
-  static void VerifyFigure(char figure);
-  virtual std::string ToJson(bool isNested) = 0;
+  static void verifyFigure(char figure);
+  virtual std::string toJson(bool isNested) = 0;
 };
 
 #endif // ULTIMATETICTACTOESERVER_BOARDBASE_HPP

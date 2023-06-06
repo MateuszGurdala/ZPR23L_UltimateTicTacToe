@@ -5,7 +5,7 @@
 #include <random>
 #include <thread>
 
-std::array<Point, 2> MoveSimulator::PerformRandomMove(
+std::array<Point, 2> MoveSimulator::performRandomMove(
     std::vector<std::vector<Point>> &movesToChooseFrom, unsigned int boardSize,
     int chosenSegment) {
   std::random_device rd;
@@ -34,7 +34,7 @@ std::array<Point, 2> MoveSimulator::PerformRandomMove(
   unsigned int innerIndex = innerDist(gen);
   Point chosenPoint = chosenVector[innerIndex];
 
-  Point outerPoint = BoardIndexConverter::IndexToPoint(outerIndex, boardSize);
+  Point outerPoint = BoardIndexConverter::indexToPoint(outerIndex, boardSize);
 
   std::array<Point, 2> result = {outerPoint, chosenPoint};
   std::this_thread::sleep_for(std::chrono::seconds(1));
