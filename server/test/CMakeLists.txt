@@ -32,7 +32,6 @@ set(HTTPRESPONSETESTS "http/HttpResponseTest.cpp" ${HTTPRESPONSE})
 set(ENGINETESTS "engine/GameEngineTests.cpp" ${GAMEENGINE})
 set(HANDLERTESTS "engine/GameHandlerTests.cpp" ${GAMEHANDLER})
 set(GAMESTAGETESTS "engine/GameStageTests.cpp" ${GAMESTAGE})
-
 set(INNERBOARDTESTS "entities/InnerBoardTests.cpp" ${INNERBOARD} ${BOARDBASE})
 set(OUTERBOARDTESTS "entities/MainBoardTests.cpp" ${MAINBOARD} ${BOARDBASE})
 set(PLAYERTESTS "entities/PlayerTests.cpp" ${PLAYER}  ${HUMANPLAYER} ${COMPUTERPLAYER})

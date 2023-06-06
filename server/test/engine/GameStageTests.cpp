@@ -1,4 +1,5 @@
 #include "../../include/gameengine/GameStage.hpp"
+#include <memory>
 #include <catch2/catch_test_macros.hpp>
 
 TEST_CASE("Game stage should use only valid stages and throw if invalid") {
