@@ -56,7 +56,9 @@ public:
     innerCoordinates - Point (x,y) chosen cell inside inner board
           */
     void PerformTurn(Point boardCoordinates, Point innerCoordinates);
-    GameHandler(std::unique_ptr<HumanPlayer> hostPlayer, std::unique_ptr<Player> secondPlayer, std::unique_ptr<GameEngine> gameEngine);
+    GameHandler(std::unique_ptr<HumanPlayer> hostPlayer,
+                std::unique_ptr<Player> secondPlayer,
+                std::unique_ptr<GameEngine> gameEngine, bool isPlayerVsComputer);
     /*  Constructor: GameHandler
     The main constructor of Game Handler expects that
      the size of board, symbol of the host and boolean if the game is against computer
