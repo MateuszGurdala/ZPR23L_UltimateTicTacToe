@@ -12,7 +12,7 @@ set(LIB "${PROJECT_SOURCE_DIR}/lib")
 add_subdirectory(lib)
 
 if(UNIX)
-# add_subdirectory(test)
+ add_subdirectory(test)
 endif()
 
 add_executable (UltimateTicTacToeServer "${PROJECT_SOURCE_DIR}/src/main.cpp")
