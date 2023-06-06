@@ -155,6 +155,7 @@ export class GameMasterService {
 		await this.sleep(this.enemyTimeout);
 	}
 	private async finishGame(): Promise<void> {
+		await this.updateBoard();
 		this.setIsProcessing(false);
 		this.gameBoard.setIsActive(false);
 		this.gVars.isGameOngoing = false;
