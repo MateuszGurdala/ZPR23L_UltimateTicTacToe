@@ -1,18 +1,39 @@
 find_package(Catch2 3 REQUIRED)
 
-set(HTTPHEADERSTESTS "http/HttpHeadersTest.cpp" "${INCLUDE}/http/HttpHeaders.hpp" "${LIB}/httphandler/HttpHeaders.cpp")
+# HTTP
+set(HTTPHANDLERSRC "${INCLUDE}/http/HttpHandler.hpp" "${LIB}/httphandler/HttpHandler.cpp")
+set(HTTPHEADERS "${INCLUDE}/http/HttpHeaders.hpp" "${LIB}/httphandler/HttpHeaders.cpp")
+set(HTTPREQUEST "${INCLUDE}/http/HttpRequest.hpp" "${LIB}/httphandler/HttpRequest.cpp")
+set(HTTPRESPONSE "${INCLUDE}/http/HttpResponse.hpp" "${LIB}/httphandler/HttpResponse.cpp")
+set(CONFIG "${SRC}/config.hpp")
 
-set(INNERBOARDTESTS "entities/InnerBoardTests.cpp" "${INCLUDE}/entities/InnerBoard.hpp" "${LIB}/entities/InnerBoard.cpp"
-        "${INCLUDE}/entities/BoardBase.hpp" "${LIB}/entities/BoardBase.cpp")
-set(OUTERBOARDTESTS "entities/MainBoardTests.cpp" "${INCLUDE}/entities/MainBoard.hpp" "${LIB}/entities/MainBoard.cpp"
-        "${INCLUDE}/entities/BoardBase.hpp" "${LIB}/entities/BoardBase.cpp")
-set(PLAYERTESTS "entities/PlayerTests.cpp" "${INCLUDE}/entities/Player.hpp" "${INCLUDE}/entities/HumanPlayer.hpp"
-        "${INCLUDE}/entities/ComputerPlayer.hpp" "${LIB}/entities/Player.cpp" "${LIB}/entities/HumanPlayer.cpp" "${LIB}/entities/ComputerPlayer.cpp")
+# GAMEENGINE
+set(GAMEENGINE "${INCLUDE}/gameengine/GameEngine.hpp" "${LIB}/gameengine/GameEngine.cpp")
+set(GAMEHANDLER "${INCLUDE}/gameengine/GameHandler.hpp" "${LIB}/gameengine/GameHandler.cpp")
 
-set(ENGINETESTS "engine/GameEngineTests.cpp" "${INCLUDE}/gameengine/GameEngine.hpp" "${LIB}/gameengine/GameEngine.cpp")
-set(HANDLERTESTS "engine/GameHandlerTests.cpp" "${INCLUDE}/gameengine/GameHandler.hpp" "${LIB}/gameengine/GameHandler.cpp")
+# ENTITIES
+set(BOARDBASE "${INCLUDE}/entities/BoardBase.hpp" "${LIB}/entities/BoardBase.cpp")
+set(INNERBOARD "${INCLUDE}/entities/InnerBoard.hpp" "${LIB}/entities/InnerBoard.cpp")
+set(MAINBOARD "${INCLUDE}/entities/MainBoard.hpp" "${LIB}/entities/MainBoard.cpp")
+set(PLAYER "${INCLUDE}/entities/Player.hpp" "${LIB}/entities/Player.cpp")
+set(HUMANPLAYER "${INCLUDE}/entities/HumanPlayer.hpp" "${LIB}/entities/HumanPlayer.cpp")
+set(COMPUTERPLAYER "${INCLUDE}/entities/ComputerPlayer.hpp" "${LIB}/entities/ComputerPlayer.cpp")
 
-set(HELPERTESTS "helpers/HelperTests.cpp" "${INCLUDE}/helpers/BoardIndexConverter.hpp" "${LIB}/helpers/BoardIndexConverter.cpp")
+# HELPERS
+set(BOARDINDEXCONVERTER "${INCLUDE}/helpers/BoardIndexConverter.hpp" "${LIB}/helpers/BoardIndexConverter.cpp")
 
-add_executable(TESTS ${HTTPHEADERSTESTS} ${INNERBOARDTESTS} ${OUTERBOARDTESTS} ${PLAYERTESTS} ${ENGINETESTS} ${HANDLERTESTS} ${HELPERTESTS})
-target_link_libraries(TESTS PRIVATE Catch2::Catch2WithMain)
+
+# TESTS
+set(HTTPHEADERSTESTS "http/HttpHeadersTest.cpp" ${HTTPHEADERS})
+set(ENGINETESTS "engine/GameEngineTests.cpp" ${GAMEENGINE})
+set(HANDLERTESTS "engine/GameHandlerTests.cpp" ${GAMEHANDLER})
+set(INNERBOARDTESTS "entities/InnerBoardTests.cpp" ${INNERBOARD} ${BOARDBASE})
+set(OUTERBOARDTESTS "entities/MainBoardTests.cpp" ${MAINBOARD} ${BOARDBASE})
+set(PLAYERTESTS "entities/PlayerTests.cpp" ${PLAYER}  ${HUMANPLAYER} ${COMPUTERPLAYER})
+set(HELPERTESTS "helpers/HelperTests.cpp" ${BOARDINDEXCONVERTER})
+
+
+add_executable(UltimateTicTacToeServerGameTest 
+                ${HTTPHEADERSTESTS}
+                )
+target_link_libraries(UltimateTicTacToeServerGameTest PRIVATE Catch2::Catch2WithMain)

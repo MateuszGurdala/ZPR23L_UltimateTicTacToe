@@ -9,10 +9,11 @@ endif()
 project ("UltimateTicTacToeServer")
 set(INCLUDE "${PROJECT_SOURCE_DIR}/include")
 set(LIB "${PROJECT_SOURCE_DIR}/lib")
+set(SRC "${PROJECT_SOURCE_DIR}/src")
 add_subdirectory(lib)
 
 if(UNIX)
-# add_subdirectory(test)
+	add_subdirectory(test)
 endif()
 
 add_executable (UltimateTicTacToeServer "${PROJECT_SOURCE_DIR}/src/main.cpp")

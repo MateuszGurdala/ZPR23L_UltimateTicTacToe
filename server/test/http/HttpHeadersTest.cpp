@@ -4,6 +4,8 @@
 #include <iostream>
 #include <string>
 
+std::string allowOrigin = "*";
+
 TEST_CASE("Empty HttpHeaders object can be created.") {
   auto object = HttpHeaders();
 
