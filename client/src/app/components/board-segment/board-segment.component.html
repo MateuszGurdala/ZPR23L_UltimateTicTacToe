@@ -1,9 +1,9 @@
 <div class="segment" (click)="onClick()"
     [ngClass]="{'disabled': !isActive, 'pseudo-hover': pseudoHoverState, 'real-hover': !pseudoHoverState}">
-    <span *ngIf="ownerSign === 'O'" class="material-symbols-outlined sign" [setSize]="signSize">
+    <span *ngIf="ownerSign === 'O'" class="material-symbols-outlined sign" [setSize]="signSizeO">
         circle
     </span>
-    <span *ngIf="ownerSign === 'X'" class="material-symbols-outlined sign" [setSize]="signSize">
+    <span *ngIf="ownerSign === 'X'" class="material-symbols-outlined sign" [setSize]="signSizeX">
         close
     </span>
 </div>
